@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_navigation"
+    app:startDestination="@id/signInDashboardFragment">
+
+    <fragment
+        android:id="@+id/signInDashboardFragment"
+        android:name="com.devtoochi.blood_donation.fragments.SignInDashboardFragment"
+        android:label="fragment_sign_in_dashboard"
+        tools:layout="@layout/fragment_sign_in_dashboard" >
+        <action
+            android:id="@+id/action_signInDashboardFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_signInDashboardFragment_to_signUpMethodFragment"
+            app:destination="@id/signUpMethodFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.devtoochi.blood_donation.fragments.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_signInDashboardFragment"
+            app:destination="@id/signInDashboardFragment"
+            app:enterAnim="@anim/expand"
+            app:exitAnim="@anim/contract"
+            app:popEnterAnim="@anim/expand"
+            app:popExitAnim="@anim/contract"/>
+    </fragment>
+    <fragment
+        android:id="@+id/signUpMethodFragment"
+        android:name="com.devtoochi.blood_donation.fragments.SignUpMethodFragment"
+        android:label="fragment_sign_up_method"
+        tools:layout="@layout/fragment_sign_up_method" >
+        <action
+            android:id="@+id/action_signUpMethodFragment_to_signInDashboardFragment"
+            app:destination="@id/signInDashboardFragment" />
+        <action
+            android:id="@+id/action_signUpMethodFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.devtoochi.blood_donation.fragments.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpMethodFragment"
+            app:destination="@id/signUpMethodFragment" />
+    </fragment>
+
+</navigation>
