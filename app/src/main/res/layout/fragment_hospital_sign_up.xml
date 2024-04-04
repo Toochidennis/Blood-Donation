@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.SignInFragment">
+    tools:context=".fragments.HospitalSignUpFragment">
 
     <ImageButton
         android:id="@+id/navigate_back_button"
@@ -18,7 +18,6 @@
         android:src="@drawable/arrow_back"
         app:tint="@color/red" />
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,49 +26,55 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:padding="@dimen/dimen_16">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dimen_16"
-                app:cardCornerRadius="60dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/app_logo" />
-            </com.google.android.material.card.MaterialCardView>
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:text="@string/welcome_back"
-                android:textAlignment="center"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
                 android:fontFamily="@font/roboto_bold"
+                android:text="@string/create_an_account"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_24"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/firstnameTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/provide_your_log_in_details_to_continue"
-                android:textAlignment="center"
-                android:fontFamily="@font/roboto_light"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_16" />
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:autofillHints="name"
+                android:hint="Hospital name"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/dimen_12"
+                app:boxCornerRadiusBottomStart="@dimen/dimen_12"
+                app:boxCornerRadiusTopEnd="@dimen/dimen_12"
+                app:boxCornerRadiusTopStart="@dimen/dimen_12"
+                app:boxStrokeColor="@color/red"
+                app:boxStrokeWidth="1dp"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/red">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:inputType="textPersonName|textCapSentences"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_text_input"
+                android:id="@+id/emailTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:autofillHints="emailAddress"
                 android:hint="@string/enter_your_email"
                 app:boxBackgroundColor="@android:color/transparent"
                 app:boxBackgroundMode="outline"
@@ -85,16 +90,46 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/textColor" />
+                    android:fontFamily="@font/roboto_regular"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneNumberTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:autofillHints="phone"
+                android:hint="Phone number"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/dimen_12"
+                app:boxCornerRadiusBottomStart="@dimen/dimen_12"
+                app:boxCornerRadiusTopEnd="@dimen/dimen_12"
+                app:boxCornerRadiusTopStart="@dimen/dimen_12"
+                app:boxStrokeColor="@color/red"
+                app:boxStrokeWidth="1dp"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/red">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_text_input"
+                android:id="@+id/passwordTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
                 android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
                 android:hint="@string/enter_your_password"
                 app:boxBackgroundColor="@android:color/transparent"
                 app:boxBackgroundMode="outline"
@@ -110,29 +145,20 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textColor="@color/textColor" />
+                    android:fontFamily="@font/roboto_regular"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/forgot_password_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dimen_16"
-                android:paddingBottom="@dimen/dimen_16"
-                android:fontFamily="@font/roboto_regular"
-                android:text="@string/forgot_password"
-                android:textAlignment="textEnd"
-                android:textColor="@color/red" />
-
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/sign_in_button"
+                android:id="@+id/signUpButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
                 android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
                 android:backgroundTint="@color/red"
-                android:text="@string/continue_"
+                android:text="@string/sign_up"
                 android:fontFamily="@font/roboto_regular"
                 android:textAlignment="center"
                 android:textAllCaps="false"
@@ -160,8 +186,8 @@
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginEnd="@dimen/dimen_10"
-                    android:text="@string/or"
                     android:fontFamily="@font/roboto_regular"
+                    android:text="@string/or"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/text_14" />
 
@@ -178,18 +204,20 @@
                 android:id="@+id/sign_in_with_google"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:layout_marginBottom="@dimen/dimen_16"
+                android:layout_margin="@dimen/dimen_16"
                 android:backgroundTint="@color/pale_pink"
-                android:text="@string/continue_with_google"
-                android:textAlignment="center"
                 android:fontFamily="@font/roboto_regular"
+                android:text="@string/sign_up_with_google"
+                android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/red"
                 app:icon="@drawable/ic_google"
                 app:iconTint="@null" />
 
+
         </LinearLayout>
 
+
     </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>
