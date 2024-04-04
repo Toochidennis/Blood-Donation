@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hospital_dashboard_navigation"
+    app:startDestination="@id/hospitalHomeFragment">
+
+    <fragment
+        android:id="@+id/hospitalHomeFragment"
+        android:name="com.devtoochi.blood_donation.fragments.HospitalHomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_hospital_home" />
+    <fragment
+        android:id="@+id/requestFragment"
+        android:name="com.devtoochi.blood_donation.fragments.RequestFragment"
+        android:label="@string/request"
+        tools:layout="@layout/fragment_request" />
+    <fragment
+        android:id="@+id/hospitalNotificationsFragment"
+        android:name="com.devtoochi.blood_donation.fragments.HospitalNotificationsFragment"
+        android:label="@string/notification"
+        tools:layout="@layout/fragment_hospital_notifications" />
+    <fragment
+        android:id="@+id/hospitalSettingsFragment"
+        android:name="com.devtoochi.blood_donation.fragments.HospitalSettingsFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_hospital_settings" />
+</navigation>
