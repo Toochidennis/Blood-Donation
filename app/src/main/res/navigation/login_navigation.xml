@@ -39,16 +39,28 @@
             android:id="@+id/action_signUpMethodFragment_to_signInDashboardFragment"
             app:destination="@id/signInDashboardFragment" />
         <action
-            android:id="@+id/action_signUpMethodFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_signUpMethodFragment_to_donorSignUpFragment"
+            app:destination="@id/donorSignUpFragment" />
+        <action
+            android:id="@+id/action_signUpMethodFragment_to_hospitalSignUpFragment"
+            app:destination="@id/hospitalSignUpFragment" />
     </fragment>
     <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.devtoochi.blood_donation.fragments.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
+        android:id="@+id/hospitalSignUpFragment"
+        android:name="com.devtoochi.blood_donation.fragments.HospitalSignUpFragment"
+        android:label="fragment_hospital_sign_up"
+        tools:layout="@layout/fragment_hospital_sign_up" >
         <action
-            android:id="@+id/action_signUpFragment_to_signUpMethodFragment"
+            android:id="@+id/action_hospitalSignUpFragment_to_signUpMethodFragment"
+            app:destination="@id/signUpMethodFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/donorSignUpFragment"
+        android:name="com.devtoochi.blood_donation.fragments.DonorSignUpFragment"
+        android:label="fragment_donor_sign_up"
+        tools:layout="@layout/fragment_donor_sign_up" >
+        <action
+            android:id="@+id/action_donorSignUpFragment_to_signUpMethodFragment"
             app:destination="@id/signUpMethodFragment" />
     </fragment>
 
