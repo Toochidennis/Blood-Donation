@@ -21,8 +21,8 @@
         android:label="@string/notification"
         tools:layout="@layout/fragment_hospital_notifications" />
     <fragment
-        android:id="@+id/hospitalSettingsFragment"
-        android:name="com.devtoochi.blood_donation.fragments.HospitalSettingsFragment"
+        android:id="@+id/hospitalProfileFragment"
+        android:name="com.devtoochi.blood_donation.fragments.HospitalProfileFragment"
         android:label="@string/profile"
-        tools:layout="@layout/fragment_hospital_settings" />
+        tools:layout="@layout/fragment_hospital_profile" />
 </navigation>
