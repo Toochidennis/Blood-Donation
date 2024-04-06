@@ -16,7 +16,7 @@
         android:title="@string/notification" />
 
     <item
-        android:id="@+id/hospitalSettingsFragment"
+        android:id="@+id/hospitalProfileFragment"
         android:icon="@drawable/ic_person"
         android:title="@string/profile" />
 </menu>
