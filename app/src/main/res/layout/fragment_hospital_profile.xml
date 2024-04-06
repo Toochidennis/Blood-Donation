@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".fragments.HospitalProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/profile_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_32"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_16"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:backgroundTint="@color/pale_pink"
+                app:cardCornerRadius="130dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/profile_pix"
+                    android:src="@drawable/ic_person_filled" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/toochukwu_dennis"
+                android:textAlignment="center"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_22" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Last Donation: April, 2024"
+                android:textAlignment="center"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/donations_bg"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@drawable/drawable_background_line_2"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_10"
+            app:layout_constraintEnd_toStartOf="@id/lives_saved_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_24"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/donations"
+                android:textAlignment="center"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lives_saved_bg"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:background="@drawable/drawable_background_line_2"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_10"
+            app:layout_constraintEnd_toStartOf="@id/rating_bg"
+            app:layout_constraintStart_toEndOf="@id/donations_bg"
+            app:layout_constraintTop_toTopOf="@id/donations_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_24"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/lives_saved"
+                android:textAlignment="center"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rating_bg"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:layout_marginEnd="@dimen/dimen_16"
+            android:background="@drawable/drawable_background_line_2"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/lives_saved_bg"
+            app:layout_constraintTop_toTopOf="@id/donations_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3.5"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_24"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/rating"
+                android:textAlignment="center"
+                android:textColor="@color/textColor" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:drawablePadding="@dimen/dimen_16"
+            android:padding="@dimen/dimen_16"
+            android:text="@string/available_for_donation"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_16"
+            app:drawableStartCompat="@drawable/presence_available"
+            app:drawableTint="@color/red"
+            app:layout_constraintEnd_toStartOf="@id/available_switch_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/donations_bg" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/available_switch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/red"
+            android:padding="@dimen/dimen_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView2" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+        <TextView
+            android:id="@+id/manage_account_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dimen_16"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="@dimen/dimen_16"
+            android:text="@string/manage_your_account"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_16"
+            app:drawableEndCompat="@drawable/ic_keyboard_arrow_right"
+            app:drawableStartCompat="@drawable/ic_account_circle"
+            app:drawableTint="@color/red"
+            app:layout_constraintTop_toBottomOf="@id/divider_1" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_width="match_parent"
+            android:id="@+id/logout_button"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_16"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/logout"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
