@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    tools:context=".fragments.CheckHospitalEligibilityFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/check_eligibility"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/text_24"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/hospital_instruction"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/text_14" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:backgroundTint="@color/card_color"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardElevation="0dp"
+                app:contentPadding="@dimen/dimen_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/hospital_question_1"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_16" />
+
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/yes_button_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/yes"
+                            android:textSize="@dimen/text_16" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/no_button_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/no"
+                            android:textSize="@dimen/text_16" />
+                    </RadioGroup>
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:backgroundTint="@color/card_color"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardElevation="0dp"
+                app:contentPadding="@dimen/dimen_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/hospital_question_2"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_16" />
+
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/yes_button_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/yes"
+                            android:textSize="@dimen/text_16" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/no_button_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/no"
+                            android:textSize="@dimen/text_16" />
+                    </RadioGroup>
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:backgroundTint="@color/card_color"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardElevation="0dp"
+                app:contentPadding="@dimen/dimen_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/hospital_question_3"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_16" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/yes_button_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/yes"
+                            android:textSize="@dimen/text_16" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/no_button_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/no"
+                            android:textSize="@dimen/text_16" />
+                    </RadioGroup>
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:backgroundTint="@color/card_color"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardElevation="0dp"
+                app:contentPadding="@dimen/dimen_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/hospital_question_4"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_16" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/yes_button_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/yes"
+                            android:textSize="@dimen/text_16" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/no_button_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/no"
+                            android:textSize="@dimen/text_16" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:backgroundTint="@color/card_color"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardElevation="0dp"
+                app:contentPadding="@dimen/dimen_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/hospital_question_5"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_16" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/yes_button_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/yes"
+                            android:textSize="@dimen/text_16" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/no_button_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/no"
+                            android:textSize="@dimen/text_16" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:backgroundTint="@color/card_color"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardElevation="0dp"
+                app:contentPadding="@dimen/dimen_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/hospital_question_6"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_16" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/yes_button_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/yes"
+                            android:textSize="@dimen/text_16" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/no_button_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/no"
+                            android:textSize="@dimen/text_16" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:backgroundTint="@color/card_color"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardElevation="0dp"
+                app:contentPadding="@dimen/dimen_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/hospital_question_7"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_16" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/yes_button_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/yes"
+                            android:textSize="@dimen/text_16" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/no_button_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/no"
+                            android:textSize="@dimen/text_16" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:backgroundTint="@color/card_color"
+                app:cardCornerRadius="@dimen/dimen_16"
+                app:cardElevation="0dp"
+                app:contentPadding="@dimen/dimen_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/hospital_question_8"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_16" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/yes_button_8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/yes"
+                            android:textSize="@dimen/text_16" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/no_button_8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/no"
+                            android:textSize="@dimen/text_16" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_16"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/check_eligibility"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_16" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
