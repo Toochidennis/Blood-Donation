@@ -49,9 +49,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
+                android:fontFamily="@font/roboto_bold"
                 android:text="@string/welcome_back"
                 android:textAlignment="center"
-                android:fontFamily="@font/roboto_bold"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_24"
                 android:textStyle="bold" />
@@ -59,72 +59,65 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
                 android:text="@string/provide_your_log_in_details_to_continue"
                 android:textAlignment="center"
-                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_16" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_text_input"
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/email_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:autofillHints="emailAddress"
+                android:backgroundTint="@color/textColor"
+                android:fontFamily="@font/roboto_regular"
                 android:hint="@string/enter_your_email"
-                app:boxBackgroundColor="@android:color/transparent"
-                app:boxBackgroundMode="outline"
-                app:boxCornerRadiusBottomEnd="@dimen/dimen_12"
-                app:boxCornerRadiusBottomStart="@dimen/dimen_12"
-                app:boxCornerRadiusTopEnd="@dimen/dimen_12"
-                app:boxCornerRadiusTopStart="@dimen/dimen_12"
-                app:boxStrokeColor="@color/red"
-                app:boxStrokeWidth="1dp"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/red">
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/textColor" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_text_input"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:hint="@string/enter_your_password"
-                app:boxBackgroundColor="@android:color/transparent"
-                app:boxBackgroundMode="outline"
-                app:boxCornerRadiusBottomEnd="@dimen/dimen_12"
-                app:boxCornerRadiusBottomStart="@dimen/dimen_12"
-                app:boxCornerRadiusTopEnd="@dimen/dimen_12"
-                app:boxCornerRadiusTopStart="@dimen/dimen_12"
-                app:boxStrokeColor="@color/red"
-                app:boxStrokeWidth="1dp"
-                app:hintTextColor="@color/red"
-                app:passwordToggleEnabled="true">
+                android:layout_marginTop="@dimen/dimen_16">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/password_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textColor="@color/textColor" />
+                    android:autofillHints="password"
+                    android:backgroundTint="@color/textColor"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="@string/enter_your_password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <ImageView
+                    android:id="@+id/password_visibility_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/password_input_text"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:contentDescription="@string/enter_your_password"
+                    android:focusable="true"
+                    android:padding="@dimen/dimen_8"
+                    android:src="@drawable/ic_visible"
+                    app:tint="@color/textColor" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/forgot_password_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
                 android:paddingTop="@dimen/dimen_16"
                 android:paddingBottom="@dimen/dimen_16"
-                android:fontFamily="@font/roboto_regular"
                 android:text="@string/forgot_password"
                 android:textAlignment="textEnd"
-                android:textColor="@color/red" />
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_16" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/sign_in_button"
@@ -132,8 +125,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:backgroundTint="@color/red"
-                android:text="@string/continue_"
                 android:fontFamily="@font/roboto_regular"
+                android:text="@string/continue_"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -160,8 +153,8 @@
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginEnd="@dimen/dimen_10"
-                    android:text="@string/or"
                     android:fontFamily="@font/roboto_regular"
+                    android:text="@string/or"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/text_14" />
 
@@ -181,9 +174,9 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:layout_marginBottom="@dimen/dimen_16"
                 android:backgroundTint="@color/pale_pink"
+                android:fontFamily="@font/roboto_regular"
                 android:text="@string/continue_with_google"
                 android:textAlignment="center"
-                android:fontFamily="@font/roboto_regular"
                 android:textAllCaps="false"
                 android:textColor="@color/red"
                 app:icon="@drawable/ic_google"
