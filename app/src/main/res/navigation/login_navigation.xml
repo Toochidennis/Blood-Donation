@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_hospitalSignUpFragment_to_signUpMethodFragment"
             app:destination="@id/signUpMethodFragment" />
+        <action
+            android:id="@+id/action_hospitalSignUpFragment_to_checkHospitalEligibilityFragment"
+            app:destination="@id/checkHospitalEligibilityFragment" />
     </fragment>
     <fragment
         android:id="@+id/donorSignUpFragment"
@@ -63,5 +66,10 @@
             android:id="@+id/action_donorSignUpFragment_to_signUpMethodFragment"
             app:destination="@id/signUpMethodFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/checkHospitalEligibilityFragment"
+        android:name="com.devtoochi.blood_donation.fragments.CheckHospitalEligibilityFragment"
+        android:label="fragment_check_hospital_eligibility"
+        tools:layout="@layout/fragment_check_hospital_eligibility" />
 
 </navigation>
