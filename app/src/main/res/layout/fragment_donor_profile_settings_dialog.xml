@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".dialogs.DonorProfileSettingsDialogFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_16">
+
+        <ImageButton
+            android:id="@+id/navigateUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/drawable_navigate_back"
+            android:contentDescription="@string/navigate_up"
+            android:padding="@dimen/dimen_12"
+            android:src="@drawable/ic_x"
+            app:tint="@color/red" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/edit_profile"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_18" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/indicates_required"
+                android:textSize="@dimen/text_14" />
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/first_name_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:autofillHints="name"
+                android:backgroundTint="@color/textColor"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/firstname"
+                android:imeOptions="actionNext" />
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/last_name_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:autofillHints="name"
+                android:backgroundTint="@color/textColor"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/lastname"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName|textCapSentences" />
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/date_of_birth_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:autofillHints="creditCardExpirationDate"
+                android:backgroundTint="@color/textColor"
+                android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/birth_date"
+                android:imeOptions="actionNext"
+                android:inputType="date" />
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/gender_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:backgroundTint="@color/textColor"
+                android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/gender"
+                android:inputType="text" />
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/blood_group_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:autofillHints=""
+                android:backgroundTint="@color/textColor"
+                android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/blood_group"
+                android:inputType="textCapSentences" />
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/genotype_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:autofillHints=""
+                android:backgroundTint="@color/textColor"
+                android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/genotype"
+                android:inputType="textCapSentences" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/location"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/country_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:backgroundTint="@color/textColor"
+                android:hint="@string/country"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences" />
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/state_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:backgroundTint="@color/textColor"
+                android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/state"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences" />
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/city_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:layout_marginBottom="@dimen/dimen_32"
+                android:backgroundTint="@color/textColor"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/city"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/contactInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_right"
+                android:drawableTint="@color/red"
+                android:fontFamily="@font/roboto_regular"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="@dimen/dimen_16"
+                android:text="@string/contact_info"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_18" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:layout_marginBottom="@dimen/dimen_16"
+                android:backgroundTint="@color/red"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/save"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
