@@ -87,7 +87,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/donations"
                 android:textAlignment="center"
-                android:textColor="@color/textColor"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_16" />
 
         </LinearLayout>
@@ -121,7 +121,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/lives_saved"
                 android:textAlignment="center"
-                android:textColor="@color/textColor"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_16" />
 
         </LinearLayout>
@@ -156,16 +156,15 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/rating"
                 android:textAlignment="center"
-                android:textColor="@color/textColor" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
-
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_16"
+            android:layout_marginTop="@dimen/dimen_32"
             android:drawablePadding="@dimen/dimen_16"
             android:padding="@dimen/dimen_16"
             android:text="@string/available_for_donation"
@@ -193,23 +192,65 @@
             app:layout_constraintTop_toBottomOf="@id/textView2" />
 
         <TextView
-            android:id="@+id/manage_account_button"
+            android:id="@+id/edit_profile_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/dimen_16"
             android:foreground="?android:attr/selectableItemBackground"
             android:padding="@dimen/dimen_16"
-            android:text="@string/manage_your_account"
+            android:text="@string/edit_profile"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_16"
             app:drawableEndCompat="@drawable/ic_keyboard_arrow_right"
-            app:drawableStartCompat="@drawable/ic_account_circle"
+            app:drawableStartCompat="@drawable/ic_user_edit"
             app:drawableTint="@color/red"
             app:layout_constraintTop_toBottomOf="@id/divider_1" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_2"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/edit_profile_button" />
+
+        <TextView
+            android:id="@+id/contact_info_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dimen_16"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="@dimen/dimen_16"
+            android:text="@string/contact_info"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_16"
+            app:drawableEndCompat="@drawable/ic_keyboard_arrow_right"
+            app:drawableStartCompat="@drawable/ic_address_card"
+            app:drawableTint="@color/red"
+            app:layout_constraintTop_toBottomOf="@id/divider_2" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/contact_info_button" />
+
+        <TextView
+            android:id="@+id/privacy_and_security_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dimen_16"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="@dimen/dimen_16"
+            android:text="@string/privacy_and_security"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_16"
+            app:drawableEndCompat="@drawable/ic_keyboard_arrow_right"
+            app:drawableStartCompat="@drawable/ic_security"
+            app:drawableTint="@color/red"
+            app:layout_constraintTop_toBottomOf="@id/divider_3" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/logout_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_16"
             android:fontFamily="@font/roboto_regular"
