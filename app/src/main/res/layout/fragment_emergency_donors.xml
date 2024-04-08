@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.EmergencyDonorsDialogFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_16">
+
+        <ImageButton
+            android:id="@+id/navigateUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/drawable_navigate_back"
+            android:contentDescription="@string/navigate_up"
+            android:padding="@dimen/dimen_12"
+            android:src="@drawable/ic_x"
+            app:tint="@color/red" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/emergency_donors"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_18" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/search_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:autofillHints="name"
+        android:background="@drawable/drawable_edit_text"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/dimen_16"
+        android:drawableTint="@color/red"
+        android:fontFamily="@font/roboto_regular"
+        android:hint="Search for emergency donors"
+        android:inputType="textPersonName|textCapSentences"
+        android:padding="@dimen/dimen_10" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false" />
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
