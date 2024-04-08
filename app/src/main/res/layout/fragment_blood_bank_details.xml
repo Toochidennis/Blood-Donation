@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.BloodBankDetailsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_16">
+
+        <ImageButton
+            android:id="@+id/navigateUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/drawable_navigate_back"
+            android:contentDescription="@string/navigate_up"
+            android:padding="@dimen/dimen_12"
+            android:src="@drawable/arrow_back"
+            app:tint="@color/red" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/blood_bank_details"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_18" />
+
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/card_color"
+        android:clipToPadding="false"
+        app:cardCornerRadius="@dimen/dimen_16"
+        app:cardElevation="0dp"
+        app:contentPadding="@dimen/dimen_16">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/bank_card_view"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:backgroundTint="@color/red"
+                app:cardCornerRadius="@dimen/dimen_40"
+                app:contentPadding="@dimen/dimen_10">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_blood_drop"
+                    app:tint="@color/white" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/name_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_toEndOf="@id/bank_card_view"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/toochukwu_dennis"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_22"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/state_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_textview"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_toEndOf="@id/bank_card_view"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Enugu"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+
+            <View
+                android:id="@+id/circle"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_below="@id/name_textview"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_toEndOf="@id/state_textview"
+                android:background="@drawable/drawable_circle" />
+
+
+            <TextView
+                android:id="@+id/city_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_textview"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_toEndOf="@id/circle"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Enugu East"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/address_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/state_textview"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_toEndOf="@id/bank_card_view"
+                android:fontFamily="@font/roboto_light"
+                android:text="110 College Road Ugboezeji, Abakpa Nike, Enugu State"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_14" />
+
+            <LinearLayout
+                android:id="@+id/call_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_textview"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_toEndOf="@id/bank_card_view"
+                android:background="@drawable/drawable_button_2"
+                android:elevation="1dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dimen_24"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingEnd="@dimen/dimen_24"
+                android:paddingBottom="@dimen/dimen_10">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_phone"
+                    app:tint="@color/light_blue" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/call"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/text_16" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/email_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_textview"
+                android:layout_marginStart="@dimen/dimen_64"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_toEndOf="@id/call_button"
+                android:background="@drawable/drawable_button_2"
+                android:clipToPadding="false"
+                android:elevation="1dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dimen_16"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingEnd="@dimen/dimen_16"
+                android:paddingBottom="@dimen/dimen_10">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_gmail" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/email"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/text_16" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:backgroundTint="@color/card_color"
+        app:cardCornerRadius="@dimen/dimen_16"
+        app:cardElevation="0dp"
+        app:contentPadding="@dimen/dimen_16">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Blood Bank Stock"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_16"
+        android:text="@string/send_request"
+        android:textAlignment="center"
+        android:textAllCaps="false" />
+
+</LinearLayout>
