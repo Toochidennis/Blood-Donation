@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.R
+import com.devtoochi.blood_donation.databinding.FragmentHospitalProfileBinding
+import com.devtoochi.blood_donation.dialogs.ContactInfoDialogFragment
+import com.devtoochi.blood_donation.dialogs.HospitalEditProfileDialogFragment
 
 
 private const val ARG_PARAM1 = "param1"
@@ -13,32 +16,39 @@ private const val ARG_PARAM2 = "param2"
 
 
 class HospitalProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentHospitalProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hospital_profile, container, false)
+        binding = FragmentHospitalProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Extend app bar color to status bar
-        /*requireActivity().window.decorView
-            .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
-        requireActivity().window.statusBarColor = resources.getColor(R.color.red)*/
+
+        handleButtonClicks()
+
+    }
+
+    private fun handleButtonClicks() {
+        binding.editProfileButton.setOnClickListener {
+            HospitalEditProfileDialogFragment().show(
+                parentFragmentManager,
+                getString(R.string.edit_profile)
+            )
+        }
+
+        binding.contactInfoButton.setOnClickListener {
+            ContactInfoDialogFragment().show(
+                parentFragmentManager,
+                getString(R.string.contact_info)
+            )
+        }
     }
 }

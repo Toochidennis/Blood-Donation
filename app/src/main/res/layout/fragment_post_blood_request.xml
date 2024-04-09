@@ -46,22 +46,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/last_name_text_input"
+                android:id="@+id/blood_group_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_16"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:layout_marginEnd="@dimen/dimen_16"
-                android:autofillHints="name"
+                android:autofillHints=""
                 android:backgroundTint="@color/textColor"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
                 android:focusableInTouchMode="false"
                 android:fontFamily="@font/roboto_regular"
-                android:hint="Select donor"
-                android:imeOptions="actionNext"
-                android:inputType="textPersonName|textCapSentences" />
+                android:hint="@string/blood_group"
+                android:inputType="textCapSentences" />
+
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/date_of_birth_text_input"
@@ -93,20 +92,6 @@
                 android:hint="Time"
                 android:inputType="text" />
 
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/blood_group_text_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_16"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:layout_marginEnd="@dimen/dimen_16"
-                android:autofillHints=""
-                android:backgroundTint="@color/textColor"
-                android:drawableEnd="@drawable/ic_arrow_drop_down"
-                android:focusableInTouchMode="false"
-                android:fontFamily="@font/roboto_regular"
-                android:hint="@string/blood_group"
-                android:inputType="textCapSentences" />
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/note_text_input"
@@ -138,7 +123,7 @@
                 android:layout_marginBottom="@dimen/dimen_16"
                 android:backgroundTint="@color/red"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Send request"
+                android:text="Post request"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

@@ -47,7 +47,7 @@
             android:fontFamily="@font/roboto_regular"
             android:text="@string/post_blood_request"
             android:textAlignment="center"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_16" />
 
 
@@ -82,7 +82,7 @@
             android:fontFamily="@font/roboto_regular"
             android:text="@string/blood_bank"
             android:textAlignment="center"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_16" />
 
     </LinearLayout>
@@ -117,7 +117,7 @@
             android:fontFamily="@font/roboto_regular"
             android:text="@string/emergency_donors"
             android:textAlignment="center"
-            android:textColor="@color/textColor" />
+            android:textColor="@color/black" />
 
     </LinearLayout>
 
