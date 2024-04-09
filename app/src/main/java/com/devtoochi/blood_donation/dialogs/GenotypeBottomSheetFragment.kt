@@ -1,60 +1,67 @@
 package com.devtoochi.blood_donation.dialogs
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
+import com.devtoochi.blood_donation.adapters.GenericAdapter
+import com.devtoochi.blood_donation.backend.models.Genotype
+import com.devtoochi.blood_donation.databinding.FragmentGenotypeBottomSheetBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GenotypeBottomSheetFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class GenotypeBottomSheetFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class GenotypeBottomSheetFragment(
+    private val onSelected: (String) -> Unit
+) : BottomSheetDialogFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentGenotypeBottomSheetBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_genotype_bottom_sheet, container, false)
+        binding = FragmentGenotypeBottomSheetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment GenotypeBottomSheetFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            GenotypeBottomSheetFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        prepareData()
     }
+
+    private fun prepareData() {
+        val bloodGroups = resources.getStringArray(R.array.genotypes).toMutableList()
+        val newGenotype = mutableListOf<Genotype>()
+
+        bloodGroups.forEach { genotype ->
+            newGenotype.add(Genotype(genotype))
+        }
+
+        setUpAdapter(genotypes = newGenotype)
+    }
+
+    private fun setUpAdapter(genotypes: MutableList<Genotype>) {
+        val bloodGroupAdapter = GenericAdapter(
+            itemList = genotypes,
+            itemResLayout = R.layout.item_fragment_genotype_bottom_sheet,
+            bindItem = { binding, model ->
+                binding.setVariable(BR.genotype, model)
+                binding.executePendingBindings()
+            }
+        ) { position ->
+            onSelected.invoke(genotypes[position].name)
+            dismiss()
+        }
+
+        binding.genotypeRecyclerview.apply {
+            hasFixedSize()
+            adapter = bloodGroupAdapter
+        }
+    }
+
 }
