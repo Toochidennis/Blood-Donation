@@ -24,11 +24,7 @@
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/action_signInFragment_to_signInDashboardFragment"
-            app:destination="@id/signInDashboardFragment"
-            app:enterAnim="@anim/expand"
-            app:exitAnim="@anim/contract"
-            app:popEnterAnim="@anim/expand"
-            app:popExitAnim="@anim/contract"/>
+            app:destination="@id/signInDashboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpMethodFragment"
