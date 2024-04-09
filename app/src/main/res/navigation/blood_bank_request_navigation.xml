@@ -9,7 +9,11 @@
         android:id="@+id/bloodBanksDialogFragment"
         android:name="com.devtoochi.blood_donation.fragments.BloodBanksDialogFragment"
         android:label="fragment_blood_banks"
-        tools:layout="@layout/fragment_blood_banks" />
+        tools:layout="@layout/fragment_blood_banks" >
+        <action
+            android:id="@+id/action_bloodBanksDialogFragment_to_bloodBankDetailsFragment"
+            app:destination="@id/bloodBankDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/bloodBankDetailsFragment"
         android:name="com.devtoochi.blood_donation.fragments.BloodBankDetailsFragment"
