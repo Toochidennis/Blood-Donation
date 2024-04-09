@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".dialogs.HospitalBloodGroupsBottomSheetFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/save_button"
+        android:fontFamily="@font/roboto_bold"
+        android:padding="@dimen/dimen_16"
+        android:text="Select blood group"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/text_18"
+        android:textStyle="bold" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:background="@drawable/drawable_button_3"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="@color/red" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/blood_group_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView1"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_fragment_hospital_blood_groups_bottom_sheet" />
+
+</RelativeLayout>
