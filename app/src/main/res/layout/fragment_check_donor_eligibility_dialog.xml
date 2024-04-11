@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:orientation="vertical"
-    tools:context=".dialogs.CheckDonorEligibilityDialogFragment">
+    tools:context=".ui.dialogs.CheckDonorEligibilityDialogFragment">
 
     <ImageButton
         android:id="@+id/navigateUp"
