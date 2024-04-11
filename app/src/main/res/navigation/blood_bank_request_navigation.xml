@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bloodBanksDialogFragment"
-        android:name="com.devtoochi.blood_donation.fragments.BloodBanksDialogFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.BloodBanksDialogFragment"
         android:label="fragment_blood_banks"
         tools:layout="@layout/fragment_blood_banks" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/bloodBankDetailsFragment"
-        android:name="com.devtoochi.blood_donation.fragments.BloodBankDetailsFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.BloodBankDetailsFragment"
         android:label="fragment_blood_bank_details"
         tools:layout="@layout/fragment_blood_bank_details" />
 </navigation>
