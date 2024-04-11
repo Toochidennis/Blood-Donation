@@ -1,4 +1,4 @@
-package com.devtoochi.blood_donation.activities
+package com.devtoochi.blood_donation.ui.activities
 
 import android.content.res.Configuration
 import android.os.Bundle

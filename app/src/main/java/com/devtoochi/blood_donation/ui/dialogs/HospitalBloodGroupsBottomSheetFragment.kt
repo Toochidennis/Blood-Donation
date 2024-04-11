@@ -1,11 +1,11 @@
-package com.devtoochi.blood_donation.dialogs
+package com.devtoochi.blood_donation.ui.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.devtoochi.blood_donation.R
-import com.devtoochi.blood_donation.adapters.BloodGroupAdapter
+import com.devtoochi.blood_donation.ui.adapters.BloodGroupAdapter
 import com.devtoochi.blood_donation.backend.models.BloodGroup
 import com.devtoochi.blood_donation.databinding.FragmentHospitalBloodGroupsBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
