@@ -20,6 +20,7 @@ class CheckHospitalEligibilityDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
+        isCancelable = false
     }
 
     override fun onCreateView(
@@ -47,6 +48,7 @@ class CheckHospitalEligibilityDialogFragment : DialogFragment() {
             } else {
                 startActivity(Intent(requireContext(), HospitalDashboardActivity::class.java))
                 dismiss()
+                requireActivity().finish()
             }
         }
     }
