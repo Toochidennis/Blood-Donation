@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.SignInFragment">
+    tools:context=".ui.fragments.SignInFragment">
 
     <ImageButton
         android:id="@+id/navigate_back_button"
@@ -93,17 +93,19 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/password_visibility_toggle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@id/password_input_text"
                     android:layout_centerVertical="true"
                     android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:background="@drawable/drawable_button_4"
                     android:contentDescription="@string/enter_your_password"
                     android:focusable="true"
                     android:padding="@dimen/dimen_8"
-                    android:src="@drawable/ic_visible"
+                    android:src="@drawable/ic_eye_open"
                     app:tint="@color/textColor" />
             </RelativeLayout>
 
