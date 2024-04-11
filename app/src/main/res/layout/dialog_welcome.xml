@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/drawable_dialog_bg"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_16"
+    tools:context=".ui.dialogs.WelcomeDialog">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/welcome_message"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/text_16"
+        app:fontFamily="@font/roboto_regular" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/complete_button"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/complete"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="@dimen/text_16" />
+
+</RelativeLayout>

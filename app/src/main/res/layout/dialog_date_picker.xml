@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/drawable_dialog_bg"
     android:orientation="vertical"
-    tools:context=".dialogs.DatePickerDialog">
+    tools:context=".ui.dialogs.DatePickerDialog">
 
     <DatePicker
         android:id="@+id/date_picker"
