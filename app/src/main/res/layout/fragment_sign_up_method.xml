@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SignUpMethodFragment">
+    tools:context=".ui.fragments.SignUpMethodFragment">
 
     <ImageButton
         android:id="@+id/navigate_back_button"
