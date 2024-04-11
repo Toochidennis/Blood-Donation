@@ -1,4 +1,4 @@
-package com.devtoochi.blood_donation.dialogs
+package com.devtoochi.blood_donation.ui.dialogs
 
 import android.animation.ObjectAnimator
 import android.app.Dialog
