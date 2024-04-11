@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".dialogs.ContactInfoDialogFragment">
+    tools:context=".ui.dialogs.ContactInfoDialogFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

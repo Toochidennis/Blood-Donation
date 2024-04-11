@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:orientation="vertical"
-    tools:context=".fragments.CheckHospitalEligibilityFragment">
+    tools:context=".ui.dialogs.CheckHospitalEligibilityDialogFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -233,6 +233,7 @@
                             android:padding="@dimen/dimen_10"
                             android:text="@string/no"
                             android:textSize="@dimen/text_16" />
+
                     </RadioGroup>
 
                 </LinearLayout>
@@ -432,12 +433,14 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/check_eligibility_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_16"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/check_eligibility"
                 android:textAlignment="center"
+                android:textAllCaps="false"
                 android:textSize="@dimen/text_16" />
 
         </LinearLayout>
