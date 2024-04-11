@@ -1,4 +1,4 @@
-package com.devtoochi.blood_donation.activities
+package com.devtoochi.blood_donation.ui.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

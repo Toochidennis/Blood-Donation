@@ -1,4 +1,4 @@
-package com.devtoochi.blood_donation.fragments
+package com.devtoochi.blood_donation.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.databinding.FragmentHospitalProfileBinding
-import com.devtoochi.blood_donation.dialogs.ContactInfoDialogFragment
-import com.devtoochi.blood_donation.dialogs.HospitalEditProfileDialogFragment
+import com.devtoochi.blood_donation.ui.dialogs.ContactInfoDialogFragment
+import com.devtoochi.blood_donation.ui.dialogs.HospitalEditProfileDialogFragment
 
 
 private const val ARG_PARAM1 = "param1"
