@@ -1,4 +1,4 @@
-package com.devtoochi.blood_donation.adapters
+package com.devtoochi.blood_donation.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
