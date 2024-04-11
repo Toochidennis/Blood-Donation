@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/hospitalHomeFragment"
-        android:name="com.devtoochi.blood_donation.fragments.HospitalHomeFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.HospitalHomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_hospital_home" />
     <fragment
         android:id="@+id/requestFragment"
-        android:name="com.devtoochi.blood_donation.fragments.RequestFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.RequestFragment"
         android:label="@string/request"
         tools:layout="@layout/fragment_request" />
     <fragment
         android:id="@+id/hospitalNotificationsFragment"
-        android:name="com.devtoochi.blood_donation.fragments.HospitalNotificationsFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.HospitalNotificationsFragment"
         android:label="@string/notification"
         tools:layout="@layout/fragment_hospital_notifications" />
     <fragment
         android:id="@+id/hospitalProfileFragment"
-        android:name="com.devtoochi.blood_donation.fragments.HospitalProfileFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.HospitalProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_hospital_profile" />
 </navigation>
