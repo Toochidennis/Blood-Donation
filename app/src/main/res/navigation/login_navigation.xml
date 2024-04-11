@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signInDashboardFragment"
-        android:name="com.devtoochi.blood_donation.fragments.SignInDashboardFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.SignInDashboardFragment"
         android:label="fragment_sign_in_dashboard"
         tools:layout="@layout/fragment_sign_in_dashboard" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.devtoochi.blood_donation.fragments.SignInFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpMethodFragment"
-        android:name="com.devtoochi.blood_donation.fragments.SignUpMethodFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.SignUpMethodFragment"
         android:label="fragment_sign_up_method"
         tools:layout="@layout/fragment_sign_up_method" >
         <action
@@ -43,29 +43,21 @@
     </fragment>
     <fragment
         android:id="@+id/hospitalSignUpFragment"
-        android:name="com.devtoochi.blood_donation.fragments.HospitalSignUpFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.HospitalSignUpFragment"
         android:label="fragment_hospital_sign_up"
         tools:layout="@layout/fragment_hospital_sign_up" >
         <action
             android:id="@+id/action_hospitalSignUpFragment_to_signUpMethodFragment"
             app:destination="@id/signUpMethodFragment" />
-        <action
-            android:id="@+id/action_hospitalSignUpFragment_to_checkHospitalEligibilityFragment"
-            app:destination="@id/checkHospitalEligibilityFragment" />
     </fragment>
     <fragment
         android:id="@+id/donorSignUpFragment"
-        android:name="com.devtoochi.blood_donation.fragments.DonorSignUpFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.DonorSignUpFragment"
         android:label="fragment_donor_sign_up"
         tools:layout="@layout/fragment_donor_sign_up" >
         <action
             android:id="@+id/action_donorSignUpFragment_to_signUpMethodFragment"
             app:destination="@id/signUpMethodFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/checkHospitalEligibilityFragment"
-        android:name="com.devtoochi.blood_donation.fragments.CheckHospitalEligibilityFragment"
-        android:label="fragment_check_hospital_eligibility"
-        tools:layout="@layout/fragment_check_hospital_eligibility" />
 
 </navigation>
