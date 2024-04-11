@@ -1,4 +1,4 @@
-package com.devtoochi.blood_donation.fragments
+package com.devtoochi.blood_donation.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.R
-import com.devtoochi.blood_donation.activities.BloodBankRequestActivity
+import com.devtoochi.blood_donation.ui.activities.BloodBankRequestActivity
 import com.devtoochi.blood_donation.databinding.FragmentRequestBinding
 
 
@@ -38,5 +38,7 @@ class RequestFragment : Fragment() {
             startActivity(Intent(requireContext(), BloodBankRequestActivity::class.java))
         }
     }
+
+   //# private fun
 
 }
