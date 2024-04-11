@@ -18,7 +18,7 @@
         android:theme="@style/Theme.BloodDonation"
         tools:targetApi="31">
         <activity
-            android:name=".activities.BloodBankRequestActivity"
+            android:name=".ui.activities.BloodBankRequestActivity"
             android:exported="false" />
         <activity
             android:name=".activities.HospitalProfileSettingsActivity"
@@ -27,13 +27,13 @@
             android:name=".activities.DonorProfileSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.HospitalDashboardActivity"
+            android:name=".ui.activities.HospitalDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DonorDashboardActivity"
+            android:name=".ui.activities.DonorDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
