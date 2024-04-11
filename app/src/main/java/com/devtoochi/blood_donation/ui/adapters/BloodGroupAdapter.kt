@@ -1,4 +1,4 @@
-package com.devtoochi.blood_donation.adapters
+package com.devtoochi.blood_donation.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -25,7 +25,7 @@ class BloodGroupAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: BloodGroupAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(itemList[position])
     }
 

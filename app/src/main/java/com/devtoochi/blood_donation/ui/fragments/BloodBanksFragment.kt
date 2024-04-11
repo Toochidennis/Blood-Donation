@@ -1,4 +1,4 @@
-package com.devtoochi.blood_donation.fragments
+package com.devtoochi.blood_donation.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
