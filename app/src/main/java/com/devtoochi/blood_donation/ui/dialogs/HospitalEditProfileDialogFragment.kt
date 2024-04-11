@@ -1,12 +1,12 @@
-package com.devtoochi.blood_donation.dialogs
+package com.devtoochi.blood_donation.ui.dialogs
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.devtoochi.blood_donation.R
+import com.devtoochi.blood_donation.databinding.FragmentHospitalEditProfileDialogBinding
 
 
 private const val ARG_PARAM1 = "param1"
@@ -14,6 +14,8 @@ private const val ARG_PARAM2 = "param2"
 
 
 class HospitalEditProfileDialogFragment : DialogFragment() {
+
+    private lateinit var binding: FragmentHospitalEditProfileDialogBinding
 
     private var param1: String? = null
     private var param2: String? = null
@@ -30,9 +32,18 @@ class HospitalEditProfileDialogFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hospital_edit_profile_dialog, container, false)
+        binding = FragmentHospitalEditProfileDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.navigateUp.setOnClickListener {
+            dismiss()
+        }
     }
 
     companion object {
