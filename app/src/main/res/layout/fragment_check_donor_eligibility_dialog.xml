@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_16"
         android:layout_marginEnd="@dimen/dimen_16"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/nunito_sans_bold"
         android:text="@string/check_eligibility"
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_24"
@@ -37,7 +37,7 @@
         android:layout_marginStart="@dimen/dimen_16"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginEnd="@dimen/dimen_16"
-        android:fontFamily="@font/roboto_regular"
+        android:fontFamily="@font/nunito_sans_regular"
         android:text="@string/hospital_instruction"
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_14" />
@@ -70,7 +70,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:text="@string/donor_question_1"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_16" />
@@ -119,7 +119,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:text="@string/donor_question_2"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_16" />
@@ -169,7 +169,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:text="@string/donor_question_3"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_16" />
@@ -218,7 +218,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:text="@string/donor_question_4"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_16" />
@@ -266,7 +266,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:text="@string/donor_question_5"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_16" />
@@ -314,7 +314,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:text="@string/donor_question_6"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_16" />
@@ -362,7 +362,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:text="@string/donor_question_7"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_16" />
@@ -410,7 +410,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:text="@string/donor_question_8"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_16" />
@@ -460,7 +460,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:text="@string/donor_question_9"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_16" />
@@ -495,7 +495,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_16"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:text="@string/check_eligibility"
                 android:textAlignment="center"
                 android:textSize="@dimen/text_16" />

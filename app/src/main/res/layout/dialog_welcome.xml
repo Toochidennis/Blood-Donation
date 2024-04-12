@@ -18,7 +18,7 @@
         android:text="@string/welcome_message"
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_16"
-        app:fontFamily="@font/roboto_regular" />
+        app:fontFamily="@font/nunito_sans_regular" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/complete_button"
         android:layout_marginTop="@dimen/dimen_16"
-        android:fontFamily="@font/roboto_regular"
+        android:fontFamily="@font/nunito_sans_regular"
         android:text="@string/complete"
         android:textAlignment="center"
         android:textAllCaps="false"
