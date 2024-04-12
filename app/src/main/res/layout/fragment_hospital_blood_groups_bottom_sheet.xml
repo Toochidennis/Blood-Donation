@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/save_button"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/nunito_sans_bold"
         android:padding="@dimen/dimen_16"
         android:text="Select blood group"
         android:textColor="@color/textColor"
@@ -28,7 +28,7 @@
         android:layout_marginTop="@dimen/dimen_5"
         android:layout_marginEnd="@dimen/dimen_16"
         android:background="@drawable/drawable_button_3"
-        android:fontFamily="@font/roboto_regular"
+        android:fontFamily="@font/nunito_sans_regular"
         android:text="@string/save"
         android:textAllCaps="false"
         android:textColor="@color/red" />
