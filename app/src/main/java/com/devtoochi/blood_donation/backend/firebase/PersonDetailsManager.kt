@@ -1,9 +1,8 @@
 package com.devtoochi.blood_donation.backend.firebase
 
-import android.util.Log
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
-import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.donorCollection
-import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.hospitalCollection
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.donorsCollection
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.hospitalsCollection
 import com.devtoochi.blood_donation.backend.models.Donor
 import com.devtoochi.blood_donation.backend.models.Hospital
 import com.devtoochi.blood_donation.backend.models.User
@@ -19,7 +18,7 @@ object PersonDetailsManager {
         user: User,
         onComplete: (Boolean, String?) -> Unit
     ) {
-        val collection = if (user is Hospital) hospitalCollection else donorCollection
+        val collection = if (user is Hospital) hospitalsCollection else donorsCollection
         addToPersonalDetails(collection, user, onComplete)
     }
 
@@ -44,9 +43,8 @@ object PersonDetailsManager {
         userId: String,
         onComplete: (Boolean, String?) -> Unit
     ) {
-        Log.d("response", "user Id $userId")
-        val donorsQuery = donorCollection.document(userId).collection(PERSONAL_DETAILS).get()
-        val hospitalsQuery = hospitalCollection.document(userId).collection(PERSONAL_DETAILS).get()
+        val donorsQuery = donorsCollection.document(userId).collection(PERSONAL_DETAILS).get()
+        val hospitalsQuery = hospitalsCollection.document(userId).collection(PERSONAL_DETAILS).get()
 
         // Add success and failure listeners to the donors query
         donorsQuery.addOnSuccessListener { donorResult ->
@@ -58,26 +56,22 @@ object PersonDetailsManager {
                 // Check if the document exists in the "hospitals" collection
                 val hospitalExists = !hospitalResult.isEmpty
 
-                Log.d("response", "$hospitalExists $donorExists")
-
                 if (donorExists || hospitalExists) {
                     // User exists in either "donors" or "hospitals" collection
                     val userType = if (donorExists) DONOR else HOSPITAL
-                    onComplete(true, userType)
+                    onComplete.invoke(true, userType)
                 } else {
                     // User does not exist in either collection
-                    onComplete(false, null)
+                    onComplete.invoke(false, null)
                 }
             }.addOnFailureListener { hospitalError ->
                 // Handle any errors that occur during the hospitals query
-                Log.d("response", "${hospitalError.message}")
-                onComplete(false, hospitalError.message)
+                onComplete.invoke(false, hospitalError.message)
 
             }
         }.addOnFailureListener { donorError ->
             // Handle any errors that occur during the donors query
-            Log.d("response", "${donorError.message}")
-            onComplete(false, donorError.message)
+            onComplete.invoke(false, donorError.message)
         }
     }
 
@@ -86,7 +80,7 @@ object PersonDetailsManager {
         userId: String = "",
         onComplete: (User?, String?) -> Unit
     ) {
-        val collection = if (userType == HOSPITAL) hospitalCollection else donorCollection
+        val collection = if (userType == HOSPITAL) hospitalsCollection else donorsCollection
 
         // Reference to the user's personal details collection
         val userRef = if (userId.isEmpty()) {
@@ -105,9 +99,15 @@ object PersonDetailsManager {
             ?.addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
                     val user = if (userType == HOSPITAL) {
-                        querySnapshot.documents.firstOrNull()?.toObject(Hospital::class.java)
+                        val hospital =
+                            querySnapshot.documents.firstOrNull()?.toObject(Hospital::class.java)
+                        hospital?.id = querySnapshot.documents.firstOrNull()?.id.toString()
+                        hospital
                     } else {
-                        querySnapshot.documents.firstOrNull()?.toObject(Donor::class.java)
+                        val donor =
+                            querySnapshot.documents.firstOrNull()?.toObject(Donor::class.java)
+                        donor?.id = querySnapshot.documents.firstOrNull()?.id.toString()
+                        donor
                     }
                     onComplete.invoke(user, null)
                 } else {
@@ -117,5 +117,27 @@ object PersonDetailsManager {
             ?.addOnFailureListener { error ->
                 onComplete.invoke(null, error.message)
             }
+    }
+
+    fun updatePersonalDetails(
+        data: HashMap<String, Any>,
+        userType: String,
+        profileId: String,
+        onComplete: (Boolean, String?) -> Unit
+    ) {
+        val collection = if (userType == HOSPITAL) hospitalsCollection else donorsCollection
+        val userId = auth.currentUser?.uid
+
+        if (userId != null) {
+            val updateQuery = collection.document(userId).collection(PERSONAL_DETAILS)
+            updateQuery.document(profileId)
+                .update(data)
+                .addOnSuccessListener {
+                    onComplete.invoke(true, null)
+                }
+                .addOnFailureListener {
+                    onComplete.invoke(false, it.message)
+                }
+        }
     }
 }
