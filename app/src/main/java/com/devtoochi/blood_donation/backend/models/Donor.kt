@@ -4,7 +4,7 @@ import com.google.firebase.firestore.ServerTimestamp
 import java.util.Date
 
 data class Donor(
-    var id: String = "",
+    override var id: String = "",
     override var userId: String = "",
     var firstname: String = "",
     var lastname: String = "",
@@ -20,4 +20,5 @@ data class Donor(
     override var address: String = "",
     @ServerTimestamp
     override var recentDonation: Date = Date(),
+    override var isAvailable:Boolean = true
 ) : User

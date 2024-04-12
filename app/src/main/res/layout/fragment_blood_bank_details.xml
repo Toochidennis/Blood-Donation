@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
             android:layout_marginStart="@dimen/dimen_16"
-            android:fontFamily="@font/roboto_regular"
+            android:fontFamily="@font/nunito_sans_regular"
             android:text="@string/blood_bank_details"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_18" />
@@ -75,7 +75,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:layout_toEndOf="@id/bank_card_view"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/nunito_sans_bold"
                 android:text="@string/toochukwu_dennis"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_22"
@@ -88,7 +88,7 @@
                 android:layout_below="@id/name_textview"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:layout_toEndOf="@id/bank_card_view"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:text="Enugu"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_16" />
@@ -112,7 +112,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:layout_toEndOf="@id/circle"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:text="Enugu East"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_16" />
@@ -125,7 +125,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:layout_toEndOf="@id/bank_card_view"
-                android:fontFamily="@font/roboto_light"
+                android:fontFamily="@font/nunito_sans_light"
                 android:text="110 College Road Ugboezeji, Abakpa Nike, Enugu State"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_14" />
@@ -157,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_10"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/nunito_sans_regular"
                     android:text="@string/call"
                     android:textColor="@color/red"
                     android:textSize="@dimen/text_16" />
@@ -192,7 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_10"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/nunito_sans_regular"
                     android:text="@string/email"
                     android:textColor="@color/red"
                     android:textSize="@dimen/text_16" />
@@ -220,7 +220,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/nunito_sans_bold"
                 android:text="Blood Bank Stock"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_16" />
