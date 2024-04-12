@@ -27,11 +27,14 @@ class RequestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        handleViewsClick()
+    }
+
+    private fun handleViewsClick() {
         binding.postBloodRequestButton.setOnClickListener {
-            PostBloodRequestDialogFragment().show(
-                parentFragmentManager,
-                getString(R.string.post_blood_request)
-            )
+            PostBloodRequestDialogFragment {
+
+            }.show(parentFragmentManager, getString(R.string.post_blood_request))
         }
 
         binding.bloodBankButton.setOnClickListener {
@@ -39,6 +42,5 @@ class RequestFragment : Fragment() {
         }
     }
 
-   //# private fun
 
 }

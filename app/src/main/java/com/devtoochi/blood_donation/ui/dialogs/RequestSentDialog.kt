@@ -11,7 +11,7 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.devtoochi.blood_donation.R
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
-class RequestSentDialog(context: Context) {
+class RequestSentDialog(context: Context, onDismiss:()->Unit) {
     private val dialog = Dialog(context)
 
     init {
@@ -31,6 +31,7 @@ class RequestSentDialog(context: Context) {
             }
 
             okayButton.setOnClickListener {
+                onDismiss.invoke()
                 dismiss()
             }
         }
