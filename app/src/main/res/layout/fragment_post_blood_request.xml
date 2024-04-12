@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
             android:layout_marginStart="@dimen/dimen_16"
-            android:fontFamily="@font/roboto_bold"
+            android:fontFamily="@font/nunito_sans_bold"
             android:text="@string/post_a_request"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_18" />
@@ -57,7 +57,7 @@
                 android:backgroundTint="@color/textColor"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
                 android:focusableInTouchMode="false"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/blood_group"
                 android:inputType="textCapSentences" />
 
@@ -70,12 +70,12 @@
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:autofillHints="creditCardNumber"
                 android:backgroundTint="@color/textColor"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/unit"
                 android:inputType="number" />
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/date_of_birth_text_input"
+                android:id="@+id/date_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_16"
@@ -85,13 +85,13 @@
                 android:backgroundTint="@color/textColor"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
                 android:focusableInTouchMode="false"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/date"
                 android:imeOptions="actionNext"
                 android:inputType="date" />
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/gender_input_text"
+                android:id="@+id/time_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_16"
@@ -100,7 +100,7 @@
                 android:backgroundTint="@color/textColor"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
                 android:focusableInTouchMode="false"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/time"
                 android:inputType="text" />
 
@@ -114,7 +114,7 @@
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:autofillHints=""
                 android:backgroundTint="@color/textColor"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:gravity="top|start"
                 android:hint="@string/note"
                 android:inputType="textCapSentences|textMultiLine"
@@ -134,7 +134,7 @@
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:layout_marginBottom="@dimen/dimen_16"
                 android:backgroundTint="@color/red"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:text="@string/post_request"
                 android:textAlignment="center"
                 android:textAllCaps="false"
