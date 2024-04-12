@@ -27,6 +27,7 @@ import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.devtoochi.blood_donation.backend.utils.Constants.NOT_AVAILABLE
 import com.devtoochi.blood_donation.backend.utils.Constants.PHONE_NUMBER
 import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
+import com.devtoochi.blood_donation.backend.utils.Constants.SIGN_UP
 import com.devtoochi.blood_donation.backend.utils.Util.isValidEmailOrPhoneNumber
 import com.devtoochi.blood_donation.backend.utils.Util.togglePasswordVisibility
 import com.devtoochi.blood_donation.backend.utils.Util.updateSharedPreferences
@@ -183,7 +184,7 @@ class HospitalSignUpFragment : Fragment() {
     }
 
     private fun navigateTo() {
-        CheckHospitalEligibilityDialogFragment().show(
+        CheckHospitalEligibilityDialogFragment(SIGN_UP).show(
             parentFragmentManager,
             getString(R.string.check_eligibility)
         )
