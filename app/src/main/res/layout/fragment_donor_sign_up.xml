@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/nunito_sans_bold"
                 android:text="@string/create_an_account"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_24"
@@ -48,7 +48,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:autofillHints="name"
                 android:backgroundTint="@color/textColor"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:hint="Firstname"
                 android:imeOptions="actionNext" />
 
@@ -59,7 +59,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:autofillHints="name"
                 android:backgroundTint="@color/textColor"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:hint="Lastname"
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName|textCapSentences" />
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:autofillHints="password"
                     android:backgroundTint="@color/textColor"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/nunito_sans_regular"
                     android:hint="@string/enter_your_password"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword" />
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:backgroundTint="@color/red"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:text="@string/sign_up"
                 android:textAlignment="center"
                 android:textAllCaps="false"
@@ -147,7 +147,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginEnd="@dimen/dimen_10"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/nunito_sans_regular"
                     android:text="@string/or"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/text_14" />
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_32"
                 android:backgroundTint="@color/pale_pink"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:text="@string/sign_up_with_google"
                 android:textAlignment="center"
                 android:textAllCaps="false"
