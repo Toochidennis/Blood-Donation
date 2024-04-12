@@ -1,6 +1,8 @@
 package com.devtoochi.blood_donation.ui.dialogs
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +10,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.devtoochi.blood_donation.R
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.updatePersonalDetails
+import com.devtoochi.blood_donation.backend.utils.Constants.ELIGIBLE
+import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
+import com.devtoochi.blood_donation.backend.utils.Constants.SIGN_UP
 import com.devtoochi.blood_donation.databinding.FragmentCheckHospitalEligibilityDialogBinding
 import com.devtoochi.blood_donation.ui.activities.HospitalDashboardActivity
 
 
-class CheckHospitalEligibilityDialogFragment : DialogFragment() {
+class CheckHospitalEligibilityDialogFragment(private val from: String) : DialogFragment() {
 
     private lateinit var binding: FragmentCheckHospitalEligibilityDialogBinding
+    private lateinit var loadingDialog: LoadingDialog
+    private lateinit var sharedPreferences: SharedPreferences
+
     private var requiredScore = 16
+    private var profileId: String? = null
+    private var userType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +45,14 @@ class CheckHospitalEligibilityDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadingDialog = LoadingDialog(requireContext())
+        sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+        with(sharedPreferences) {
+            profileId = getString("id", "")
+            userType = getString("user_type", "")
+        }
+
         handleViewsClick()
     }
 
@@ -46,9 +65,38 @@ class CheckHospitalEligibilityDialogFragment : DialogFragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                startActivity(Intent(requireContext(), HospitalDashboardActivity::class.java))
-                dismiss()
-                requireActivity().finish()
+                loadingDialog.show()
+
+                updatePersonalDetails(
+                    data = hashMapOf("eligibility" to ELIGIBLE),
+                    userType = "$userType",
+                    profileId = "$profileId"
+                ) { success, message ->
+                    if (success) {
+                        loadingDialog.dismiss()
+
+                        if (from == SIGN_UP) {
+                            loadingDialog.dismiss()
+                            startActivity(
+                                Intent(
+                                    requireContext(),
+                                    HospitalDashboardActivity::class.java
+                                )
+                            )
+                            requireActivity().finish()
+                            dismiss()
+                        }
+
+                        sharedPreferences.edit().run {
+                            putBoolean("eligible", ELIGIBLE)
+                            apply()
+                        }
+                        dismiss()
+                    } else {
+                        loadingDialog.dismiss()
+                        Toast.makeText(requireContext(), "$message", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }

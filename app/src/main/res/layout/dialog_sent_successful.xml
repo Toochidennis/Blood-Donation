@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/drawable_dialog_bg"
     android:padding="@dimen/dimen_16"
+    android:clipToPadding="false"
     tools:context=".ui.dialogs.RequestSentDialog">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/red"
@@ -33,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/card_view"
         android:layout_marginTop="@dimen/dimen_16"
-        android:fontFamily="@font/roboto_regular"
+        android:fontFamily="@font/nunito_sans_regular"
         android:text="@string/request_successfully_sent"
         android:textAlignment="center"
         android:textColor="@color/textColor"
@@ -46,7 +47,7 @@
         android:layout_below="@id/textview"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dimen_32"
-        android:fontFamily="@font/roboto_regular"
+        android:fontFamily="@font/nunito_sans_regular"
         android:text="@string/okay"
         android:textAlignment="center"
         android:textAllCaps="false"
