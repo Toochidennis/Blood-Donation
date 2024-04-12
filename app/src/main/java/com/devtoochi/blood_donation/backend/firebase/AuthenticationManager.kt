@@ -19,8 +19,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 object AuthenticationManager {
 
     val auth = UserAuth.instance
-    val hospitalCollection = FirestoreDB.instance.collection(HOSPITAL)
-    val donorCollection = FirestoreDB.instance.collection(DONOR)
+    val hospitalsCollection = FirestoreDB.instance.collection(HOSPITAL)
+    val donorsCollection = FirestoreDB.instance.collection(DONOR)
+   // val donationsCollection = FirestoreDB.instance.collection(D)
 
     fun registerWithEmailAndPassword(user: User, onComplete: (Boolean, String?) -> Unit) {
         auth.createUserWithEmailAndPassword(user.email, user.password)
