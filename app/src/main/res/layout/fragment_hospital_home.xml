@@ -35,7 +35,7 @@
         android:layout_marginEnd="@dimen/dimen_16"
         android:layout_toEndOf="@id/imageview_card"
         android:fontFamily="@font/nunito_sans_regular"
-        android:text="Good morning,"
+        android:text="@string/good_morning"
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_18" />
 
