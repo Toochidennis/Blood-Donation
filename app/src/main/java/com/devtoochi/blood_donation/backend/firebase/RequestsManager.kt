@@ -2,6 +2,7 @@ package com.devtoochi.blood_donation.backend.firebase
 
 import com.devtoochi.blood_donation.backend.models.BloodRequest
 import com.devtoochi.blood_donation.backend.utils.Constants
+import com.devtoochi.blood_donation.backend.utils.Constants.GENERAL
 
 object RequestsManager {
 
@@ -34,9 +35,9 @@ object RequestsManager {
             }
     }
 
-    fun getBloodRequestId(
+    fun getBloodRequestById(
         userId: String,
-        onComplete: (List<BloodRequest?>?, String?) -> Unit
+        onComplete: (List<BloodRequest>?, String?) -> Unit
     ) {
         requestsCollection.whereEqualTo("userId", userId)
             .get()
@@ -63,7 +64,10 @@ object RequestsManager {
         userId: String,
         onComplete: (List<BloodRequest?>?, String?) -> Unit
     ) {
-        requestsCollection.whereNotEqualTo("userId", userId)
+        requestsCollection
+            .whereNotEqualTo("userId", userId)
+            .whereEqualTo("donorId", userId)
+            .whereEqualTo("requestType", GENERAL)
             .get()
             .addOnSuccessListener { querySnapshots ->
                 val requestDataList = querySnapshots.documents.mapNotNull { document ->

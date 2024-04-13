@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.devtoochi.blood_donation.R
@@ -31,7 +32,6 @@ class PostBloodRequestDialogFragment(private val onPosted: () -> Unit) : DialogF
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
-
     }
 
     override fun onCreateView(
@@ -75,7 +75,7 @@ class PostBloodRequestDialogFragment(private val onPosted: () -> Unit) : DialogF
                 date = selectedDate
                 val formattedDate = dateFormatter(selectedDate)
                 binding.dateTextInput.setText(formattedDate)
-            }
+            }.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         }
     }
 
