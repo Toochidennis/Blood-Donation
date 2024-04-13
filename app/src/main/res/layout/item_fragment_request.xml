@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="request"
+            type="com.devtoochi.blood_donation.backend.models.BloodRequest" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/card_color"
+        app:cardCornerRadius="@dimen/dimen_16"
+        app:cardElevation="0dp"
+        app:contentPadding="@dimen/dimen_16">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_view"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:backgroundTint="@color/red"
+                app:cardCornerRadius="30dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/request"
+                    android:src="@drawable/ic_request"
+                    app:tint="@color/white" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/title_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_toEndOf="@id/card_view"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="@{request.bloodGroup}"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/date_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_textview"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_toEndOf="@id/card_view"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="@{request.note}"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/status_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/date_textview"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_toEndOf="@id/card_view"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="@string/status"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/date_textview"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_toEndOf="@id/status_textview"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="@{request.status}"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16" />
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
