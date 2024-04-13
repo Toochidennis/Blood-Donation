@@ -125,5 +125,4 @@ class CheckHospitalEligibilityDialogFragment(private val from: String) : DialogF
 
         return score
     }
-
 }

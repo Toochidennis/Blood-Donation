@@ -76,7 +76,7 @@
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:layout_toStartOf="@id/donate_button"
                 android:fontFamily="@font/nunito_sans_regular"
-                android:text="Be the lifeline. Your blood can save lives. Join the ranks of heroes and donate today!"
+                android:text="@string/motivation_message"
                 android:textColor="@color/red"
                 android:textSize="@dimen/text_16" />
 
@@ -103,23 +103,16 @@
         android:layout_below="@id/card_view_1"
         android:fontFamily="@font/nunito_sans_bold"
         android:padding="@dimen/dimen_16"
-        android:text="Donation Request"
+        android:text="@string/donation_request"
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_18" />
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/donation_request_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_below="@id/textview"
-        android:backgroundTint="@color/card_color"
-        app:cardCornerRadius="@dimen/dimen_16"
-        app:cardElevation="0dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/donation_request_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.card.MaterialCardView>
+        tools:listitem="@layout/item_fragment_hospital_home"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
