@@ -119,6 +119,31 @@ object PersonDetailsManager {
             }
     }
 
+    fun getHospitalPersonalDetails(
+        userId: String = "",
+        onComplete: (Hospital?, String?) -> Unit
+    ) {
+        // Reference to the user's personal details collection
+        val collection = hospitalsCollection.document(userId).collection(PERSONAL_DETAILS)
+
+        // Retrieve personal details
+        collection.get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val hospital =
+                        querySnapshot.documents.firstOrNull()?.toObject(Hospital::class.java)
+                    hospital?.id = querySnapshot.documents.firstOrNull()?.id.toString()
+                    onComplete.invoke(hospital, null)
+                } else {
+                    onComplete.invoke(null, NOT_AVAILABLE)
+                }
+            }
+            .addOnFailureListener { error ->
+                onComplete.invoke(null, error.message)
+            }
+    }
+
+
     fun updatePersonalDetails(
         data: HashMap<String, Any>,
         userType: String,

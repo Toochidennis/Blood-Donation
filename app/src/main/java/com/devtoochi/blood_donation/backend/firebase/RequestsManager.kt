@@ -3,6 +3,8 @@ package com.devtoochi.blood_donation.backend.firebase
 import com.devtoochi.blood_donation.backend.models.BloodRequest
 import com.devtoochi.blood_donation.backend.utils.Constants
 import com.devtoochi.blood_donation.backend.utils.Constants.GENERAL
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.firestore.QuerySnapshot
 
 object RequestsManager {
 
@@ -62,22 +64,36 @@ object RequestsManager {
 
     fun getAllBloodRequests(
         userId: String,
-        onComplete: (List<BloodRequest?>?, String?) -> Unit
+        onComplete: (List<BloodRequest>?, String?) -> Unit
     ) {
-        requestsCollection
+        val query1 = requestsCollection
             .whereNotEqualTo("userId", userId)
-            .whereEqualTo("donorId", userId)
             .whereEqualTo("requestType", GENERAL)
             .get()
-            .addOnSuccessListener { querySnapshots ->
-                val requestDataList = querySnapshots.documents.mapNotNull { document ->
-                    val requestId = document.id
-                    document.toObject(BloodRequest::class.java)?.apply {
-                        this.requestId = requestId
+
+        val query2 = requestsCollection
+            .whereEqualTo("donorId", userId)
+            .get()
+
+        Tasks.whenAllSuccess<QuerySnapshot>(query1, query2)
+            .addOnSuccessListener { results ->
+                val requestDataList = mutableListOf<BloodRequest>()
+                val uniqueIds = HashSet<String>()
+
+                results.forEach { querySnapshot ->
+                    querySnapshot.documents.forEach { document ->
+                        val requestId = document.id
+                        if (uniqueIds.add(requestId)) {
+                            // Only add the document to the list if its ID is not already in the set
+                            val bloodRequest = document.toObject(BloodRequest::class.java)?.apply {
+                                this.requestId = requestId
+                            }
+                            bloodRequest?.let { requestDataList.add(it) }
+                        }
                     }
                 }
 
-                if (querySnapshots.isEmpty) {
+                if (requestDataList.isEmpty()) {
                     onComplete(null, "Empty")
                 } else {
                     onComplete(requestDataList, null)
@@ -87,4 +103,5 @@ object RequestsManager {
                 onComplete(null, exception.message)
             }
     }
+
 }
