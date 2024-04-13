@@ -32,6 +32,7 @@ import com.devtoochi.blood_donation.backend.utils.Util.isValidEmailOrPhoneNumber
 import com.devtoochi.blood_donation.backend.utils.Util.togglePasswordVisibility
 import com.devtoochi.blood_donation.backend.utils.Util.updateSharedPreferences
 import com.devtoochi.blood_donation.databinding.FragmentHospitalSignUpBinding
+import com.devtoochi.blood_donation.ui.activities.HospitalDashboardActivity
 import com.devtoochi.blood_donation.ui.dialogs.CheckHospitalEligibilityDialogFragment
 import com.devtoochi.blood_donation.ui.dialogs.LoadingDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -174,7 +175,7 @@ class HospitalSignUpFragment : Fragment() {
                     sharedPreferences = sharedPreferences
                 )
                 loadingDialog.dismiss()
-                navigateTo()
+                navigateTo(user = user)
 
             }
 
@@ -183,11 +184,16 @@ class HospitalSignUpFragment : Fragment() {
         }
     }
 
-    private fun navigateTo() {
-        CheckHospitalEligibilityDialogFragment(SIGN_UP).show(
-            parentFragmentManager,
-            getString(R.string.check_eligibility)
-        )
+    private fun navigateTo(user: User) {
+        if ((user as Hospital).eligibility) {
+            startActivity(Intent(requireContext(), HospitalDashboardActivity::class.java))
+            requireActivity().finish()
+        } else {
+            CheckHospitalEligibilityDialogFragment(SIGN_UP).show(
+                parentFragmentManager,
+                getString(R.string.check_eligibility)
+            )
+        }
     }
 
     private fun showToastAndDismiss(message: String) {

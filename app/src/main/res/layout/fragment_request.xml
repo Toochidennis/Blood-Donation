@@ -137,6 +137,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/request_history_recyclerview"
+        tools:listitem="@layout/item_fragment_request"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
