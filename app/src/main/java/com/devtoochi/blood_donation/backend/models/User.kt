@@ -15,4 +15,5 @@ interface User {
     var city: String
     var recentDonation: Date
     val isAvailable:Boolean
+    var bloodGroup: String
 }

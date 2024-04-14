@@ -47,21 +47,25 @@ object Util {
         editor.putString("phone_number", user.phone)
         editor.putString("user_type", userType)
         editor.putString("city", user.city)
+        editor.putString("state", user.state)
+        editor.putString("country", user.country)
+        //editor.putString("last_donation", user.recentDonation)
         editor.putBoolean("is_available", user.isAvailable)
+        editor.putString("blood_group", user.bloodGroup)
 
         // Specific properties for Donor
         if (user is Donor) {
             editor.putString("firstname", user.firstname)
             editor.putString("lastname", user.lastname)
             editor.putString("date_of_birth", user.birthDate)
-            editor.putString("blood_group", user.bloodGroup)
+            editor.putString("genotype", user.genotype)
         }
 
         // Specific properties for Hospital
         if (user is Hospital) {
             editor.putString("name", user.name)
-            editor.putString("blood_group", user.bloodGroup.toString())
             editor.putBoolean("eligible", user.eligibility)
+            editor.putString("reg_no", user.regNo)
         }
 
         editor.apply()
