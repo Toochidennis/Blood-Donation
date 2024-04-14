@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
@@ -32,6 +33,7 @@ class HospitalHomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHospitalHomeBinding
     private lateinit var loadingDialog: LoadingDialog
+    private val picasso = Picasso.get()
 
     private val donationRequests = mutableListOf<DonationRequest>()
     private var userId: String? = null
@@ -69,13 +71,13 @@ class HospitalHomeFragment : Fragment() {
             binding.usernameTextview.text = name
 
             if (!photoUrl.isNullOrEmpty()) {
-                Picasso.get().load(photoUrl).into(binding.imageview)
+                picasso.load(photoUrl).into(binding.imageview)
             } else {
                 binding.imageview.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
             }
 
             if (city.isNullOrEmpty() || bloodGroup.isNullOrEmpty()) {
-                 WelcomeDialog(requireContext(), parentFragmentManager).show()
+                WelcomeDialog(requireContext(), parentFragmentManager).show()
             }
         }
 
@@ -87,20 +89,16 @@ class HospitalHomeFragment : Fragment() {
             donationRequests.clear()
             loadingDialog.show()
             getAllBloodRequests(userId = "$userId") { bloodRequests, message ->
-
                 if (bloodRequests != null) {
                     var requestsProcessed = 0 // Counter to track processed requests
                     val totalRequests = bloodRequests.size // Total number of requests
 
                     bloodRequests.forEach { bloodRequest ->
-                        Log.d("response", "looping $bloodRequest")
                         getSenderPersonalDetails(bloodRequest) {
                             requestsProcessed++
                             if (requestsProcessed == totalRequests) {
                                 // All requests processed, setup adapter
-                                Log.d("response", "adapter reached")
                                 setupAdapter()
-                                Log.d("response", "adapter passed")
                                 loadingDialog.dismiss()
                             }
                         }
@@ -120,9 +118,7 @@ class HospitalHomeFragment : Fragment() {
         getHospitalPersonalDetails(
             userId = bloodRequest.userId,
         ) { hospital, message ->
-            Log.d("response", "hospital $hospital $message")
             if (hospital != null) {
-                Log.d("response", "hospital $hospital")
                 donationRequests.add(
                     DonationRequest(
                         requestId = bloodRequest.requestId,
@@ -165,15 +161,19 @@ class HospitalHomeFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        Log.d("response", "adapter entered")
-        Log.d("response", "$donationRequests")
         val donationAdapter = GenericAdapter(
             itemList = donationRequests,
             itemResLayout = R.layout.item_fragment_hospital_home,
             bindItem = { binding, model ->
                 binding.setVariable(BR.request, model)
                 binding.executePendingBindings()
-                Log.d("response", "adapter executing")
+
+                val imageview = binding.root.findViewById<ImageView>(R.id.imageview)
+                if (model.imageUrl.isEmpty()) {
+                    imageview.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+                } else {
+                    picasso.load(model.imageUrl).into(imageview)
+                }
             }
         ) {}
 
