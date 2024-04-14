@@ -11,8 +11,9 @@ data class Donor(
     override var email: String = "",
     override var imageUrl: String = "",
     override var password: String = "",
-    var bloodGroup: String = "",
+    override var bloodGroup: String = "",
     var birthDate: String = "",
+    var genotype: String = "",
     override var country: String = "",
     override var state: String = "",
     override var city: String = "",
@@ -20,5 +21,5 @@ data class Donor(
     override var address: String = "",
     @ServerTimestamp
     override var recentDonation: Date = Date(),
-    override var isAvailable:Boolean = true
+    override var isAvailable: Boolean = true
 ) : User

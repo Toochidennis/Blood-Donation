@@ -1,51 +1,124 @@
 package com.devtoochi.blood_donation.ui.dialogs
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.devtoochi.blood_donation.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.updatePersonalDetails
+import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
+import com.devtoochi.blood_donation.databinding.FragmentContactInfoDialogBinding
 
 
 class ContactInfoDialogFragment : DialogFragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var binding: FragmentContactInfoDialogBinding
+    private lateinit var loadingDialog: LoadingDialog
+    private lateinit var sharedPreferences: SharedPreferences
+
+    private var profileId: String? = null
+    private var userType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact_info_dialog, container, false)
+        binding = FragmentContactInfoDialogBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ContactInfoDialogFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        loadingDialog = LoadingDialog(requireContext())
+        sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+
+        initData()
+        handleViewsClick()
+    }
+
+    private fun initData() {
+        with(sharedPreferences) {
+            profileId = getString("id", "")
+            userType = getString("user_type", "")
+            binding.emailTextview.text = getString("email", "")
+            binding.phoneNumberTextInput.setText(getString("phone_number", ""))
+            binding.addressTextInput.setText(getString("address", ""))
+        }
+    }
+
+    private fun handleViewsClick() {
+        binding.navigateUp.setOnClickListener {
+            dismiss()
+        }
+
+        binding.saveButton.setOnClickListener {
+            updateContactInfo()
+        }
+    }
+
+    private fun updateContactInfo() {
+        try {
+            if (isValidForm() && profileId != null) {
+                loadingDialog.show()
+
+                val phoneNumber = binding.phoneNumberTextInput.text.toString()
+                val address = binding.addressTextInput.text.toString().trim()
+
+                updatePersonalDetails(
+                    data = hashMapOf(
+                        "phone" to phoneNumber,
+                        "address" to address
+                    ),
+                    userType = "$userType",
+                    profileId = "$profileId",
+                ) { success, message ->
+                    if (success) {
+                        sharedPreferences.edit().apply {
+                            putString("phone_number", phoneNumber)
+                            putString("address", address)
+                            apply()
+                        }
+                        loadingDialog.dismiss()
+                        showToast("Saved successfully")
+                    }else{
+                        loadingDialog.dismiss()
+                        showToast("Something went wrong please try again: $message")
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            loadingDialog.dismiss()
+        }
     }
+
+    private fun isValidForm(): Boolean {
+        return if (binding.phoneNumberTextInput.text.isBlank()) {
+            binding.phoneNumberTextInput.error = "Phone number is required"
+            false
+        } else if (binding.addressTextInput.text.isBlank()) {
+            binding.addressTextInput.error = "Address is required"
+            false
+        } else {
+            binding.phoneNumberTextInput.error = null
+            binding.addressTextInput.error = null
+            true
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
 }
