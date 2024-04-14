@@ -2,6 +2,7 @@ package com.devtoochi.blood_donation.backend.models
 
 import com.devtoochi.blood_donation.backend.utils.Constants.NOT_ELIGIBLE
 import com.google.firebase.firestore.ServerTimestamp
+import org.json.JSONArray
 import java.util.Date
 
 data class Hospital(
@@ -12,7 +13,7 @@ data class Hospital(
     override var imageUrl: String = "",
     override var password: String = "",
     var regNo: String = "",
-    var bloodGroup: List<String> = emptyList(),
+    override var bloodGroup: String = "",
     override var country: String = "",
     override var state: String = "",
     override var city: String = "",

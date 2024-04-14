@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class HospitalBloodGroupsBottomSheetFragment(
+    private val bloodGroupMap: HashMap<String, String>,
     private val onSelected: (HashMap<String, String>) -> Unit
 ) : BottomSheetDialogFragment() {
 
@@ -47,6 +48,8 @@ class HospitalBloodGroupsBottomSheetFragment(
             if (bloodGroup.isNotEmpty())
                 newBloodGroups.add(BloodGroup((index + 1).toString(), bloodGroup))
         }
+
+        selectedItems = bloodGroupMap
 
         newBloodGroups.forEach {
             val skillName = selectedItems[it.id]
