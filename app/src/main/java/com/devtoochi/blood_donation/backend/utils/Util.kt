@@ -8,9 +8,25 @@ import android.widget.ImageButton
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.models.Donor
 import com.devtoochi.blood_donation.backend.models.Hospital
+import com.devtoochi.blood_donation.backend.models.Notification
 import com.devtoochi.blood_donation.backend.models.User
+import com.devtoochi.blood_donation.backend.utils.Constants.BASE_URL
+import com.devtoochi.blood_donation.backend.utils.Constants.CONTENT_TYPE
 import com.devtoochi.blood_donation.backend.utils.Constants.EMAIL
+import com.devtoochi.blood_donation.backend.utils.Constants.SCOPES
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.auth.oauth2.GoogleCredentials
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONObject
+import java.io.BufferedOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -136,4 +152,72 @@ object Util {
             ""
         }
     }
+
+    fun sendNotification(
+        context: Context,
+        notification: Notification,
+        onComplete: (String?) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val serverKey = getAccessToken(context)
+
+        val url = URL(BASE_URL)
+        val connection = url.openConnection() as HttpURLConnection
+        connection.apply {
+            requestMethod = "POST"
+            setRequestProperty("Content-Type", CONTENT_TYPE)
+            setRequestProperty("Authorization", "Bearer $serverKey")
+            doOutput = true
+        }
+
+        try {
+            val payload = JSONObject().apply {
+                put("message", JSONObject().apply {
+                    put("token", notification.token)
+
+                    put("notification", JSONObject().apply {
+                        put("title", notification.title)
+                        put("body", notification.body)
+                    })
+                })
+            }.toString()
+
+            val outputStream = BufferedOutputStream(connection.outputStream)
+            outputStream.write(payload.toByteArray())
+            outputStream.flush()
+
+            val responseCode = connection.responseCode
+
+            withContext(Dispatchers.Main) {
+                onComplete(responseCode.toString())
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            withContext(Dispatchers.Main) {
+                onComplete(e.message)
+            }
+        } finally {
+            connection.disconnect()
+        }
+    }
+
+    private fun getAccessToken(context: Context): String? {
+        return runBlocking {
+            try {
+                val inputStream = context.assets.open("service-account.json")
+
+                val googleCredentials = GoogleCredentials
+                    .fromStream(inputStream)
+                    .createScoped(listOf(SCOPES))
+
+                val token = googleCredentials.refreshAccessToken()
+                token.tokenValue
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        }
+    }
+
 }
