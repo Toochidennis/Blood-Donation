@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_16"
             android:layout_marginEnd="@dimen/dimen_16"
+            android:layout_marginBottom="@dimen/dimen_16"
             android:autofillHints="name"
             android:background="@drawable/drawable_edit_text"
             android:drawableStart="@drawable/ic_search"
