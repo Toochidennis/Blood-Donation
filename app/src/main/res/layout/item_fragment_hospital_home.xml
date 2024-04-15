@@ -26,6 +26,8 @@
                 android:id="@+id/card_view"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:backgroundTint="@color/red"
                 app:cardCornerRadius="30dp">
 
@@ -111,6 +113,18 @@
                 android:text="@{request.requestDate}"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_16" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/date_textview"
+                android:layout_alignEnd="@id/title_textview"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_toEndOf="@id/card_view"
+                android:fontFamily="@font/nunito_sans_light"
+                android:text="@string/see_more"
+                android:textSize="@dimen/text_14" />
 
         </RelativeLayout>
 
