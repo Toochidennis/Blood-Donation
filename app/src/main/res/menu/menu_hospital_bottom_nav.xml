@@ -11,9 +11,9 @@
         android:title="@string/request" />
 
     <item
-        android:id="@+id/hospitalNotificationsFragment"
-        android:icon="@drawable/ic_notification"
-        android:title="@string/notification" />
+        android:id="@+id/hospitalAppointmentsFragment"
+        android:icon="@drawable/ic_appointment"
+        android:title="@string/appointments" />
 
     <item
         android:id="@+id/hospitalProfileFragment"
