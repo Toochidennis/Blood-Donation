@@ -72,6 +72,7 @@ class HospitalBloodGroupsBottomSheetFragment(
     private fun handleViewClick() {
         binding.saveButton.setOnClickListener {
             onSelected.invoke(selectedItems)
+            dismiss()
         }
     }
 

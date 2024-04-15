@@ -22,6 +22,7 @@ import com.devtoochi.blood_donation.backend.utils.Util.formatTime
 import com.devtoochi.blood_donation.backend.utils.Util.getGreetingMessage
 import com.devtoochi.blood_donation.databinding.FragmentHospitalHomeBinding
 import com.devtoochi.blood_donation.ui.adapters.GenericAdapter
+import com.devtoochi.blood_donation.ui.dialogs.BloodRequestDetailsBottomSheetDialogFragment
 import com.devtoochi.blood_donation.ui.dialogs.LoadingDialog
 import com.devtoochi.blood_donation.ui.dialogs.WelcomeDialog
 import com.squareup.picasso.Picasso
@@ -153,7 +154,7 @@ class HospitalHomeFragment : Fragment() {
             val formattedDate = dateFormatter(date)
             val formattedTime = formatTime(hour, minutes)
 
-            "$formattedDate $formattedTime"
+            "Time: $formattedDate $formattedTime"
         } catch (e: Exception) {
             Log.e("formatRequestDate", "Error formatting request date: $requestDate", e)
             requestDate // Return the original string in case of an error
@@ -175,7 +176,10 @@ class HospitalHomeFragment : Fragment() {
                     picasso.load(model.imageUrl).into(imageview)
                 }
             }
-        ) {}
+        ) { position ->
+            BloodRequestDetailsBottomSheetDialogFragment(donationRequests[position])
+                .show(parentFragmentManager, getString(R.string.request))
+        }
 
         binding.donationRequestRecyclerview.apply {
             hasFixedSize()
