@@ -75,7 +75,7 @@ class HospitalDashboardActivity : AppCompatActivity() {
         // Get the resource ID for the filled icon based on the selected menu item
         R.id.hospitalHomeFragment -> R.drawable.ic_home_filled
         R.id.requestFragment -> R.drawable.ic_request_filled
-        R.id.hospitalNotificationsFragment -> R.drawable.ic_notification_filled
+        R.id.hospitalAppointmentsFragment -> R.drawable.ic_appointment_filled
         else -> R.drawable.ic_person_filled
     }
 
@@ -83,7 +83,7 @@ class HospitalDashboardActivity : AppCompatActivity() {
         // Get the resource ID for the normal icon based on the selected menu item
         R.id.hospitalHomeFragment -> R.drawable.ic_home
         R.id.requestFragment -> R.drawable.ic_request
-        R.id.hospitalNotificationsFragment -> R.drawable.ic_notification
+        R.id.hospitalAppointmentsFragment -> R.drawable.ic_appointment
         else -> R.drawable.ic_person
     }
 }

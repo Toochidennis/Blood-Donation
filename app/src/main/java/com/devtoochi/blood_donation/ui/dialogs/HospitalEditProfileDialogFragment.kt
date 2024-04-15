@@ -59,7 +59,7 @@ class HospitalEditProfileDialogFragment : DialogFragment() {
             binding.regNoTextInput.setText(getString("reg_no", ""))
 
             processBloodGroup(getString("blood_group", ""))
-            val bloodGroupString = bloodGroupMap.values.joinToString { ", " }
+            val bloodGroupString = bloodGroupMap.values.joinToString(separator = ", ") { it }
             binding.bloodGroupTextInput.setText(bloodGroupString)
             binding.countryTextInput.setText(getString("country", ""))
             binding.stateTextInput.setText(getString("state", ""))
@@ -90,12 +90,11 @@ class HospitalEditProfileDialogFragment : DialogFragment() {
         }
 
         binding.bloodGroupTextInput.setOnClickListener {
-            HospitalBloodGroupsBottomSheetFragment(bloodGroupMap) {
-                bloodGroupMap = it
-                val bloodGroupString = bloodGroupMap.values.joinToString { ", " }
+            HospitalBloodGroupsBottomSheetFragment(bloodGroupMap) { bloodGroups ->
+                bloodGroupMap = bloodGroups
+                val bloodGroupString = bloodGroupMap.values.joinToString(separator = ", ") { it }
                 binding.bloodGroupTextInput.setText(bloodGroupString)
-
-            }
+            }.show(parentFragmentManager, getString(R.string.blood_group))
         }
 
         binding.contactInfo.setOnClickListener {
