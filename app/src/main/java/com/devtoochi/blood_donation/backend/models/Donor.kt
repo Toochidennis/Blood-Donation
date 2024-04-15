@@ -21,5 +21,6 @@ data class Donor(
     override var address: String = "",
     @ServerTimestamp
     override var recentDonation: Date = Date(),
-    override var isAvailable: Boolean = true
+    override var isAvailable: Boolean = true,
+    override val token: String =""
 ) : User
