@@ -1,52 +1,122 @@
 package com.devtoochi.blood_donation.ui.dialogs
 
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.devtoochi.blood_donation.R
+import android.widget.Toast
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
+import com.devtoochi.blood_donation.backend.firebase.DonationsManager.checkIfDonationExists
+import com.devtoochi.blood_donation.backend.firebase.DonationsManager.createDonations
+import com.devtoochi.blood_donation.backend.models.DonationRequest
+import com.devtoochi.blood_donation.backend.models.Donations
+import com.devtoochi.blood_donation.databinding.FragmentBloodRequestDetailsBottomSheetDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.squareup.picasso.Picasso
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-class BloodRequestDetailsBottomSheetDialogFragment : BottomSheetDialogFragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class BloodRequestDetailsBottomSheetDialogFragment(
+    private val donationRequest: DonationRequest
+) : BottomSheetDialogFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentBloodRequestDetailsBottomSheetDialogBinding
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(
-            R.layout.fragment_blood_request_details_bottom_sheet_dialog,
-            container,
-            false
-        )
+        binding =
+            FragmentBloodRequestDetailsBottomSheetDialogBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BloodRequestDetailsBottomSheetDialogFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        loadingDialog = LoadingDialog(requireContext())
+
+        initData()
+        handleViewsClick()
+    }
+
+    private fun initData() {
+        binding.nameTextview.text = donationRequest.name
+        binding.bloodGroupTextview.text = donationRequest.bloodGroup
+        binding.stateTextview.text = donationRequest.state
+        binding.addressTextview.text = donationRequest.address
+        binding.dateTextview.text = donationRequest.requestDate
+        binding.noteTextview.text = donationRequest.note
+
+        if (donationRequest.imageUrl.isNotEmpty()) {
+            Picasso.get().load(donationRequest.imageUrl).into(binding.imageview)
+        } else {
+            binding.imageview.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+        }
+
+        try {
+            checkIfDonationExists(donationRequest.requestId) { exists, feedback ->
+                if (exists) {
+                    binding.donateButton.isEnabled = false
+                } else if (feedback == "Empty") {
+                    binding.donateButton.isEnabled = true
+                } else {
+                    Log.d("response", "$feedback")
+                    binding.donateButton.isEnabled = true
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun handleViewsClick() {
+        binding.donateButton.setOnClickListener {
+            updateRequest()
+        }
+    }
+
+    private fun updateRequest() {
+        val donorId = donationRequest.donorId.ifEmpty { "${auth.currentUser?.uid}" }
+        try {
+            loadingDialog.show()
+
+            createDonations(
+                Donations(
+                    donorId = donorId,
+                    receiverId = donationRequest.userId,
+                    requestId = donationRequest.requestId,
+                    receiverAddress = donationRequest.address,
+                    receiverName = donationRequest.name,
+                    bloodGroup = donationRequest.bloodGroup,
+                    receiverImageUrl = donationRequest.imageUrl
+                )
+            ) { success, message ->
+                if (success) {
+                    loadingDialog.dismiss()
+                    dismiss()
+                    DonationSuccessDialog(
+                        requireContext(),
+                        parentFragmentManager,
+                        donationRequest
+                    ).show()
+                } else {
+                    loadingDialog.dismiss()
+                    Log.d("response", "$message")
+                    Toast.makeText(
+                        requireContext(),
+                        "Something went wrong please try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            loadingDialog.dismiss()
+        }
     }
 }
