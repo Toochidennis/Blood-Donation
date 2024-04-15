@@ -45,11 +45,11 @@ class StatesBottomSheetFragment(
     }
 
     private fun setUpAdapter(states: MutableList<State>) {
-        val bloodGroupAdapter = GenericAdapter(
+        val stateAdapter = GenericAdapter(
             itemList = states,
             itemResLayout = R.layout.item_fragment_states_bottom_sheet,
             bindItem = { binding, model ->
-                binding.setVariable(BR.blood, model)
+                binding.setVariable(BR.state, model)
                 binding.executePendingBindings()
             }
         ) { position ->
@@ -59,7 +59,7 @@ class StatesBottomSheetFragment(
 
         binding.statesRecyclerview.apply {
             hasFixedSize()
-            adapter = bloodGroupAdapter
+            adapter = stateAdapter
         }
     }
 }
