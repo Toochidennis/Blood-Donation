@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="@{state.name}"
+            android:fontFamily="@font/nunito_sans_regular"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_16" />
 
