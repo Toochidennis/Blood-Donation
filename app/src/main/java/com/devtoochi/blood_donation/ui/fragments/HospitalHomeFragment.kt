@@ -134,6 +134,7 @@ class HospitalHomeFragment : Fragment() {
                         unit = bloodRequest.unit,
                         requestDate = formatRequestDate(bloodRequest.requestDate),
                         datePosted = dateFormat.format(bloodRequest.datePosted),
+                        token = hospital.token
                     )
                 )
             } else {
