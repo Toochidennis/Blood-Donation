@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/drawable_dialog_bg"
+    android:clipToPadding="false"
+    android:padding="@dimen/dimen_16"
+    tools:context=".ui.dialogs.DonationSuccessDialog">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:fontFamily="@font/nunito_sans_regular"
+        android:text="@string/appreciation"
+        android:textAlignment="center"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/text_16" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/okay_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_32"
+        android:fontFamily="@font/nunito_sans_regular"
+        android:text="@string/book_appointment"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="@dimen/text_16" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/dismiss_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/okay_button"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/nunito_sans_regular"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/dimen_16"
+        android:text="@string/i_ll_do_it_later"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/text_16" />
+
+</RelativeLayout>
