@@ -22,5 +22,6 @@ data class Hospital(
     var eligibility: Boolean = NOT_ELIGIBLE,
     @ServerTimestamp
     override var recentDonation: Date = Date(),
-    override var isAvailable: Boolean = true
+    override var isAvailable: Boolean = true,
+    override val token: String = ""
 ) : User

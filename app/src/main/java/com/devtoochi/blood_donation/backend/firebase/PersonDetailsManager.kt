@@ -126,6 +126,7 @@ object PersonDetailsManager {
         // Reference to the user's personal details collection
         val collection = hospitalsCollection.document(userId).collection(PERSONAL_DETAILS)
 
+
         // Retrieve personal details
         collection.get()
             .addOnSuccessListener { querySnapshot ->
@@ -143,6 +144,36 @@ object PersonDetailsManager {
             }
     }
 
+
+    fun getAllHospitalDetails(
+        onComplete: (List<Hospital>?, String?) -> Unit
+    ) {
+        val userId = auth.currentUser?.uid
+        // Reference to the user's personal details collection
+        val collection = FirestoreDB.instance
+            .collectionGroup(PERSONAL_DETAILS)
+            .whereNotEqualTo("userId", userId)
+            .whereEqualTo("available", true)
+
+        // Retrieve personal details
+        collection.get()
+            .addOnSuccessListener { querySnapshots ->
+                val hospitals = querySnapshots.documents.mapNotNull { document ->
+                    document.toObject(Hospital::class.java).apply {
+                        this?.id = document.id
+                    }
+                }
+
+                if (!querySnapshots.isEmpty) {
+                    onComplete.invoke(hospitals, null)
+                } else {
+                    onComplete.invoke(null, NOT_AVAILABLE)
+                }
+            }
+            .addOnFailureListener { error ->
+                onComplete.invoke(null, error.message)
+            }
+    }
 
     fun updatePersonalDetails(
         data: HashMap<String, Any>,
