@@ -34,6 +34,10 @@ class BloodBanksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LoadingDialog(requireContext())
         getBloodBanks()
+
+        binding.navigateUp.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun getBloodBanks() {

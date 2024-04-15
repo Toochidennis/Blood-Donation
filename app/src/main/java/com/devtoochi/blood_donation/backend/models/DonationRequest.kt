@@ -12,5 +12,6 @@ data class DonationRequest(
     var unit: String = "",
     var note: String = "",
     var requestDate: String = "",
-    var datePosted: String = ""
+    var datePosted: String = "",
+    val token:String=""
 )
