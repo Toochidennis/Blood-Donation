@@ -13,7 +13,7 @@
         android:layout_toStartOf="@id/save_button"
         android:fontFamily="@font/nunito_sans_bold"
         android:padding="@dimen/dimen_16"
-        android:text="Select blood group"
+        android:text="@string/select_blood_group"
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_18"
         android:textStyle="bold" />
