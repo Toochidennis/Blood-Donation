@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.dialogs.StatesBottomSheetFragment">
 
@@ -24,9 +24,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/states_recyclerview"
         android:layout_width="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_fragment_states_bottom_sheet"
         android:layout_height="wrap_content"
-        android:clipToPadding="false" />
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_fragment_states_bottom_sheet" />
 
 </LinearLayout>
