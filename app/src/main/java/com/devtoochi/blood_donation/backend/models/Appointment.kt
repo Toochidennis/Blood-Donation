@@ -1,3 +1,10 @@
 package com.devtoochi.blood_donation.backend.models
 
-data class Appointment(var appointmentId:String)
+data class Appointment(
+    var appointmentId: String = "",
+    var donorId: String = "",
+    var receiverId: String = "",
+    var requestId: String = "",
+    var appointmentDate: String = "",
+    var isCompleted: Boolean = false
+)
