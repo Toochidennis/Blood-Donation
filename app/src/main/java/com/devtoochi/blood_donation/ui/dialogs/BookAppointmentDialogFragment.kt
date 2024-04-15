@@ -44,6 +44,7 @@ class BookAppointmentDialogFragment(donationRequest: DonationRequest) : DialogFr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        handleViewsClick()
     }
 
     private fun handleViewsClick() {
