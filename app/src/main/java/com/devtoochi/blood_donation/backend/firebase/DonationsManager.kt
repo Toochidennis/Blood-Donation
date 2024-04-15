@@ -18,7 +18,7 @@ object DonationsManager {
     }
 
     fun checkIfDonationExists(requestId: String, onComplete: (Boolean, String?) -> Unit) {
-        FirestoreDB.instance.collectionGroup(DONATIONS)
+        FirestoreDB.instance.collection(DONATIONS)
             .whereEqualTo("requestId", requestId)
             .get()
             .addOnSuccessListener { result ->
