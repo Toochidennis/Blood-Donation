@@ -1,53 +1,75 @@
 package com.devtoochi.blood_donation.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getAllHospitalDetails
+import com.devtoochi.blood_donation.backend.models.Hospital
+import com.devtoochi.blood_donation.databinding.FragmentBloodBanksBinding
+import com.devtoochi.blood_donation.ui.adapters.GenericAdapter
+import com.devtoochi.blood_donation.ui.dialogs.LoadingDialog
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class BloodBanksFragment : Fragment() {
 
+    private lateinit var binding: FragmentBloodBanksBinding
+    private lateinit var loadingDialog: LoadingDialog
 
-class BloodBanksDialogFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blood_banks, container, false)
+        binding = FragmentBloodBanksBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // val usernameTuple = mutableListOf<String>()
+        loadingDialog = LoadingDialog(requireContext())
+        getBloodBanks()
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BloodBanksDialogFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun getBloodBanks() {
+        loadingDialog.show()
+        try {
+            getAllHospitalDetails { hospitals, message ->
+                if (hospitals != null) {
+                    setupAdapter(hospitals = hospitals)
+                    loadingDialog.dismiss()
+                } else {
+                    loadingDialog.dismiss()
+                    Log.d("response", "$message")
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            loadingDialog.dismiss()
+        }
     }
+
+    private fun setupAdapter(hospitals: List<Hospital>) {
+        val bloodBankAdapter = GenericAdapter(
+            itemList = hospitals.toMutableList(),
+            itemResLayout = R.layout.item_fragment_blood_banks,
+            bindItem = { binding, model ->
+                binding.setVariable(BR.hospital, model)
+                binding.executePendingBindings()
+            }
+        ) {
+
+        }
+
+        binding.bloodBankRecyclerview.apply {
+            hasFixedSize()
+            adapter = bloodBankAdapter
+        }
+    }
+
 }
