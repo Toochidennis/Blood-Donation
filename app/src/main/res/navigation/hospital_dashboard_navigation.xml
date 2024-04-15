@@ -16,10 +16,10 @@
         android:label="@string/request"
         tools:layout="@layout/fragment_request" />
     <fragment
-        android:id="@+id/hospitalNotificationsFragment"
-        android:name="com.devtoochi.blood_donation.ui.fragments.HospitalNotificationsFragment"
-        android:label="@string/notification"
-        tools:layout="@layout/fragment_hospital_notifications" />
+        android:id="@+id/hospitalAppointmentsFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.HospitalAppointmentsFragment"
+        android:label="@string/appointments"
+        tools:layout="@layout/fragment_hospital_appointments" />
     <fragment
         android:id="@+id/hospitalProfileFragment"
         android:name="com.devtoochi.blood_donation.ui.fragments.HospitalProfileFragment"
