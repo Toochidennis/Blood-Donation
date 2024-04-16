@@ -22,7 +22,7 @@ import com.devtoochi.blood_donation.ui.dialogs.RequestSentDialog
 import java.util.Calendar
 
 
-class PostBloodRequestDialogFragment(private val onPosted: () -> Unit) : DialogFragment() {
+class PostBloodRequestDialogFragment : DialogFragment() {
 
     private lateinit var binding: FragmentPostBloodRequestBinding
     private lateinit var loadingDialog: LoadingDialog
@@ -89,7 +89,6 @@ class PostBloodRequestDialogFragment(private val onPosted: () -> Unit) : DialogF
                     if (success) {
                         loadingDialog.dismiss()
                         RequestSentDialog(requireContext()) {
-                            onPosted.invoke()
                             dismiss()
                         }.show()
                     } else {

@@ -135,9 +135,13 @@ object PersonDetailsManager {
         val db = FirestoreDB.instance
         // Reference to the user's personal details collection
         val query = if (userType == HOSPITAL) {
-            db.collection(HOSPITAL).whereNotEqualTo("userId", userId).get()
+            db.collection(HOSPITAL).whereNotEqualTo("userId", userId)
+                .whereNotEqualTo("available", false)
+                .get()
         } else {
-            db.collection(HOSPITAL).whereNotEqualTo("userId", userId).get()
+            db.collection(DONOR).whereNotEqualTo("userId", userId)
+                .whereNotEqualTo("available", false)
+                .get()
         }
 
         query

@@ -57,13 +57,21 @@ class RequestFragment : Fragment() {
 
     private fun handleViewsClick() {
         binding.postBloodRequestButton.setOnClickListener {
-            PostBloodRequestDialogFragment {
-
-            }.show(parentFragmentManager, getString(R.string.post_blood_request))
+            PostBloodRequestDialogFragment().show(
+                parentFragmentManager,
+                getString(R.string.post_blood_request)
+            )
         }
 
         binding.bloodBankButton.setOnClickListener {
             startActivity(Intent(requireContext(), BloodBankRequestActivity::class.java))
+        }
+
+        binding.emergencyDonorsButton.setOnClickListener {
+            EmergencyDonorsDialogFragment().show(
+                parentFragmentManager,
+                getString(R.string.emergency_donors)
+            )
         }
     }
 
