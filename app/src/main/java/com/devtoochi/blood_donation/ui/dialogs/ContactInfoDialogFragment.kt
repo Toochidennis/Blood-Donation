@@ -91,6 +91,7 @@ class ContactInfoDialogFragment : DialogFragment() {
                         }
                         loadingDialog.dismiss()
                         showToast("Saved successfully")
+                        dismiss()
                     }else{
                         loadingDialog.dismiss()
                         showToast("Something went wrong please try again: $message")

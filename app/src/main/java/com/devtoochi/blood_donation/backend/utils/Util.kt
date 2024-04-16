@@ -65,7 +65,7 @@ object Util {
         editor.putString("city", user.city)
         editor.putString("state", user.state)
         editor.putString("country", user.country)
-        //editor.putString("last_donation", user.recentDonation)
+        editor.putString("last_donation", user.recentDonation)
         editor.putBoolean("is_available", user.isAvailable)
         editor.putString("blood_group", user.bloodGroup)
 
