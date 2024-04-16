@@ -215,7 +215,7 @@ class HospitalEditProfileDialogFragment : DialogFragment() {
                     put("id", key)
                     put("name", value)
                 }.let {
-                    put(it)
+
                 }
             }
         }.toString()

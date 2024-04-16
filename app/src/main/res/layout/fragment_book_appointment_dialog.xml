@@ -32,8 +32,7 @@
         android:text="@string/appointment"
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_18" />
-
-
+    
     <com.google.android.material.textfield.MaterialAutoCompleteTextView
         android:id="@+id/date_text_input"
         android:layout_width="match_parent"
