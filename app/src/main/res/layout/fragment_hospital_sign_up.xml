@@ -48,7 +48,7 @@
                 android:autofillHints="name"
                 android:backgroundTint="@color/textColor"
                 android:hint="Hospital name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName|textCapSentences" />
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/email_text_input"

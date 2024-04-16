@@ -13,6 +13,7 @@ import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.updatePersonalDetails
 import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
+import com.devtoochi.blood_donation.backend.utils.Util.dateFormatter
 import com.devtoochi.blood_donation.databinding.FragmentHospitalProfileBinding
 import com.devtoochi.blood_donation.ui.dialogs.ContactInfoDialogFragment
 import com.devtoochi.blood_donation.ui.dialogs.HospitalEditProfileDialogFragment
@@ -58,6 +59,14 @@ class HospitalProfileFragment : Fragment() {
             } else {
                 binding.imageview.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
             }
+
+            val lastDonation = getString("last_donation", "")
+            binding.lastDonationTxetview.text =
+                if (lastDonation.isNullOrEmpty()) {
+                    "Last donation: NIL"
+                } else {
+                    "Last donation: ${dateFormatter(lastDonation)}"
+                }
 
             binding.availableSwitchButton.isChecked = isAvailable
         }
