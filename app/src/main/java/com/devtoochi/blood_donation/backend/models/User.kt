@@ -13,7 +13,7 @@ interface User {
     var country: String
     var state: String
     var city: String
-    var recentDonation: Date
+    var recentDonation: String
     val isAvailable:Boolean
     var bloodGroup: String
     val token:String

@@ -10,7 +10,6 @@ import com.devtoochi.blood_donation.backend.models.User
 import com.devtoochi.blood_donation.backend.utils.Constants.DONOR
 import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.devtoochi.blood_donation.backend.utils.Constants.NOT_AVAILABLE
-import com.devtoochi.blood_donation.backend.utils.Constants.PERSONAL_DETAILS
 import com.google.firebase.firestore.CollectionReference
 
 object PersonDetailsManager {
@@ -28,9 +27,7 @@ object PersonDetailsManager {
         user: User,
         onComplete: (Boolean, String?) -> Unit
     ) {
-        collection.document(user.userId)
-            .collection(PERSONAL_DETAILS)
-            .add(user)
+        collection.add(user)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     onComplete.invoke(true, null)
@@ -44,18 +41,29 @@ object PersonDetailsManager {
         userId: String,
         onComplete: (Boolean, String?) -> Unit
     ) {
-        val donorsQuery = donorsCollection.document(userId).collection(PERSONAL_DETAILS).get()
-        val hospitalsQuery = hospitalsCollection.document(userId).collection(PERSONAL_DETAILS).get()
+        val donorsQuery = donorsCollection.get()
+        val hospitalsQuery = hospitalsCollection.get()
 
         // Add success and failure listeners to the donors query
         donorsQuery.addOnSuccessListener { donorResult ->
             // Check if the document exists in the "donors" collection
-            val donorExists = !donorResult.isEmpty
+            var donorExists = false
+            donorResult.documents.mapNotNull { document ->
+                document.toObject(Donor::class.java)?.also {
+                    if (it.userId == userId) donorExists = true
+                }
+            }
 
             // Add success and failure listeners to the hospitals query
             hospitalsQuery.addOnSuccessListener { hospitalResult ->
                 // Check if the document exists in the "hospitals" collection
-                val hospitalExists = !hospitalResult.isEmpty
+                var hospitalExists = false
+
+                hospitalResult.documents.mapNotNull { document ->
+                    document.toObject(Hospital::class.java)?.also {
+                        if (it.userId == userId) hospitalExists = true
+                    }
+                }
 
                 if (donorExists || hospitalExists) {
                     // User exists in either "donors" or "hospitals" collection
@@ -88,11 +96,10 @@ object PersonDetailsManager {
             // Get the current user's ID
             val currentId = auth.currentUser?.uid
             currentId?.let {
-                collection.document(it)
-                    .collection(PERSONAL_DETAILS)
+                collection.whereEqualTo("userId", it)
             }
         } else {
-            collection.document(userId).collection(PERSONAL_DETAILS)
+            collection.whereEqualTo("userId", userId)
         }
 
         // Retrieve personal details
@@ -120,45 +127,45 @@ object PersonDetailsManager {
             }
     }
 
-    fun getHospitalPersonalDetails(
-        userId: String = "",
-        onComplete: (Hospital?, String?) -> Unit
-    ) {
-        // Reference to the user's personal details collection
-        val collection = hospitalsCollection.document(userId).collection(PERSONAL_DETAILS)
-
-
-        // Retrieve personal details
-        collection.get()
-            .addOnSuccessListener { querySnapshot ->
-                if (!querySnapshot.isEmpty) {
-                    val hospital =
-                        querySnapshot.documents.firstOrNull()?.toObject(Hospital::class.java)
-                    hospital?.id = querySnapshot.documents.firstOrNull()?.id.toString()
-                    onComplete.invoke(hospital, null)
-                } else {
-                    onComplete.invoke(null, NOT_AVAILABLE)
-                }
-            }
-            .addOnFailureListener { error ->
-                onComplete.invoke(null, error.message)
-            }
-    }
-
-
-    fun getAllUserDetails(
+    fun getAllUsersDetails(
         userType: String,
-        onComplete: (List<Hospital>?, String?) -> Unit
+        onComplete: (List<User>?, String?) -> Unit
     ) {
         val userId = auth.currentUser?.uid
         val db = FirestoreDB.instance
         // Reference to the user's personal details collection
-        val collection = db.collection("donations").get()
-        collection.addOnSuccessListener {
-            Log.d("response", "${it.documents.size}  ${it.documents}")
+        val query = if (userType == HOSPITAL) {
+            db.collection(HOSPITAL).whereNotEqualTo("userId", userId).get()
+        } else {
+            db.collection(HOSPITAL).whereNotEqualTo("userId", userId).get()
         }
 
+        query
+            .addOnSuccessListener { querySnapshot ->
+                Log.d("response", "${querySnapshot.documents.size}  ${querySnapshot.isEmpty}")
+                val user = if (userType == HOSPITAL) {
+                    querySnapshot.documents.mapNotNull { documentSnapshot ->
+                        documentSnapshot.toObject(Hospital::class.java)?.apply {
+                            this.id = documentSnapshot.id
+                        }
+                    }
+                } else {
+                    querySnapshot.documents.mapNotNull { documentSnapshot ->
+                        documentSnapshot.toObject(Donor::class.java)?.apply {
+                            this.id = documentSnapshot.id
+                        }
+                    }
+                }
 
+                if (querySnapshot.isEmpty) {
+                    onComplete.invoke(null, "Empty")
+                } else {
+                    onComplete.invoke(user, "Empty")
+                }
+            }
+            .addOnFailureListener {
+                onComplete.invoke(null, it.message)
+            }
     }
 
     fun updatePersonalDetails(
@@ -171,9 +178,8 @@ object PersonDetailsManager {
         val userId = auth.currentUser?.uid
 
         if (userId != null) {
-            val updateQuery = collection.document(userId).collection(PERSONAL_DETAILS)
-            updateQuery.document(profileId)
-                .update(data)
+            val updateQuery = collection.document(profileId)
+            updateQuery.update(data)
                 .addOnSuccessListener {
                     onComplete.invoke(true, null)
                 }
