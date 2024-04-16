@@ -83,7 +83,6 @@ class HospitalSignUpFragment : Fragment() {
         binding.passwordVisibilityToggle.setOnClickListener {
             togglePasswordVisibility(binding.passwordInputText, binding.passwordVisibilityToggle)
         }
-
     }
 
     private val googleSignInLauncher =
@@ -93,11 +92,13 @@ class HospitalSignUpFragment : Fragment() {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 handleGoogleSignInResult(task)
             } else {
+                loadingDialog.dismiss()
                 showToast("Login failed. Please use another method to create account")
             }
         }
 
     private fun signUpWithGoogle() {
+        loadingDialog.show()
         val googleSignInClient = googleSignInClient(requireContext())
         val signInIntent = googleSignInClient.signInIntent
         googleSignInLauncher.launch(signInIntent)
@@ -108,13 +109,10 @@ class HospitalSignUpFragment : Fragment() {
             val account = task.getResult(ApiException::class.java)
 
             account?.let {
-                loadingDialog.show()
-
                 registerWithGoogle(
                     account = it,
                     userType = HOSPITAL
                 ) { success, message ->
-                    Log.d("response", "$success $message")
                     if (success) {
                         if (message == HOSPITAL) {
                             getPersonalDetails(userType = HOSPITAL) { user, exception ->
@@ -125,7 +123,6 @@ class HospitalSignUpFragment : Fragment() {
                             googleSignInClient(requireContext()).signOut()
                             showToast("Email address already in use by another account")
                         }
-
                     } else {
                         loadingDialog.dismiss()
                         showToast(message.toString())
