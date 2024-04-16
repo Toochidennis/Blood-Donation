@@ -1,59 +1,215 @@
 package com.devtoochi.blood_donation.ui.fragments
 
+import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.devtoochi.blood_donation.R
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
+import com.devtoochi.blood_donation.backend.firebase.RequestsManager.postBloodRequest
+import com.devtoochi.blood_donation.backend.models.BloodGroup
+import com.devtoochi.blood_donation.backend.models.BloodRequest
+import com.devtoochi.blood_donation.backend.models.Hospital
+import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
+import com.devtoochi.blood_donation.backend.utils.Util
+import com.devtoochi.blood_donation.databinding.FragmentBloodBankDetailsBinding
+import com.devtoochi.blood_donation.ui.adapters.BloodGroupAdapter2
+import com.devtoochi.blood_donation.ui.dialogs.DatePickerDialog
+import com.devtoochi.blood_donation.ui.dialogs.LoadingDialog
+import com.devtoochi.blood_donation.ui.dialogs.RequestSentDialog
+import org.json.JSONArray
+import java.util.Calendar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BloodBankDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BloodBankDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var binding: FragmentBloodBankDetailsBinding
+    private lateinit var loadingDialog: LoadingDialog
+    private var bloodBankDetails: Hospital? = null
+    private var bloodGroup = BloodGroup()
+    private var time: String? = null
+    private var date: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            @Suppress("DEPRECATION")
+            bloodBankDetails = it.getSerializable("details") as Hospital
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blood_bank_details, container, false)
+        binding = FragmentBloodBankDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BloodBankDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BloodBankDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadingDialog = LoadingDialog(requireContext())
+
+        initData()
+        handleViewsClick()
+    }
+
+    private fun handleViewsClick() {
+        binding.navigateUp.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.dateTextInput.setOnClickListener {
+            DatePickerDialog(requireContext()) { selectedDate ->
+                date = selectedDate
+                binding.dateTextInput.setText(Util.dateFormatter(selectedDate))
+            }.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        }
+
+        binding.timeTextInput.setOnClickListener {
+            showTimePickerDialog()
+        }
+
+        binding.sendRequestButton.setOnClickListener {
+            sendRequest()
+        }
+    }
+
+    private fun showTimePickerDialog() {
+        // Get the current time
+        val currentTime = Calendar.getInstance()
+
+        // Create a TimePickerDialog with current time as the default time
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            { _, hourOfDay, minute ->
+                // Format the selected time to display in either AM or PM format
+                time = "$hourOfDay:$minute"
+                val formattedTime = Util.formatTime(hourOfDay, minute)
+
+                // Show the formatted time in the TextView
+                binding.timeTextInput.setText(formattedTime)
+            },
+            currentTime.get(Calendar.HOUR_OF_DAY), // Initial hour
+            currentTime.get(Calendar.MINUTE), // Initial minute
+            false // 24-hour format
+        )
+
+        // Show the TimePickerDialog
+        timePickerDialog.show()
+    }
+
+    private fun initData() {
+        if (bloodBankDetails != null) {
+            binding.nameTextview.text = bloodBankDetails?.name
+            binding.stateTextview.text = bloodBankDetails?.state
+            binding.addressTextview.text = bloodBankDetails?.address
+
+            bloodBankDetails?.bloodGroup?.let { processJson(it) }
+        }
+    }
+
+    private fun processJson(bloodGroup: String) {
+        val bloodGroups = mutableListOf<BloodGroup>()
+        try {
+            with(JSONArray(bloodGroup)) {
+                for (i in 0 until length()) {
+                    bloodGroups.add(BloodGroup().fromJsonObject(getJSONObject(i)))
+                }
+                setupAdapter(bloodGroups = bloodGroups)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun setupAdapter(bloodGroups: MutableList<BloodGroup>) {
+        val bloodGroupAdapter2 = BloodGroupAdapter2(bloodGroups, bloodGroup)
+        binding.bloodBankStockRecyclerview.apply {
+            hasFixedSize()
+            layoutManager = GridLayoutManager(requireContext(), 4)
+            adapter = bloodGroupAdapter2
+        }
+    }
+
+    private fun sendRequest() {
+        try {
+            if (isValidForm()) {
+                loadingDialog.show()
+                postBloodRequest(
+                    BloodRequest(
+                        userId = "${auth.currentUser?.uid}",
+                        donorId = bloodBankDetails?.userId!!,
+                        requestType = HOSPITAL,
+                        bloodGroup = bloodGroup.name,
+                        note = binding.noteTextInput.text.toString().trim(),
+                        requestDate = "$date:$time",
+                    )
+                ) { success, message ->
+                    if (success) {
+                        loadingDialog.dismiss()
+                        RequestSentDialog(requireContext()) {
+                            requireActivity().finish()
+                        }.show()
+                    } else {
+                        loadingDialog.dismiss()
+                        Toast.makeText(
+                            requireContext(),
+                            "Something went wrong please try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        Log.d("response", "$message")
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            loadingDialog.dismiss()
+        }
     }
+
+    private fun isValidForm(): Boolean {
+        return when {
+            bloodGroup.name.isEmpty() -> {
+                Toast.makeText(
+                    requireContext(), "Please select blood group",
+                    Toast.LENGTH_SHORT
+                ).show()
+                false
+            }
+
+            time.isNullOrEmpty() -> {
+                binding.timeTextInput.error = "Time is required"
+                false
+            }
+
+            date.isNullOrEmpty() -> {
+                binding.dateTextInput.error = "Date is required"
+                false
+            }
+
+            binding.noteTextInput.text.isBlank() -> {
+                binding.noteTextInput.error = "Note is required"
+                false
+            }
+
+            else -> {
+                binding.timeTextInput.error = null
+                binding.dateTextInput.error = null
+                binding.noteTextInput.error = null
+                true
+            }
+        }
+    }
+
 }

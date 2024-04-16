@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_blood_banks" >
         <action
             android:id="@+id/action_bloodBanksDialogFragment_to_bloodBankDetailsFragment"
-            app:destination="@id/bloodBankDetailsFragment" />
+            app:destination="@id/bloodBankDetailsFragment">
+        </action>
     </fragment>
     <fragment
         android:id="@+id/bloodBankDetailsFragment"
