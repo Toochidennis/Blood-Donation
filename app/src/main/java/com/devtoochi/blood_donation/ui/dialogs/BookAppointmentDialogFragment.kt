@@ -53,8 +53,9 @@ class BookAppointmentDialogFragment(private val donationRequest: DonationRequest
 
     private fun handleViewsClick() {
         binding.dateTextInput.setOnClickListener {
-            DatePickerDialog(requireContext()) { date ->
-                binding.dateTextInput.setText(dateFormatter(date))
+            DatePickerDialog(requireContext()) { selectedDate ->
+                date = selectedDate
+                binding.dateTextInput.setText(dateFormatter(selectedDate))
             }.window?.setLayout(
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT
@@ -101,12 +102,14 @@ class BookAppointmentDialogFragment(private val donationRequest: DonationRequest
                 time.isNullOrEmpty() -> {
                     binding.timeTextInput.error = "Time is required"
                 }
+
                 date.isNullOrEmpty() -> {
-                    binding.timeTextInput.error = "Time is required"
+                    binding.dateTextInput.error = "Date is required"
                 }
+
                 else -> {
                     binding.timeTextInput.error = null
-                    binding.timeTextInput.error = null
+                    binding.dateTextInput.error = null
 
                     loadingDialog.show()
 
@@ -115,7 +118,7 @@ class BookAppointmentDialogFragment(private val donationRequest: DonationRequest
                             donorId = donationRequest.donorId,
                             receiverId = donationRequest.userId,
                             requestId = donationRequest.requestId,
-                            appointmentDate = "$date"
+                            appointmentDate = "$date:$time"
                         )
                     ) { success, message ->
                         if (success) {
