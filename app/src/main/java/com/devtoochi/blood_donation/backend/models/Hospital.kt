@@ -1,9 +1,7 @@
 package com.devtoochi.blood_donation.backend.models
 
 import com.devtoochi.blood_donation.backend.utils.Constants.NOT_ELIGIBLE
-import com.google.firebase.firestore.ServerTimestamp
 import java.io.Serializable
-import java.util.Date
 
 data class Hospital(
     override var id: String = "",
@@ -20,8 +18,7 @@ data class Hospital(
     override var phone: String = "",
     override var address: String = "",
     var eligibility: Boolean = NOT_ELIGIBLE,
-    @ServerTimestamp
-    override var recentDonation: Date = Date(),
+    override var recentDonation: String = "",
     override var isAvailable: Boolean = true,
     override val token: String = ""
 ) : User, Serializable

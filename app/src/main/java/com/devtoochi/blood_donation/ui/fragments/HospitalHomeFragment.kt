@@ -12,10 +12,12 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
-import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getHospitalPersonalDetails
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getPersonalDetails
 import com.devtoochi.blood_donation.backend.firebase.RequestsManager.getAllBloodRequests
 import com.devtoochi.blood_donation.backend.models.BloodRequest
 import com.devtoochi.blood_donation.backend.models.DonationRequest
+import com.devtoochi.blood_donation.backend.models.Hospital
+import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
 import com.devtoochi.blood_donation.backend.utils.Util.dateFormatter
 import com.devtoochi.blood_donation.backend.utils.Util.formatTime
@@ -116,10 +118,11 @@ class HospitalHomeFragment : Fragment() {
     }
 
     private fun getSenderPersonalDetails(bloodRequest: BloodRequest, onComplete: () -> Unit) {
-        getHospitalPersonalDetails(
+        getPersonalDetails(
             userId = bloodRequest.userId,
+            userType = HOSPITAL,
         ) { hospital, message ->
-            if (hospital != null) {
+            if (hospital != null && hospital is Hospital) {
                 donationRequests.add(
                     DonationRequest(
                         requestId = bloodRequest.requestId,
