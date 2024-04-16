@@ -113,6 +113,7 @@ class BloodBankDetailsFragment : Fragment() {
             binding.nameTextview.text = bloodBankDetails?.name
             binding.stateTextview.text = bloodBankDetails?.state
             binding.addressTextview.text = bloodBankDetails?.address
+            binding.cityTextview.text=  bloodBankDetails?.city
 
             bloodBankDetails?.bloodGroup?.let { processJson(it) }
         }
@@ -158,7 +159,7 @@ class BloodBankDetailsFragment : Fragment() {
                     if (success) {
                         loadingDialog.dismiss()
                         RequestSentDialog(requireContext()) {
-                            requireActivity().finish()
+                            findNavController().popBackStack()
                         }.show()
                     } else {
                         loadingDialog.dismiss()

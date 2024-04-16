@@ -47,6 +47,7 @@ class BloodBanksFragment : Fragment() {
         try {
             getAllUsersDetails(userType = HOSPITAL) { hospitals, message ->
                 if (hospitals != null && hospitals[0] is Hospital) {
+                    @Suppress("UNCHECKED_CAST")
                     setupAdapter(hospitals = hospitals as List<Hospital>)
                     loadingDialog.dismiss()
                 } else {
