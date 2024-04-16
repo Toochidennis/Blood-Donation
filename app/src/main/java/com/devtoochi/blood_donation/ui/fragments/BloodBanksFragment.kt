@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
-import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getAllUserDetails
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getAllUsersDetails
 import com.devtoochi.blood_donation.backend.models.Hospital
 import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.devtoochi.blood_donation.databinding.FragmentBloodBanksBinding
@@ -45,9 +45,9 @@ class BloodBanksFragment : Fragment() {
     private fun getBloodBanks() {
         loadingDialog.show()
         try {
-            getAllUserDetails(userType = HOSPITAL) { hospitals, message ->
-                if (hospitals != null) {
-                    setupAdapter(hospitals = hospitals)
+            getAllUsersDetails(userType = HOSPITAL) { hospitals, message ->
+                if (hospitals != null && hospitals[0] is Hospital) {
+                    setupAdapter(hospitals = hospitals as List<Hospital>)
                     loadingDialog.dismiss()
                 } else {
                     loadingDialog.dismiss()

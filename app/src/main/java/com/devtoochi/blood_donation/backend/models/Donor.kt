@@ -1,7 +1,6 @@
 package com.devtoochi.blood_donation.backend.models
 
-import com.google.firebase.firestore.ServerTimestamp
-import java.util.Date
+import java.io.Serializable
 
 data class Donor(
     override var id: String = "",
@@ -19,8 +18,7 @@ data class Donor(
     override var city: String = "",
     override var phone: String = "",
     override var address: String = "",
-    @ServerTimestamp
-    override var recentDonation: Date = Date(),
+    override var recentDonation: String = "",
     override var isAvailable: Boolean = true,
-    override val token: String =""
-) : User
+    override val token: String = ""
+) : User, Serializable
