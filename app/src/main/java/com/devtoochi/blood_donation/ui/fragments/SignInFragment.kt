@@ -92,11 +92,13 @@ class SignInFragment : Fragment() {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 handleGoogleSignInResult(task)
             } else {
+                loadingDialog.dismiss()
                 showToast("Login failed. Please try using another method")
             }
         }
 
     private fun signUpWithGoogle() {
+        loadingDialog.show()
         val googleSignInClient = AuthenticationManager.googleSignInClient(requireContext())
         val signInIntent = googleSignInClient.signInIntent
         googleSignInLauncher.launch(signInIntent)
@@ -107,8 +109,6 @@ class SignInFragment : Fragment() {
             val account = task.getResult(ApiException::class.java)
 
             account?.let {
-                loadingDialog.show()
-
                 registerWithGoogle(account = it) { success, message ->
                     if (success) {
                         getPersonalDetails(userType = "$message") { user, error ->
