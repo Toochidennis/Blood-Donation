@@ -75,6 +75,7 @@ object Util {
             editor.putString("lastname", user.lastname)
             editor.putString("date_of_birth", user.birthDate)
             editor.putString("genotype", user.genotype)
+            editor.putString("gender", user.gender)
         }
 
         // Specific properties for Hospital
