@@ -9,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
-import com.devtoochi.blood_donation.backend.firebase.DonationsManager.checkIfDonationExists
-import com.devtoochi.blood_donation.backend.firebase.DonationsManager.createDonations
+import com.devtoochi.blood_donation.backend.firebase.DonationManager.checkIfDonationExists
+import com.devtoochi.blood_donation.backend.firebase.DonationManager.createDonations
+import com.devtoochi.blood_donation.backend.firebase.RequestsManager.updateBloodRequest
 import com.devtoochi.blood_donation.backend.models.DonationRequest
-import com.devtoochi.blood_donation.backend.models.Donations
+import com.devtoochi.blood_donation.backend.models.Donation
+import com.devtoochi.blood_donation.backend.utils.Constants.FULFILLED
+import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.devtoochi.blood_donation.databinding.FragmentBloodRequestDetailsBottomSheetDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.squareup.picasso.Picasso
@@ -30,8 +33,8 @@ class BloodRequestDetailsBottomSheetDialogFragment(
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding =
-            FragmentBloodRequestDetailsBottomSheetDialogBinding.inflate(inflater, container, false)
+        binding = FragmentBloodRequestDetailsBottomSheetDialogBinding
+            .inflate(inflater, container, false)
         return binding.root
     }
 
@@ -76,17 +79,17 @@ class BloodRequestDetailsBottomSheetDialogFragment(
 
     private fun handleViewsClick() {
         binding.donateButton.setOnClickListener {
-            updateRequest()
+            donate()
         }
     }
 
-    private fun updateRequest() {
+    private fun donate() {
         val donorId = donationRequest.donorId.ifEmpty { "${auth.currentUser?.uid}" }
         try {
             loadingDialog.show()
 
             createDonations(
-                Donations(
+                Donation(
                     donorId = donorId,
                     receiverId = donationRequest.userId,
                     requestId = donationRequest.requestId,
@@ -97,13 +100,7 @@ class BloodRequestDetailsBottomSheetDialogFragment(
                 )
             ) { success, message ->
                 if (success) {
-                    loadingDialog.dismiss()
-                    dismiss()
-                    DonationSuccessDialog(
-                        requireContext(),
-                        parentFragmentManager,
-                        donationRequest
-                    ).show()
+                    updateRequest()
                 } else {
                     loadingDialog.dismiss()
                     Log.d("response", "$message")
@@ -117,6 +114,27 @@ class BloodRequestDetailsBottomSheetDialogFragment(
         } catch (e: Exception) {
             e.printStackTrace()
             loadingDialog.dismiss()
+        }
+    }
+
+    private fun updateRequest() {
+        updateBloodRequest(
+            data = hashMapOf("status" to FULFILLED),
+            requestId = donationRequest.requestId
+        ) { success, message ->
+            if (success) {
+                loadingDialog.dismiss()
+                dismiss()
+                DonationSuccessDialog(
+                    requireContext(),
+                    parentFragmentManager,
+                    donationRequest,
+                    HOSPITAL
+                ).show()
+            } else {
+                loadingDialog.dismiss()
+                Log.d("response", "$message")
+            }
         }
     }
 }
