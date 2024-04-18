@@ -148,7 +148,7 @@ class HospitalSignUpFragment : Fragment() {
                 registerWithEmailAndPassword(user) { success, errorMessage ->
                     if (success) {
                         getPersonalDetails(userType = HOSPITAL) { result, error ->
-                            handleAuthenticationResult(error, result as Hospital)
+                            handleAuthenticationResult(error, result)
                         }
                     } else {
                         loadingDialog.dismiss()
