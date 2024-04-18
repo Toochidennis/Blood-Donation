@@ -31,7 +31,7 @@
             android:layout_marginStart="@dimen/dimen_16"
             android:fontFamily="@font/nunito_sans_bold"
             android:text="@string/edit_profile"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/text_18" />
 
     </LinearLayout>
@@ -94,6 +94,7 @@
                 android:autofillHints="creditCardExpirationDate"
                 android:backgroundTint="@color/textColor"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:drawableTint="@color/textColor"
                 android:focusableInTouchMode="false"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/birth_date"
@@ -109,6 +110,7 @@
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:backgroundTint="@color/textColor"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:drawableTint="@color/textColor"
                 android:focusableInTouchMode="false"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/gender"
@@ -124,6 +126,7 @@
                 android:autofillHints=""
                 android:backgroundTint="@color/textColor"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:drawableTint="@color/textColor"
                 android:focusableInTouchMode="false"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/blood_group"
@@ -139,6 +142,7 @@
                 android:autofillHints=""
                 android:backgroundTint="@color/textColor"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:drawableTint="@color/textColor"
                 android:focusableInTouchMode="false"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/genotype"
@@ -177,6 +181,7 @@
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:backgroundTint="@color/textColor"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:drawableTint="@color/textColor"
                 android:focusableInTouchMode="false"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/state"
@@ -202,7 +207,7 @@
                 android:layout_height="wrap_content" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/contactInfo"
+                android:id="@+id/contact_info_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_keyboard_arrow_right"
@@ -213,6 +218,10 @@
                 android:text="@string/contact_info"
                 android:textColor="@color/red"
                 android:textSize="@dimen/text_18" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/save_button"
