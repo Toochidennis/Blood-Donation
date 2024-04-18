@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/donor_dashboard_navigation.xml"
+    app:startDestination="@id/donorHomeFragment">
+
+    <fragment
+        android:id="@+id/donorHomeFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.DonorHomeFragment"
+        android:label="fragment_donor_home"
+        tools:layout="@layout/fragment_donor_home" />
+    <fragment
+        android:id="@+id/donationFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.DonorDonateFragment"
+        android:label="fragment_donor_donate"
+        tools:layout="@layout/fragment_donor_donate" />
+    <fragment
+        android:id="@+id/donorAppointmentsFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.DonorAppointmentsFragment"
+        android:label="fragment_donor_appointments"
+        tools:layout="@layout/fragment_donor_appointments" />
+    <fragment
+        android:id="@+id/donorProfileFragment"
+        android:name="com.devtoochi.blood_donation.ui.fragments.DonorProfileFragment"
+        android:label="fragment_donor_profile"
+        tools:layout="@layout/fragment_donor_profile" />
+</navigation>
