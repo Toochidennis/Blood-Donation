@@ -1,6 +1,7 @@
 package com.devtoochi.blood_donation.ui.fragments
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -10,11 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.R
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.updatePersonalDetails
 import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
 import com.devtoochi.blood_donation.backend.utils.Util.dateFormatter
 import com.devtoochi.blood_donation.databinding.FragmentHospitalProfileBinding
+import com.devtoochi.blood_donation.ui.activities.LoginActivity
 import com.devtoochi.blood_donation.ui.dialogs.ContactInfoDialogFragment
 import com.devtoochi.blood_donation.ui.dialogs.HospitalEditProfileDialogFragment
 import com.squareup.picasso.Picasso
@@ -39,7 +42,6 @@ class HospitalProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initData()
         handleViewsClick()
     }
@@ -98,6 +100,10 @@ class HospitalProfileFragment : Fragment() {
                 isRefreshing = false
             }
         }
+
+        binding.logoutButton.setOnClickListener {
+            logout()
+        }
     }
 
     private fun updateAvailability(isAvailable: Boolean) {
@@ -112,6 +118,13 @@ class HospitalProfileFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun logout() {
+        AuthenticationManager.googleSignInClient(requireContext()).signOut()
+        sharedPreferences.edit().clear().apply()
+        startActivity(Intent(requireContext(), LoginActivity::class.java))
+        requireActivity().finish()
     }
 
 }

@@ -54,9 +54,6 @@ class HospitalHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE)
-        userId = sharedPreferences.getString("user_id", "")
-
         loadingDialog = LoadingDialog(requireContext())
 
         initData()
@@ -69,6 +66,7 @@ class HospitalHomeFragment : Fragment() {
             val photoUrl = getString("image_url", "")
             val city = getString("city", "")
             val bloodGroup = getString("blood_group", "")
+            userId = getString("user_id", "")
 
             binding.greetingsTextview.text = getGreetingMessage(requireContext())
             binding.usernameTextview.text = name
@@ -80,7 +78,7 @@ class HospitalHomeFragment : Fragment() {
             }
 
             if (city.isNullOrEmpty() || bloodGroup.isNullOrEmpty()) {
-                WelcomeDialog(requireContext(), parentFragmentManager).show()
+                WelcomeDialog(HOSPITAL,requireContext(), parentFragmentManager).show()
             }
         }
 
@@ -158,7 +156,7 @@ class HospitalHomeFragment : Fragment() {
             val formattedDate = dateFormatter(date)
             val formattedTime = formatTime(hour, minutes)
 
-            "Time: $formattedDate $formattedTime"
+            "$formattedDate $formattedTime"
         } catch (e: Exception) {
             Log.e("formatRequestDate", "Error formatting request date: $requestDate", e)
             requestDate // Return the original string in case of an error
