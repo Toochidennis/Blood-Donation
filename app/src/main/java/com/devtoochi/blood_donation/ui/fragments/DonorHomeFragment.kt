@@ -1,60 +1,193 @@
 package com.devtoochi.blood_donation.ui.fragments
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager
+import com.devtoochi.blood_donation.backend.firebase.RequestsManager
+import com.devtoochi.blood_donation.backend.models.BloodRequest
+import com.devtoochi.blood_donation.backend.models.DonationRequest
+import com.devtoochi.blood_donation.backend.models.Hospital
+import com.devtoochi.blood_donation.backend.utils.Constants
+import com.devtoochi.blood_donation.backend.utils.Constants.DONOR
+import com.devtoochi.blood_donation.backend.utils.Util
+import com.devtoochi.blood_donation.databinding.FragmentDonorHomeBinding
+import com.devtoochi.blood_donation.ui.adapters.GenericAdapter
+import com.devtoochi.blood_donation.ui.dialogs.DonorBloodRequestDetailsBottomFragment
+import com.devtoochi.blood_donation.ui.dialogs.LoadingDialog
+import com.devtoochi.blood_donation.ui.dialogs.WelcomeDialog
+import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DonorHomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DonorHomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentDonorHomeBinding
+    private lateinit var loadingDialog: LoadingDialog
+    private val picasso = Picasso.get()
+
+    private val donationRequests = mutableListOf<DonationRequest>()
+    private var userId: String? = null
+    private var dateFormat: SimpleDateFormat = SimpleDateFormat("MMMM d, yyyy", Locale.getDefault())
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_donor_home, container, false)
+        binding = FragmentDonorHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DonorHomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DonorHomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadingDialog = LoadingDialog(requireContext())
+
+        initData()
+    }
+
+    private fun initData() {
+        val sharedPreferences = requireActivity().getSharedPreferences(
+            Constants.PREF_NAME,
+            Context.MODE_PRIVATE
+        )
+        with(sharedPreferences) {
+            val name = getString("name", "")
+            val photoUrl = getString("image_url", "")
+            val city = getString("city", "")
+            val bloodGroup = getString("blood_group", "")
+            userId = getString("user_id", "")
+
+            binding.greetingsTextview.text = Util.getGreetingMessage(requireContext())
+            binding.usernameTextview.text = name
+
+            if (!photoUrl.isNullOrEmpty()) {
+                picasso.load(photoUrl).into(binding.imageview)
+            } else {
+                binding.imageview.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+            }
+
+            if (city.isNullOrEmpty() || bloodGroup.isNullOrEmpty()) {
+                WelcomeDialog(DONOR, requireContext(), parentFragmentManager).show()
+            }
+        }
+
+        getDonationRequests()
+    }
+
+    private fun getDonationRequests() {
+        try {
+            donationRequests.clear()
+            loadingDialog.show()
+            RequestsManager.getAllBloodRequests(userId = "$userId") { bloodRequests, message ->
+                if (bloodRequests != null) {
+                    var requestsProcessed = 0 // Counter to track processed requests
+                    val totalRequests = bloodRequests.size // Total number of requests
+
+                    bloodRequests.forEach { bloodRequest ->
+                        getSenderPersonalDetails(bloodRequest) {
+                            requestsProcessed++
+                            if (requestsProcessed == totalRequests) {
+                                // All requests processed, setup adapter
+                                setupAdapter()
+                                loadingDialog.dismiss()
+                            }
+                        }
+                    }
+                } else {
+                    loadingDialog.dismiss()
+                    Log.d("response", "$message")
                 }
             }
+        } catch (e: Exception) {
+            loadingDialog.dismiss()
+            e.printStackTrace()
+        }
     }
+
+    private fun getSenderPersonalDetails(bloodRequest: BloodRequest, onComplete: () -> Unit) {
+        PersonDetailsManager.getPersonalDetails(
+            userId = bloodRequest.userId,
+            userType = Constants.HOSPITAL,
+        ) { hospital, message ->
+            if (hospital != null && hospital is Hospital) {
+                donationRequests.add(
+                    DonationRequest(
+                        requestId = bloodRequest.requestId,
+                        userId = bloodRequest.userId,
+                        donorId = bloodRequest.donorId,
+                        name = hospital.name,
+                        imageUrl = hospital.imageUrl,
+                        address = hospital.address,
+                        state = "${hospital.state} - ${hospital.city}",
+                        note = bloodRequest.note,
+                        bloodGroup = bloodRequest.bloodGroup,
+                        unit = bloodRequest.unit,
+                        requestDate = formatRequestDate(bloodRequest.requestDate),
+                        datePosted = dateFormat.format(bloodRequest.datePosted),
+                        token = hospital.token
+                    )
+                )
+            } else {
+                Log.d("response", "$message")
+            }
+
+            onComplete.invoke()
+        }
+    }
+
+    private fun formatRequestDate(requestDate: String): String {
+        return try {
+            val splitDate = requestDate.split(":")
+            val date = splitDate[0]
+            val hour = splitDate[1].toInt()
+            val minutes = splitDate[2].toInt()
+
+            val formattedDate = Util.dateFormatter(date)
+            val formattedTime = Util.formatTime(hour, minutes)
+
+            "$formattedDate $formattedTime"
+        } catch (e: Exception) {
+            Log.e("formatRequestDate", "Error formatting request date: $requestDate", e)
+            requestDate // Return the original string in case of an error
+        }
+    }
+
+    private fun setupAdapter() {
+        val donationAdapter = GenericAdapter(
+            itemList = donationRequests,
+            itemResLayout = R.layout.item_fragment_hospital_home,
+            bindItem = { binding, model ->
+                binding.setVariable(BR.request, model)
+                binding.executePendingBindings()
+
+                val imageview = binding.root.findViewById<ImageView>(R.id.imageview)
+                if (model.imageUrl.isEmpty()) {
+                    imageview.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+                } else {
+                    picasso.load(model.imageUrl).into(imageview)
+                }
+            }
+        ) { position ->
+            DonorBloodRequestDetailsBottomFragment(donationRequests[position])
+                .show(parentFragmentManager, getString(R.string.request))
+        }
+
+        binding.donationRequestRecyclerview.apply {
+            hasFixedSize()
+            adapter = donationAdapter
+        }
+    }
+
 }
