@@ -441,63 +441,15 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/female_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:backgroundTint="@color/card_color"
-                android:visibility="gone"
-                app:cardCornerRadius="@dimen/dimen_16"
-                app:cardElevation="0dp"
-                app:contentPadding="@dimen/dimen_16">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_sans_regular"
-                        android:text="@string/donor_question_9"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/text_16" />
-
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/yes_button_9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dimen_10"
-                            android:text="@string/yes"
-                            android:textSize="@dimen/text_16" />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/no_button_9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dimen_10"
-                            android:text="@string/no"
-                            android:textSize="@dimen/text_16" />
-                    </RadioGroup>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/check_eligibility_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_16"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:text="@string/check_eligibility"
                 android:textAlignment="center"
+                android:textAllCaps="false"
                 android:textSize="@dimen/text_16" />
 
         </LinearLayout>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager
 import com.devtoochi.blood_donation.backend.firebase.DonationManager
 import com.devtoochi.blood_donation.backend.firebase.RequestsManager
@@ -76,12 +77,26 @@ class DonorBloodRequestDetailsBottomFragment(
 
     private fun handleViewsClick() {
         binding.donateButton.setOnClickListener {
-            donate()
+            CheckDonorEligibilityDialogFragment { isEligible ->
+                if (isEligible) {
+                    donate()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "You're not eligible to donate blood",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }.show(
+                parentFragmentManager,
+                getString(R.string.check_eligibility)
+            )
         }
     }
 
     private fun donate() {
-        val donorId = donationRequest.donorId.ifEmpty { "${AuthenticationManager.auth.currentUser?.uid}" }
+        val donorId =
+            donationRequest.donorId.ifEmpty { "${AuthenticationManager.auth.currentUser?.uid}" }
         try {
             loadingDialog.show()
             DonationManager.createDonations(
