@@ -7,9 +7,10 @@ import android.graphics.drawable.ColorDrawable
 import android.view.Window
 import androidx.fragment.app.FragmentManager
 import com.devtoochi.blood_donation.R
+import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
-class WelcomeDialog(context: Context, fragmentManager: FragmentManager) {
+class WelcomeDialog(from: String, context: Context, fragmentManager: FragmentManager) {
 
     private val dialog = Dialog(context)
 
@@ -23,11 +24,17 @@ class WelcomeDialog(context: Context, fragmentManager: FragmentManager) {
             val completeButton: ExtendedFloatingActionButton = findViewById(R.id.complete_button)
 
             completeButton.setOnClickListener {
-                HospitalEditProfileDialogFragment().show(
-                    fragmentManager,
-                    context.getString(R.string.edit_profile)
-                )
-
+                if (from == HOSPITAL) {
+                    HospitalEditProfileDialogFragment().show(
+                        fragmentManager,
+                        context.getString(R.string.edit_profile)
+                    )
+                } else {
+                    DonorProfileEditProfileDialogFragment().show(
+                        fragmentManager,
+                        context.getString(R.string.edit_profile)
+                    )
+                }
                 dismiss()
             }
 
