@@ -30,7 +30,6 @@ class GenderBottomSheetFragment(
         binding.textView2.setOnClickListenerWithText()
 
     }
-
     private fun View.setOnClickListenerWithText() {
         if (this is MaterialTextView) {
             this.setOnClickListener {
