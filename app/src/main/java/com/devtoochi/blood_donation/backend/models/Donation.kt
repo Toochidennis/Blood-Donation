@@ -1,6 +1,6 @@
 package com.devtoochi.blood_donation.backend.models
 
-data class Donations(
+data class Donation(
     var donationId: String = "",
     var donorId: String = "",
     var receiverId: String = "",
