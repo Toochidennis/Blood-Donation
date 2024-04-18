@@ -15,9 +15,9 @@
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_regular"
+            android:fontFamily="@font/nunito_sans_bold"
             android:padding="@dimen/dimen_16"
-            android:text="@string/are_you_in_need_of_blood"
+            android:text="@string/requests"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_18"
             app:layout_constraintTop_toTopOf="parent" />
