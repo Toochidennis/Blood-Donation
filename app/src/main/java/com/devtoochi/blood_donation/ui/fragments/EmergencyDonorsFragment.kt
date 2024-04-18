@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getAllUsersDetails
@@ -26,6 +25,10 @@ class EmergencyDonorsDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentEmergencyDonorsBinding
     private lateinit var loadingDialog: LoadingDialog
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

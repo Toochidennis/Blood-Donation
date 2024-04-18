@@ -3,23 +3,18 @@ package com.devtoochi.blood_donation.ui.fragments
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import com.devtoochi.blood_donation.R
-import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager
-import com.devtoochi.blood_donation.backend.firebase.RequestsManager
-import com.devtoochi.blood_donation.backend.models.BloodGroup
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
+import com.devtoochi.blood_donation.backend.firebase.RequestsManager.postBloodRequest
 import com.devtoochi.blood_donation.backend.models.BloodRequest
 import com.devtoochi.blood_donation.backend.models.Donor
-import com.devtoochi.blood_donation.backend.utils.Constants
+import com.devtoochi.blood_donation.backend.utils.Constants.DONOR
 import com.devtoochi.blood_donation.backend.utils.Util
+import com.devtoochi.blood_donation.backend.utils.Util.dateFormatter
 import com.devtoochi.blood_donation.databinding.FragmentEmergencyDonorDetailsBinding
-import com.devtoochi.blood_donation.ui.adapters.BloodGroupAdapter2
 import com.devtoochi.blood_donation.ui.dialogs.DatePickerDialog
 import com.devtoochi.blood_donation.ui.dialogs.LoadingDialog
 import com.devtoochi.blood_donation.ui.dialogs.RequestSentDialog
@@ -48,18 +43,38 @@ class EmergencyDonorDetailsFragment(private val donor: Donor) : BottomSheetDialo
         super.onViewCreated(view, savedInstanceState)
 
         loadingDialog = LoadingDialog(requireContext())
+        initData()
+        handleViewsClick()
+    }
 
+    private fun initData() {
+        val name = "${donor.firstname} ${donor.lastname}"
+        binding.nameTextview.text = name
+        binding.addressTextview.text = donor.address
+        binding.recentDonationTextview.text = dateFormatter(donor.recentDonation)
+        binding.genderTextview.text = donor.gender
+        binding.ageTextview.text = getAge(donor.birthDate)
+    }
+
+    private fun getAge(birthDate: String): String {
+        return try {
+            val calendar = Calendar.getInstance()
+            val currentYear = calendar[Calendar.YEAR]
+            val splitDate = birthDate.split('-')
+            val year = splitDate[0].toInt()
+
+            "${currentYear - year} yrs"
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "NIL"
+        }
     }
 
     private fun handleViewsClick() {
-      /*  binding.navigateUp.setOnClickListener {
-            dismiss()
-        }
-
         binding.dateTextInput.setOnClickListener {
             DatePickerDialog(requireContext()) { selectedDate ->
                 date = selectedDate
-                binding.dateTextInput.setText(Util.dateFormatter(selectedDate))
+                binding.dateTextInput.setText(dateFormatter(selectedDate))
             }.window?.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -72,7 +87,7 @@ class EmergencyDonorDetailsFragment(private val donor: Donor) : BottomSheetDialo
 
         binding.sendRequestButton.setOnClickListener {
             sendRequest()
-        }*/
+        }
     }
 
     private fun showTimePickerDialog() {
@@ -88,7 +103,7 @@ class EmergencyDonorDetailsFragment(private val donor: Donor) : BottomSheetDialo
                 val formattedTime = Util.formatTime(hourOfDay, minute)
 
                 // Show the formatted time in the TextView
-               // binding.timeTextInput.setText(formattedTime)
+                binding.timeTextInput.setText(formattedTime)
             },
             currentTime.get(Calendar.HOUR_OF_DAY), // Initial hour
             currentTime.get(Calendar.MINUTE), // Initial minute
@@ -99,18 +114,16 @@ class EmergencyDonorDetailsFragment(private val donor: Donor) : BottomSheetDialo
         timePickerDialog.show()
     }
 
-
-
-/*    private fun sendRequest() {
+    private fun sendRequest() {
         try {
             if (isValidForm()) {
                 loadingDialog.show()
-                RequestsManager.postBloodRequest(
+                postBloodRequest(
                     BloodRequest(
-                        userId = "${AuthenticationManager.auth.currentUser?.uid}",
-                        donorId = bloodBankDetails?.userId!!,
-                        requestType = Constants.HOSPITAL,
-                        bloodGroup = bloodGroup.name,
+                        userId = "${auth.currentUser?.uid}",
+                        donorId = donor.userId,
+                        requestType = DONOR,
+                        bloodGroup = donor.bloodGroup,
                         note = binding.noteTextInput.text.toString().trim(),
                         requestDate = "$date:$time",
                     )
@@ -118,7 +131,7 @@ class EmergencyDonorDetailsFragment(private val donor: Donor) : BottomSheetDialo
                     if (success) {
                         loadingDialog.dismiss()
                         RequestSentDialog(requireContext()) {
-                            findNavController().popBackStack()
+                            dismiss()
                         }.show()
                     } else {
                         loadingDialog.dismiss()
@@ -136,8 +149,32 @@ class EmergencyDonorDetailsFragment(private val donor: Donor) : BottomSheetDialo
             e.printStackTrace()
             loadingDialog.dismiss()
         }
-    }*/
+    }
 
+    private fun isValidForm(): Boolean {
+        return when {
+            time.isNullOrEmpty() -> {
+                binding.timeTextInput.error = "Time is required"
+                false
+            }
 
+            date.isNullOrEmpty() -> {
+                binding.dateTextInput.error = "Date is required"
+                false
+            }
+
+            binding.noteTextInput.text.isBlank() -> {
+                binding.noteTextInput.error = "Note is required"
+                false
+            }
+
+            else -> {
+                binding.timeTextInput.error = null
+                binding.dateTextInput.error = null
+                binding.noteTextInput.error = null
+                true
+            }
+        }
+    }
 
 }
