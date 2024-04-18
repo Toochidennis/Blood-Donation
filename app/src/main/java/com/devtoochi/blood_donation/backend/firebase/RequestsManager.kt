@@ -75,7 +75,6 @@ object RequestsManager {
             .whereEqualTo("donorId", userId)
             .get()
 
-
         Tasks.whenAllSuccess<QuerySnapshot>(query1, query2)
             .addOnSuccessListener { results ->
                 val requestDataList = mutableListOf<BloodRequest>()

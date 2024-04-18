@@ -136,11 +136,11 @@ object PersonDetailsManager {
         // Reference to the user's personal details collection
         val query = if (userType == HOSPITAL) {
             db.collection(HOSPITAL).whereNotEqualTo("userId", userId)
-                .whereNotEqualTo("available", false)
+                .whereEqualTo("available", true)
                 .get()
         } else {
             db.collection(DONOR).whereNotEqualTo("userId", userId)
-                .whereNotEqualTo("available", false)
+                .whereEqualTo("available", true)
                 .get()
         }
 
