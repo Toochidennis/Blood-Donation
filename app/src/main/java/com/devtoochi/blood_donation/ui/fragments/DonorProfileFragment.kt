@@ -1,60 +1,140 @@
 package com.devtoochi.blood_donation.ui.fragments
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.R
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager
+import com.devtoochi.blood_donation.backend.utils.Constants
+import com.devtoochi.blood_donation.backend.utils.Util
+import com.devtoochi.blood_donation.databinding.FragmentDonorProfileBinding
+import com.devtoochi.blood_donation.ui.activities.LoginActivity
+import com.devtoochi.blood_donation.ui.dialogs.ContactInfoDialogFragment
+import com.devtoochi.blood_donation.ui.dialogs.DonorProfileEditProfileDialogFragment
+import com.squareup.picasso.Picasso
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DonorProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DonorProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentDonorProfileBinding
+    private lateinit var sharedPreferences: SharedPreferences
+    private var isAvailable = true
+    private var profileId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_donor_profile, container, false)
+        binding = FragmentDonorProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DonorSettingsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DonorProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initData()
+        handleViewsClick()
+    }
+
+    private fun initData() {
+        sharedPreferences = requireActivity().getSharedPreferences(
+            Constants.PREF_NAME,
+            Context.MODE_PRIVATE
+        )
+        with(sharedPreferences) {
+            isAvailable = getBoolean("is_available", true)
+            profileId = getString("id", "")
+            val firstname = getString("firstname", "")
+            val lastname = getString("lastname", "")
+            val imageUrl = getString("image_url", "")
+            val name = "$firstname $lastname"
+
+            binding.nameTextview.text = name
+            binding.bloodGroupTextview.text = getString("blood_group", "")
+
+            if (!imageUrl.isNullOrEmpty()) {
+                Picasso.get().load(imageUrl).into(binding.imageview)
+            } else {
+                binding.imageview.setColorFilter(
+                    Color.WHITE,
+                    android.graphics.PorterDuff.Mode.SRC_ATOP
+                )
+            }
+
+            val lastDonation = getString("last_donation", "")
+            binding.lastDonationTextview.text =
+                if (lastDonation.isNullOrEmpty()) {
+                    "Last donation: NIL"
+                } else {
+                    "Last donation: ${
+                        Util.dateFormatter(
+                            lastDonation
+                        )
+                    }"
+                }
+
+            binding.availableSwitchButton.isChecked = isAvailable
+        }
+    }
+
+    private fun handleViewsClick() {
+        binding.editProfileButton.setOnClickListener {
+            DonorProfileEditProfileDialogFragment().show(
+                parentFragmentManager,
+                getString(R.string.edit_profile)
+            )
+        }
+
+        binding.contactInfoButton.setOnClickListener {
+            ContactInfoDialogFragment().show(
+                parentFragmentManager,
+                getString(R.string.contact_info)
+            )
+        }
+
+        binding.availableSwitchButton.setOnClickListener {
+            updateAvailability(isAvailable = binding.availableSwitchButton.isChecked)
+        }
+
+        binding.swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.red)
+            setOnRefreshListener {
+                initData()
+                isRefreshing = false
+            }
+        }
+
+        binding.logoutButton.setOnClickListener {
+            logout()
+        }
+    }
+
+    private fun updateAvailability(isAvailable: Boolean) {
+        if (profileId != null) {
+            PersonDetailsManager.updatePersonalDetails(
+                data = hashMapOf("available" to isAvailable),
+                userType = Constants.DONOR,
+                profileId = profileId!!,
+            ) { success, _ ->
+                if (success) {
+                    sharedPreferences.edit().putBoolean("is_available", isAvailable).apply()
                 }
             }
+        }
+    }
+
+    private fun logout() {
+        AuthenticationManager.googleSignInClient(requireContext()).signOut()
+        sharedPreferences.edit().clear().apply()
+        startActivity(Intent(requireContext(), LoginActivity::class.java))
+        requireActivity().finish()
     }
 }
