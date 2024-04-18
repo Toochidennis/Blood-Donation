@@ -14,7 +14,8 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 class DonationSuccessDialog(
     context: Context,
     fragmentManager: FragmentManager,
-    donationRequest: DonationRequest
+    donationRequest: DonationRequest,
+    userType: String
 ) {
     private val dialog = Dialog(context)
 
@@ -33,10 +34,11 @@ class DonationSuccessDialog(
             }
 
             okayButton.setOnClickListener {
-                BookAppointmentDialogFragment(donationRequest).show(
-                    fragmentManager,
-                    context.getString(R.string.appointment)
-                )
+                BookAppointmentDialogFragment(donationRequest, userType)
+                    .show(
+                        fragmentManager,
+                        context.getString(R.string.appointment)
+                    )
                 dismiss()
             }
         }

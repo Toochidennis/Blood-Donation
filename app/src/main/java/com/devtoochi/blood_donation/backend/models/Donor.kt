@@ -13,6 +13,7 @@ data class Donor(
     override var bloodGroup: String = "",
     var birthDate: String = "",
     var genotype: String = "",
+    var gender: String = "",
     override var country: String = "",
     override var state: String = "",
     override var city: String = "",
