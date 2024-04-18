@@ -102,11 +102,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@id/password_input_text"
                     android:layout_centerVertical="true"
-                    android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:background="@drawable/drawable_button_4"
                     android:contentDescription="@string/enter_your_password"
-                    android:focusable="true"
                     android:padding="@dimen/dimen_8"
                     android:src="@drawable/ic_eye_open"
                     app:tint="@color/textColor" />
