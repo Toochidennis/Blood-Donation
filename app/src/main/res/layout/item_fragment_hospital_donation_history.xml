@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="request"
-            type="com.devtoochi.blood_donation.backend.models.DonationRequest" />
+            name="donation"
+            type="com.devtoochi.blood_donation.backend.models.Donation" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -15,21 +15,23 @@
         android:layout_marginBottom="@dimen/dimen_16"
         android:backgroundTint="@color/card_color"
         app:cardCornerRadius="@dimen/dimen_16"
-        app:cardElevation="0dp"
-        app:contentPadding="@dimen/dimen_16">
+        app:cardElevation="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="@dimen/dimen_16">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_view"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:backgroundTint="@color/red"
-                app:cardCornerRadius="30dp">
+                app:cardCornerRadius="38dp"
+                app:contentPadding="@dimen/dimen_5">
 
                 <ImageView
                     android:id="@+id/imageview"
@@ -37,7 +39,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:contentDescription="@string/request"
-                    android:src="@drawable/ic_person" />
+                    android:src="@drawable/ic_donate_blood"
+                    app:tint="@color/white" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -51,14 +54,14 @@
                 android:layout_toStartOf="@id/blood_group_layout"
                 android:layout_toEndOf="@id/card_view"
                 android:fontFamily="@font/nunito_sans_bold"
-                android:text="@{request.name}"
+                android:text="@{donation.receiverName}"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_16" />
 
             <LinearLayout
                 android:id="@+id/blood_group_layout"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/drawable_circle"
@@ -69,14 +72,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:text="@{request.bloodGroup}"
+                    android:text="@{donation.bloodGroup}"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_16" />
+                    android:textSize="@dimen/text_14" />
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/state_textview"
+                android:id="@+id/address_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title_textview"
@@ -84,52 +87,12 @@
                 android:layout_marginStart="@dimen/dimen_16"
                 android:layout_toEndOf="@id/card_view"
                 android:fontFamily="@font/nunito_sans_regular"
-                android:text="@{request.state}"
+                android:text="@{donation.receiverAddress}"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/text_14" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/address_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/state_textview"
-                android:layout_alignEnd="@id/title_textview"
-                android:layout_marginStart="@dimen/dimen_16"
-                android:layout_toEndOf="@id/card_view"
-                android:fontFamily="@font/nunito_sans_light"
-                android:text="@{request.address}"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_14" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/date_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/address_textview"
-                android:layout_alignEnd="@id/title_textview"
-                android:layout_marginStart="@dimen/dimen_16"
-                android:layout_toEndOf="@id/card_view"
-                android:drawableStart="@drawable/ic_clock"
-                android:drawablePadding="@dimen/dimen_16"
-                android:drawableTint="@color/textColor"
-                android:fontFamily="@font/nunito_sans_regular"
-                android:text="@{request.requestDate}"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_16" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/date_textview"
-                android:layout_alignEnd="@id/title_textview"
-                android:layout_marginStart="@dimen/dimen_16"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:layout_toEndOf="@id/card_view"
-                android:fontFamily="@font/nunito_sans_light"
-                android:text="@string/see_more"
                 android:textSize="@dimen/text_14" />
 
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
 </layout>

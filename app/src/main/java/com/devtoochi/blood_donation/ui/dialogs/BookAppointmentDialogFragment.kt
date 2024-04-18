@@ -1,6 +1,7 @@
 package com.devtoochi.blood_donation.ui.dialogs
 
 import android.app.TimePickerDialog
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,9 +12,11 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.AppointmentManager.bookAppointment
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.updatePersonalDetails
 import com.devtoochi.blood_donation.backend.models.Appointment
 import com.devtoochi.blood_donation.backend.models.DonationRequest
 import com.devtoochi.blood_donation.backend.models.Notification
+import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
 import com.devtoochi.blood_donation.backend.utils.Util
 import com.devtoochi.blood_donation.backend.utils.Util.dateFormatter
 import com.devtoochi.blood_donation.backend.utils.Util.sendNotification
@@ -21,8 +24,10 @@ import com.devtoochi.blood_donation.databinding.FragmentBookAppointmentDialogBin
 import java.util.Calendar
 
 
-class BookAppointmentDialogFragment(private val donationRequest: DonationRequest) :
-    DialogFragment() {
+class BookAppointmentDialogFragment(
+    private val donationRequest: DonationRequest,
+    private val userType: String
+) : DialogFragment() {
 
     private lateinit var binding: FragmentBookAppointmentDialogBinding
     private lateinit var loadingDialog: LoadingDialog
@@ -118,26 +123,12 @@ class BookAppointmentDialogFragment(private val donationRequest: DonationRequest
                             donorId = donationRequest.donorId,
                             receiverId = donationRequest.userId,
                             requestId = donationRequest.requestId,
-                            appointmentDate = "$date:$time"
+                            appointmentDate = "$date:$time",
+                            userType = userType
                         )
                     ) { success, message ->
                         if (success) {
-                            sendNotification(
-                                requireContext(),
-                                Notification(
-                                    token = donationRequest.token,
-                                    title = "Donation Request Accepted!",
-                                    body = getString(R.string.request_accepted)
-                                ),
-                            ) {
-                                loadingDialog.dismiss()
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Appointment booked successfully",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                dismiss()
-                            }
+                            updateInfo()
                         } else {
                             loadingDialog.dismiss()
                             Toast.makeText(
@@ -153,5 +144,46 @@ class BookAppointmentDialogFragment(private val donationRequest: DonationRequest
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun updateInfo() {
+        val sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+        val profileId = sharedPreferences.getString("id", "")
+
+        updatePersonalDetails(
+            data = hashMapOf("recentDonation" to getDate()),
+            userType = userType,
+            profileId = "$profileId"
+        ) { success, message ->
+            if (success) {
+                sendNotification(
+                    requireContext(),
+                    Notification(
+                        token = donationRequest.token,
+                        title = "Donation Request Accepted!",
+                        body = getString(R.string.request_accepted)
+                    ),
+                ) {
+                    loadingDialog.dismiss()
+                    Toast.makeText(
+                        requireContext(),
+                        "Appointment booked successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    dismiss()
+                }
+            } else {
+                Log.d("response", "$message")
+            }
+        }
+    }
+
+    private fun getDate(): String {
+        val calendar = Calendar.getInstance()
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH] + 1
+        val day = calendar[Calendar.DAY_OF_MONTH]
+
+        return "$year-$month-$day"
     }
 }

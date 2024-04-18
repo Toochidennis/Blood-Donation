@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_5"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_divider"
@@ -57,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/nunito_sans_regular"
-            android:text=""
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="@dimen/text_16" />
@@ -74,25 +73,45 @@
         android:layout_toStartOf="@id/blood_group_layout"
         android:layout_toEndOf="@id/card_view"
         android:fontFamily="@font/nunito_sans_bold"
-        android:text="@string/toochukwu_dennis"
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_16" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/gender_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_textview"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_toEndOf="@id/card_view"
+        android:fontFamily="@font/nunito_sans_regular"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/text_14" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/age_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_textview"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_toEndOf="@id/gender_textview"
+        android:fontFamily="@font/nunito_sans_regular"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/text_14" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/address_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name_textview"
+        android:layout_below="@id/gender_textview"
         android:layout_alignEnd="@id/name_textview"
         android:layout_marginStart="@dimen/dimen_16"
         android:layout_toEndOf="@id/card_view"
         android:fontFamily="@font/nunito_sans_regular"
-        android:text=""
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_14" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/date_textview"
+        android:id="@+id/recent_donation_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/address_textview"
@@ -100,19 +119,27 @@
         android:layout_marginStart="@dimen/dimen_16"
         android:layout_toEndOf="@id/card_view"
         android:fontFamily="@font/nunito_sans_light"
-        android:text=""
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_14" />
 
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_view"
+        android:layout_marginTop="@dimen/dimen_16" />
 
     <com.google.android.material.textfield.MaterialAutoCompleteTextView
         android:id="@+id/date_text_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/date_textview"
+        android:layout_below="@id/divider_1"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_32"
         android:layout_marginEnd="@dimen/dimen_16"
         android:layout_toStartOf="@id/time_text_input"
         android:drawableEnd="@drawable/ic_arrow_drop_down"
+        android:drawableTint="@color/textColor"
         android:focusableInTouchMode="false"
         android:fontFamily="@font/nunito_sans_regular"
         android:hint="@string/date"
@@ -122,24 +149,49 @@
         android:id="@+id/time_text_input"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/date_textview"
+        android:layout_below="@id/divider_1"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/dimen_32"
+        android:layout_marginEnd="@dimen/dimen_16"
         android:backgroundTint="@color/textColor"
         android:drawableEnd="@drawable/ic_arrow_drop_down"
+        android:drawableTint="@color/textColor"
         android:focusableInTouchMode="false"
         android:fontFamily="@font/nunito_sans_regular"
         android:hint="@string/time"
         android:inputType="datetime" />
 
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/donate_button"
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:id="@+id/note_text_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/date_text_input"
-        android:layout_margin="@dimen/dimen_16"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:autofillHints=""
+        android:backgroundTint="@color/textColor"
         android:fontFamily="@font/nunito_sans_regular"
-        android:text="@string/donate"
+        android:gravity="top|start"
+        android:hint="@string/note"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lineSpacingMultiplier="1"
+        android:lines="5"
+        android:minLines="1"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="vertical" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/send_request_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/note_text_input"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_32"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:layout_marginBottom="@dimen/dimen_16"
+        android:fontFamily="@font/nunito_sans_regular"
+        android:text="@string/send_request"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="@dimen/text_16" />
