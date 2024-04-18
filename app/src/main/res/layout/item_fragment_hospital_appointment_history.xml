@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="appointment"
+            type="com.devtoochi.blood_donation.backend.models.Appointment" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:backgroundTint="@color/card_color"
+        android:clipToPadding="false"
+        app:cardCornerRadius="@dimen/dimen_16"
+        app:cardElevation="0dp"
+        app:contentPadding="@dimen/dimen_16">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/bank_card_view"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:backgroundTint="@color/red"
+                app:cardCornerRadius="60dp"
+                app:contentPadding="@dimen/dimen_10">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_blood_drop"
+                    app:tint="@color/white" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/name_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_toEndOf="@id/bank_card_view"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="@{appointment.name}"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/address_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_textview"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:layout_toEndOf="@id/bank_card_view"
+                android:drawablePadding="@dimen/dimen_16"
+                android:fontFamily="@font/nunito_sans_light"
+                android:text="@{appointment.address}"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16"
+                app:drawableStartCompat="@drawable/ic_location"
+                app:drawableTint="@color/textColor" />
+
+            <TextView
+                android:id="@+id/time_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_textview"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:layout_toEndOf="@id/bank_card_view"
+                android:drawablePadding="@dimen/dimen_16"
+                android:fontFamily="@font/nunito_sans_light"
+                android:text="@{appointment.appointmentDate}"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16"
+                app:drawableStartCompat="@drawable/ic_clock"
+                app:drawableTint="@color/textColor" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/time_textview"
+                android:layout_marginTop="@dimen/dimen_16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/call_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_16"
+                    android:layout_marginBottom="@dimen/dimen_16"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_button_2"
+                    android:clipToPadding="false"
+                    android:elevation="1dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/dimen_24"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingEnd="@dimen/dimen_24"
+                    android:paddingBottom="@dimen/dimen_10">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_phone"
+                        app:tint="@color/light_blue" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="@string/call"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/text_16" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/email_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_16"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_button_2"
+                    android:clipToPadding="false"
+                    android:elevation="1dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/dimen_24"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingEnd="@dimen/dimen_24"
+                    android:paddingBottom="@dimen/dimen_10">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_gmail" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="@string/email"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/text_16" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
