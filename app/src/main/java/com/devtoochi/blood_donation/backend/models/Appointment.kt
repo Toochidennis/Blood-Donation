@@ -6,5 +6,10 @@ data class Appointment(
     var receiverId: String = "",
     var requestId: String = "",
     var appointmentDate: String = "",
-    var isCompleted: Boolean = false
+    var name: String = "",
+    var address: String = "",
+    var imageUrl: String = "",
+    var phone: String = "",
+    var email: String = "",
+    var userType: String = "",
 )
