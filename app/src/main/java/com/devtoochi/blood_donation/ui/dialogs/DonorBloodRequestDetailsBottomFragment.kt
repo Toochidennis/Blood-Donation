@@ -9,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.devtoochi.blood_donation.R
-import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
 import com.devtoochi.blood_donation.backend.firebase.DonationManager
-import com.devtoochi.blood_donation.backend.firebase.RequestsManager
+import com.devtoochi.blood_donation.backend.firebase.RequestsManager.updateBloodRequest
 import com.devtoochi.blood_donation.backend.models.Donation
 import com.devtoochi.blood_donation.backend.models.DonationRequest
 import com.devtoochi.blood_donation.backend.utils.Constants
@@ -95,8 +95,7 @@ class DonorBloodRequestDetailsBottomFragment(
     }
 
     private fun donate() {
-        val donorId =
-            donationRequest.donorId.ifEmpty { "${AuthenticationManager.auth.currentUser?.uid}" }
+        val donorId = donationRequest.donorId.ifEmpty { "${auth.currentUser?.uid}" }
         try {
             loadingDialog.show()
             DonationManager.createDonations(
@@ -113,7 +112,6 @@ class DonorBloodRequestDetailsBottomFragment(
                 if (success) {
                     updateRequest()
                 } else {
-                    loadingDialog.dismiss()
                     Log.d("response", "$message")
                     Toast.makeText(
                         requireContext(),
@@ -121,6 +119,7 @@ class DonorBloodRequestDetailsBottomFragment(
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+                loadingDialog.dismiss()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -129,12 +128,11 @@ class DonorBloodRequestDetailsBottomFragment(
     }
 
     private fun updateRequest() {
-        RequestsManager.updateBloodRequest(
+        updateBloodRequest(
             data = hashMapOf("status" to Constants.FULFILLED),
             requestId = donationRequest.requestId
         ) { success, message ->
             if (success) {
-                loadingDialog.dismiss()
                 dismiss()
                 DonationSuccessDialog(
                     requireContext(),
@@ -143,9 +141,9 @@ class DonorBloodRequestDetailsBottomFragment(
                     Constants.DONOR
                 ).show()
             } else {
-                loadingDialog.dismiss()
                 Log.d("response", "$message")
             }
+            loadingDialog.dismiss()
         }
     }
 
