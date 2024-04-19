@@ -51,7 +51,7 @@
                 android:layout_toStartOf="@id/blood_group_layout"
                 android:layout_toEndOf="@id/card_view"
                 android:fontFamily="@font/nunito_sans_bold"
-                android:text="@{donor.firstname}"
+                android:text="@{donor.country}"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_16" />
 

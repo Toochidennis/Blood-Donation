@@ -53,7 +53,7 @@
                 android:fontFamily="@font/nunito_sans_bold"
                 android:text="@{request.name}"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_18" />
 
             <LinearLayout
                 android:id="@+id/blood_group_layout"
@@ -86,7 +86,7 @@
                 android:fontFamily="@font/nunito_sans_regular"
                 android:text="@{request.state}"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/text_14" />
+                android:textSize="@dimen/text_16" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/address_textview"
@@ -96,7 +96,7 @@
                 android:layout_alignEnd="@id/title_textview"
                 android:layout_marginStart="@dimen/dimen_16"
                 android:layout_toEndOf="@id/card_view"
-                android:fontFamily="@font/nunito_sans_light"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:text="@{request.address}"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_14" />
@@ -109,13 +109,10 @@
                 android:layout_alignEnd="@id/title_textview"
                 android:layout_marginStart="@dimen/dimen_16"
                 android:layout_toEndOf="@id/card_view"
-                android:drawableStart="@drawable/ic_clock"
-                android:drawablePadding="@dimen/dimen_16"
-                android:drawableTint="@color/textColor"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:text="@{request.requestDate}"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_14" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -125,7 +122,7 @@
                 android:layout_marginStart="@dimen/dimen_16"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_toEndOf="@id/card_view"
-                android:fontFamily="@font/nunito_sans_light"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:text="@string/see_more"
                 android:textSize="@dimen/text_14" />
 
