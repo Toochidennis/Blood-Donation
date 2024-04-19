@@ -52,7 +52,7 @@ class BookAppointmentDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        loadingDialog = LoadingDialog(requireContext())
         handleViewsClick()
     }
 
@@ -173,6 +173,7 @@ class BookAppointmentDialogFragment(
                     dismiss()
                 }
             } else {
+                loadingDialog.dismiss()
                 Log.d("response", "$message")
             }
         }

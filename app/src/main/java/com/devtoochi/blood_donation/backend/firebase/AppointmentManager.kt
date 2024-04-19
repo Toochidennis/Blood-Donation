@@ -2,7 +2,6 @@ package com.devtoochi.blood_donation.backend.firebase
 
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
 import com.devtoochi.blood_donation.backend.models.Appointment
-import com.devtoochi.blood_donation.backend.models.BloodRequest
 import com.devtoochi.blood_donation.backend.utils.Constants.APPOINTMENTS
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.QuerySnapshot
@@ -30,7 +29,7 @@ object AppointmentManager {
             .whereEqualTo("receiverId", auth.currentUser?.uid)
             .get()
 
-        Tasks.whenAllSuccess<QuerySnapshot>(query1, query1)
+        Tasks.whenAllSuccess<QuerySnapshot>(query1, query2)
             .addOnSuccessListener { results ->
                 val appointmentList = mutableListOf<Appointment>()
                 val uniqueIds = HashSet<String>()
