@@ -1,26 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.fragments.DonorDonateFragment">
 
-    <com.google.android.material.textview.MaterialTextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito_sans_bold"
-        android:padding="@dimen/dimen_16"
-        android:text="@string/donate_blood"
-        android:textColor="@color/textColor"
-        android:textSize="@dimen/text_18" />
+        android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/donation_request_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_fragment_hospital_home" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:padding="@dimen/dimen_16"
+            android:text="@string/donate_blood"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_18" />
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/donation_request_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/textview"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_fragment_hospital_home" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/empty_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:padding="@dimen/dimen_16"
+            android:text="@string/there_no_blood_request_yet"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_16"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
