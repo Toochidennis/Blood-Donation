@@ -1,6 +1,8 @@
 package com.devtoochi.blood_donation.ui.fragments
 
 import android.app.TimePickerDialog
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +21,7 @@ import com.devtoochi.blood_donation.ui.dialogs.DatePickerDialog
 import com.devtoochi.blood_donation.ui.dialogs.LoadingDialog
 import com.devtoochi.blood_donation.ui.dialogs.RequestSentDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.squareup.picasso.Picasso
 import java.util.Calendar
 
 
@@ -51,9 +54,20 @@ class EmergencyDonorDetailsFragment(private val donor: Donor) : BottomSheetDialo
         val name = "${donor.firstname} ${donor.lastname}"
         binding.nameTextview.text = name
         binding.addressTextview.text = donor.address
-        binding.recentDonationTextview.text = dateFormatter(donor.recentDonation)
         binding.genderTextview.text = donor.gender
         binding.ageTextview.text = getAge(donor.birthDate)
+        binding.bloodGroupTextview.text = donor.bloodGroup
+        binding.recentDonationTextview.text = if (donor.recentDonation.isEmpty()) {
+            "Last donation: NIL"
+        } else {
+            "Last donation: ${dateFormatter(donor.recentDonation)}"
+        }
+
+        if (donor.imageUrl.isEmpty()) {
+            binding.imageview.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+        } else {
+            Picasso.get().load(donor.imageUrl).into(binding.imageview)
+        }
     }
 
     private fun getAge(birthDate: String): String {
@@ -129,12 +143,10 @@ class EmergencyDonorDetailsFragment(private val donor: Donor) : BottomSheetDialo
                     )
                 ) { success, message ->
                     if (success) {
-                        loadingDialog.dismiss()
                         RequestSentDialog(requireContext()) {
                             dismiss()
                         }.show()
                     } else {
-                        loadingDialog.dismiss()
                         Toast.makeText(
                             requireContext(),
                             "Something went wrong please try again",
@@ -143,6 +155,7 @@ class EmergencyDonorDetailsFragment(private val donor: Donor) : BottomSheetDialo
 
                         Log.d("response", "$message")
                     }
+                    loadingDialog.dismiss()
                 }
             }
         } catch (e: Exception) {
