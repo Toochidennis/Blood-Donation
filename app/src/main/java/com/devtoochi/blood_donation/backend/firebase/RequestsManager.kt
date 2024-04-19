@@ -73,6 +73,7 @@ object RequestsManager {
 
         val query2 = requestsCollection
             .whereEqualTo("donorId", userId)
+            .whereEqualTo("requestType", GENERAL)
             .get()
 
         Tasks.whenAllSuccess<QuerySnapshot>(query1, query2)

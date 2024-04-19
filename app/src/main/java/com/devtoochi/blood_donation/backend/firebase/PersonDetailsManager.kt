@@ -1,6 +1,5 @@
 package com.devtoochi.blood_donation.backend.firebase
 
-import android.util.Log
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.donorsCollection
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.hospitalsCollection
@@ -139,14 +138,11 @@ object PersonDetailsManager {
                 .whereEqualTo("available", true)
                 .get()
         } else {
-            db.collection(DONOR).whereNotEqualTo("userId", userId)
-                .whereEqualTo("available", true)
-                .get()
+            db.collection(DONOR).whereEqualTo("available", true).get()
         }
 
         query
             .addOnSuccessListener { querySnapshot ->
-                Log.d("response", "${querySnapshot.documents.size}  ${querySnapshot.isEmpty}")
                 val user = if (userType == HOSPITAL) {
                     querySnapshot.documents.mapNotNull { documentSnapshot ->
                         documentSnapshot.toObject(Hospital::class.java)?.apply {
@@ -164,7 +160,7 @@ object PersonDetailsManager {
                 if (querySnapshot.isEmpty) {
                     onComplete.invoke(null, "Empty")
                 } else {
-                    onComplete.invoke(user, "Empty")
+                    onComplete.invoke(user, null)
                 }
             }
             .addOnFailureListener {
