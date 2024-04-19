@@ -2,7 +2,10 @@ package com.devtoochi.blood_donation.backend.firebase
 
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
 import com.devtoochi.blood_donation.backend.models.Appointment
+import com.devtoochi.blood_donation.backend.models.BloodRequest
 import com.devtoochi.blood_donation.backend.utils.Constants.APPOINTMENTS
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.firestore.QuerySnapshot
 
 object AppointmentManager {
 
@@ -20,21 +23,34 @@ object AppointmentManager {
     }
 
     fun getAppointments(onComplete: (List<Appointment>?, String?) -> Unit) {
-        appointmentsCollection
+        val query1 = appointmentsCollection
             .whereEqualTo("donorId", auth.currentUser?.uid)
+            .get()
+        val query2 = appointmentsCollection
             .whereEqualTo("receiverId", auth.currentUser?.uid)
             .get()
-            .addOnSuccessListener { querySnapshot ->
-                val appointments = querySnapshot.documents.mapNotNull { document ->
-                    document.toObject(Appointment::class.java)?.apply {
-                        this.appointmentId = document.id
+
+        Tasks.whenAllSuccess<QuerySnapshot>(query1, query1)
+            .addOnSuccessListener { results ->
+                val appointmentList = mutableListOf<Appointment>()
+                val uniqueIds = HashSet<String>()
+
+                results.forEach { querySnapshot ->
+                    querySnapshot.documents.mapNotNull { document ->
+                        val appointmentId = document.id
+                        if (uniqueIds.add(appointmentId)) {
+                            val appointments = document.toObject(Appointment::class.java)?.apply {
+                                this.appointmentId = document.id
+                            }
+                            appointments?.let { appointmentList.add(it) }
+                        }
                     }
                 }
 
-                if (appointments.isEmpty()) {
+                if (appointmentList.isEmpty()) {
                     onComplete.invoke(null, "Empty")
                 } else {
-                    onComplete.invoke(appointments, null)
+                    onComplete.invoke(appointmentList, null)
                 }
             }
             .addOnFailureListener {

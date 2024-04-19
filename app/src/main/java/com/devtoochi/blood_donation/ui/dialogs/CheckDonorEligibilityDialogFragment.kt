@@ -42,7 +42,12 @@ class CheckDonorEligibilityDialogFragment(
             }
             dismiss()
         }
+
+        binding.navigateUp.setOnClickListener {
+            dismiss()
+        }
     }
+
 
     private fun getScore(): Int {
         var score = 0
