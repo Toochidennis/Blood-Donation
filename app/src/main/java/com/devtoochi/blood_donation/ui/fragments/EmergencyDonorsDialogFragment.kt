@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
@@ -42,7 +43,9 @@ class EmergencyDonorsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LoadingDialog(requireContext())
+
         getDonors()
+        refreshDonors()
 
         binding.navigateUp.setOnClickListener {
             dismiss()
@@ -52,15 +55,18 @@ class EmergencyDonorsDialogFragment : DialogFragment() {
     private fun getDonors() {
         loadingDialog.show()
         try {
-            getAllUsersDetails(userType = DONOR) { donors, message ->
-                if (donors != null && donors[0] is Donor) {
-                    @Suppress("UNCHECKED_CAST")
-                    setupAdapter(donors = donors as List<Donor>)
-                    loadingDialog.dismiss()
-                } else {
-                    loadingDialog.dismiss()
-                    Log.d("response", "$message")
-                }
+            getAllUsersDetails(userType = DONOR) { users, message ->
+                users?.let {
+                    binding.emptyTextview.isVisible = false
+                    val donors = it.filterIsInstance<Donor>()
+                    donors.forEach { donor ->
+                        donor.country = "${donor.firstname} ${donor.lastname}"
+                        donor.state = "${donor.state} ${donor.city}"
+                    }
+                    setupAdapter(donors = donors)
+                } ?: handleGetDonorsError(message)
+
+                loadingDialog.dismiss()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -72,9 +78,9 @@ class EmergencyDonorsDialogFragment : DialogFragment() {
         val picasso = Picasso.get()
         val bloodBankAdapter = GenericAdapter(
             itemList = donors.toMutableList(),
-            itemResLayout = R.layout.item_fragment_blood_banks,
+            itemResLayout = R.layout.item_fragment_emergency_donors,
             bindItem = { binding, model ->
-                binding.setVariable(BR.hospital, model)
+                binding.setVariable(BR.donor, model)
                 binding.executePendingBindings()
 
                 val imageview = binding.root.findViewById<ImageView>(R.id.imageview)
@@ -85,15 +91,34 @@ class EmergencyDonorsDialogFragment : DialogFragment() {
                 }
             }
         ) { position ->
-            EmergencyDonorDetailsFragment(donors[position]).show(
-                parentFragmentManager,
-                getString(R.string.emergency_donors)
-            )
+            showEmergencyDonorDetails(donors[position])
         }
 
         binding.emergencyDonorsRecyclerview.apply {
             hasFixedSize()
             adapter = bloodBankAdapter
+        }
+    }
+
+    private fun showEmergencyDonorDetails(donor: Donor) {
+        EmergencyDonorDetailsFragment(donor).show(
+            parentFragmentManager,
+            getString(R.string.emergency_donors)
+        )
+    }
+
+    private fun handleGetDonorsError(message: String?) {
+        Log.d("response", "Failed to get donors: $message")
+        binding.emptyTextview.isVisible = true
+    }
+
+    private fun refreshDonors() {
+        binding.swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.red)
+            setOnRefreshListener {
+                getDonors()
+                isRefreshing = false
+            }
         }
     }
 

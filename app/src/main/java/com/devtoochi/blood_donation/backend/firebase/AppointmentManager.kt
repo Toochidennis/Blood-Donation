@@ -1,5 +1,6 @@
 package com.devtoochi.blood_donation.backend.firebase
 
+import android.util.Log
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
 import com.devtoochi.blood_donation.backend.models.Appointment
 import com.devtoochi.blood_donation.backend.utils.Constants.APPOINTMENTS
@@ -22,6 +23,7 @@ object AppointmentManager {
     }
 
     fun getAppointments(onComplete: (List<Appointment>?, String?) -> Unit) {
+        Log.d("response", "id :${auth.currentUser?.uid}")
         val query1 = appointmentsCollection
             .whereEqualTo("donorId", auth.currentUser?.uid)
             .get()
