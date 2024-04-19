@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.AppointmentManager
@@ -47,6 +48,7 @@ class DonorAppointmentHistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LoadingDialog(requireContext())
         getAppointmentsHistory()
+        refreshAppointment()
     }
 
     private fun getAppointmentsHistory() {
@@ -55,7 +57,8 @@ class DonorAppointmentHistoryFragment : Fragment() {
             loadingDialog.show()
 
             AppointmentManager.getAppointments { appointments, message ->
-                if (appointments != null) {
+                appointments?.let {
+                    binding.emptyTextview.isVisible = false
                     var requestsProcessed = 0 // Counter to track processed requests
                     val totalRequests = appointments.size
 
@@ -65,15 +68,12 @@ class DonorAppointmentHistoryFragment : Fragment() {
                             if (requestsProcessed == totalRequests) {
                                 // All requests processed, setup adapter
                                 setupAdapter()
-                                loadingDialog.dismiss()
                             }
                         }
                     }
-                } else {
-                    loadingDialog.dismiss()
-                    showToast("Something went wrong please try again")
-                    Log.d("response", "$message")
-                }
+                } ?: handleGetAppointmentsError(message)
+
+                loadingDialog.dismiss()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -210,5 +210,19 @@ class DonorAppointmentHistoryFragment : Fragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
+    private fun handleGetAppointmentsError(message: String?) {
+        Log.d("response", "Failed to get donors: $message")
+        binding.emptyTextview.isVisible = true
+    }
+
+    private fun refreshAppointment() {
+        binding.swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.red)
+            setOnRefreshListener {
+                getAppointmentsHistory()
+                isRefreshing = false
+            }
+        }
+    }
 
 }

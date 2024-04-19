@@ -19,7 +19,7 @@ object Constants {
     const val ELIGIBLE = true
     const val NOT_ELIGIBLE = false
     const val SCOPES = "https://www.googleapis.com/auth/firebase.messaging"
-    const val BASE_URL = "https://fcm.googleapis.com/v1/projects/jobswift-d3781/messages:send/"
+    const val BASE_URL = "https://fcm.googleapis.com/v1/projects/blood-donation-5ad75/messages:send/"
     const val CONTENT_TYPE = "application/json"
     const val CHANNEL_ID = "blood_app"
     const val CHANNEL_NAME = "blood donation app"
