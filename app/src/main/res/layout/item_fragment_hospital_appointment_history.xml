@@ -30,16 +30,14 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:backgroundTint="@color/red"
-                app:cardCornerRadius="60dp"
-                app:contentPadding="@dimen/dimen_10">
+                app:cardCornerRadius="60dp">
 
                 <ImageView
                     android:id="@+id/imageview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_blood_drop"
-                    app:tint="@color/white" />
+                    android:src="@drawable/ic_person" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -115,6 +113,7 @@
                     android:background="@drawable/drawable_button_2"
                     android:clipToPadding="false"
                     android:elevation="1dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/dimen_24"
@@ -149,6 +148,7 @@
                     android:background="@drawable/drawable_button_2"
                     android:clipToPadding="false"
                     android:elevation="1dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/dimen_24"

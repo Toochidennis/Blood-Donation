@@ -12,9 +12,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager
+import com.devtoochi.blood_donation.backend.firebase.DonationManager.getDonations
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getPersonalDetails
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.updatePersonalDetails
 import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
+import com.devtoochi.blood_donation.backend.utils.Util
 import com.devtoochi.blood_donation.backend.utils.Util.dateFormatter
 import com.devtoochi.blood_donation.databinding.FragmentHospitalProfileBinding
 import com.devtoochi.blood_donation.ui.activities.LoginActivity
@@ -47,6 +50,7 @@ class HospitalProfileFragment : Fragment() {
     }
 
     private fun initData() {
+        getInfo()
         sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE)
         with(sharedPreferences) {
             isAvailable = getBoolean("is_available", true)
@@ -63,7 +67,7 @@ class HospitalProfileFragment : Fragment() {
             }
 
             val lastDonation = getString("last_donation", "")
-            binding.lastDonationTxetview.text =
+            binding.lastDonationTextview.text =
                 if (lastDonation.isNullOrEmpty()) {
                     "Last donation: NIL"
                 } else {
@@ -71,6 +75,7 @@ class HospitalProfileFragment : Fragment() {
                 }
 
             binding.availableSwitchButton.isChecked = isAvailable
+            livesSaved()
         }
     }
 
@@ -117,6 +122,33 @@ class HospitalProfileFragment : Fragment() {
                     sharedPreferences.edit().putBoolean("is_available", isAvailable).apply()
                 }
             }
+        }
+    }
+
+    private fun getInfo() {
+        getPersonalDetails(
+            userType = HOSPITAL,
+            userId = "${AuthenticationManager.auth.currentUser?.uid}"
+        ) { user, _ ->
+            user?.let {
+                Util.updateSharedPreferences(
+                    user = user,
+                    userType = HOSPITAL,
+                    sharedPreferences
+                )
+            }
+        }
+    }
+
+    private fun livesSaved() {
+        try {
+            getDonations { donations, _ ->
+                val count = donations?.size!!
+                binding.donationsTextview.text = count.toString()
+                binding.livesSavedTextview.text = count.toString()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
