@@ -23,4 +23,5 @@ object Constants {
     const val CONTENT_TYPE = "application/json"
     const val CHANNEL_ID = "blood_app"
     const val CHANNEL_NAME = "blood donation app"
+    const val PERMISSION_REQUESTED_CODE = 100
 }

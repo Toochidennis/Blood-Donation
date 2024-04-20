@@ -1,10 +1,14 @@
 package com.devtoochi.blood_donation.ui.activities
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -25,14 +29,14 @@ import kotlinx.coroutines.tasks.await
 
 class DonorDashboardActivity : AppCompatActivity() {
 
-    private lateinit var binding:ActivityDonorDashboardBinding
+    private lateinit var binding: ActivityDonorDashboardBinding
     private var previousItemMenu: MenuItem? = null
     private val userActivityScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding= ActivityDonorDashboardBinding.inflate(layoutInflater)
+        binding = ActivityDonorDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -67,6 +71,9 @@ class DonorDashboardActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             updateIcon(navDestination = destination)
+            if (destination.id == R.id.donorAppointmentsFragment) {
+                requestPermission()
+            }
         }
     }
 
@@ -117,5 +124,28 @@ class DonorDashboardActivity : AppCompatActivity() {
             // Handle exceptions, such as token retrieval failure or database update failure
             e.printStackTrace()
         }
+    }
+
+    private fun requestPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    Constants.PERMISSION_REQUESTED_CODE
+                )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

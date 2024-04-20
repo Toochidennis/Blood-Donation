@@ -1,10 +1,14 @@
 package com.devtoochi.blood_donation.ui.activities
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -15,6 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.updatePersonalDetails
 import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
+import com.devtoochi.blood_donation.backend.utils.Constants.PERMISSION_REQUESTED_CODE
 import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
 import com.devtoochi.blood_donation.databinding.ActivityHospitalDashboardBinding
 import com.google.firebase.messaging.FirebaseMessaging
@@ -69,6 +74,9 @@ class HospitalDashboardActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             updateIcon(navDestination = destination)
+            if (destination.id == R.id.hospitalAppointmentsFragment) {
+                requestPermission()
+            }
         }
     }
 
@@ -119,5 +127,28 @@ class HospitalDashboardActivity : AppCompatActivity() {
             // Handle exceptions, such as token retrieval failure or database update failure
             e.printStackTrace()
         }
+    }
+
+    private fun requestPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    PERMISSION_REQUESTED_CODE
+                )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }
