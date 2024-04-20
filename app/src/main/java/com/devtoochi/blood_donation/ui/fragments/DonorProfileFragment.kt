@@ -1,6 +1,6 @@
 package com.devtoochi.blood_donation.ui.fragments
 
-import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -11,9 +11,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
+import com.devtoochi.blood_donation.backend.firebase.DonationManager.getDonations
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager
-import com.devtoochi.blood_donation.backend.utils.Constants
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getPersonalDetails
+import com.devtoochi.blood_donation.backend.utils.Constants.DONOR
+import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
 import com.devtoochi.blood_donation.backend.utils.Util
+import com.devtoochi.blood_donation.backend.utils.Util.updateSharedPreferences
 import com.devtoochi.blood_donation.databinding.FragmentDonorProfileBinding
 import com.devtoochi.blood_donation.ui.activities.LoginActivity
 import com.devtoochi.blood_donation.ui.dialogs.ContactInfoDialogFragment
@@ -45,10 +50,8 @@ class DonorProfileFragment : Fragment() {
     }
 
     private fun initData() {
-        sharedPreferences = requireActivity().getSharedPreferences(
-            Constants.PREF_NAME,
-            Context.MODE_PRIVATE
-        )
+        sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+        getInfo()
         with(sharedPreferences) {
             isAvailable = getBoolean("is_available", true)
             profileId = getString("id", "")
@@ -82,6 +85,8 @@ class DonorProfileFragment : Fragment() {
                 }
 
             binding.availableSwitchButton.isChecked = isAvailable
+
+            livesSaved()
         }
     }
 
@@ -121,7 +126,7 @@ class DonorProfileFragment : Fragment() {
         if (profileId != null) {
             PersonDetailsManager.updatePersonalDetails(
                 data = hashMapOf("available" to isAvailable),
-                userType = Constants.DONOR,
+                userType = DONOR,
                 profileId = profileId!!,
             ) { success, _ ->
                 if (success) {
@@ -130,6 +135,27 @@ class DonorProfileFragment : Fragment() {
             }
         }
     }
+
+    private fun getInfo() {
+        getPersonalDetails(userType = DONOR, userId = "${auth.currentUser?.uid}") { user, _ ->
+            user?.let {
+                updateSharedPreferences(user = user, userType = DONOR, sharedPreferences)
+            }
+        }
+    }
+
+    private fun livesSaved() {
+        try {
+            getDonations { donations, _ ->
+                val count = donations?.size!!
+                binding.donationsTextview.text = count.toString()
+                binding.livesSavedTextview.text = count.toString()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 
     private fun logout() {
         AuthenticationManager.googleSignInClient(requireContext()).signOut()

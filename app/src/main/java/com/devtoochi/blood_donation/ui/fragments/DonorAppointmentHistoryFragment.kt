@@ -6,7 +6,6 @@ import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +13,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.AppointmentManager
-import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager
-import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getPersonalDetails
 import com.devtoochi.blood_donation.backend.models.Appointment
 import com.devtoochi.blood_donation.backend.models.Donor
