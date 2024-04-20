@@ -123,7 +123,6 @@ class BloodRequestDetailsBottomSheetDialogFragment(
             requestId = donationRequest.requestId
         ) { success, message ->
             if (success) {
-                loadingDialog.dismiss()
                 dismiss()
                 DonationSuccessDialog(
                     requireContext(),
@@ -132,9 +131,9 @@ class BloodRequestDetailsBottomSheetDialogFragment(
                     HOSPITAL
                 ).show()
             } else {
-                loadingDialog.dismiss()
                 Log.d("response", "$message")
             }
+            loadingDialog.dismiss()
         }
     }
 }
