@@ -1,6 +1,8 @@
 package com.devtoochi.blood_donation.ui.fragments
 
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -31,7 +33,7 @@ class BloodBankDetailsFragment : Fragment() {
     private lateinit var binding: FragmentBloodBankDetailsBinding
     private lateinit var loadingDialog: LoadingDialog
     private var bloodBankDetails: Hospital? = null
-    private var bloodGroup = BloodGroup()
+    private var selectedBloodGroup = mutableListOf<String>()
     private var time: String? = null
     private var date: String? = null
 
@@ -82,6 +84,14 @@ class BloodBankDetailsFragment : Fragment() {
         binding.sendRequestButton.setOnClickListener {
             sendRequest()
         }
+
+        binding.callButton.setOnClickListener {
+            bloodBankDetails?.phone?.let { it1 -> makePhoneCall(it1) }
+        }
+
+        binding.emailButton.setOnClickListener {
+            bloodBankDetails?.email?.let { it1 -> sendEmail(it1) }
+        }
     }
 
     private fun showTimePickerDialog() {
@@ -113,7 +123,7 @@ class BloodBankDetailsFragment : Fragment() {
             binding.nameTextview.text = bloodBankDetails?.name
             binding.stateTextview.text = bloodBankDetails?.state
             binding.addressTextview.text = bloodBankDetails?.address
-            binding.cityTextview.text=  bloodBankDetails?.city
+            binding.cityTextview.text = bloodBankDetails?.city
 
             bloodBankDetails?.bloodGroup?.let { processJson(it) }
         }
@@ -134,7 +144,7 @@ class BloodBankDetailsFragment : Fragment() {
     }
 
     private fun setupAdapter(bloodGroups: MutableList<BloodGroup>) {
-        val bloodGroupAdapter2 = BloodGroupAdapter2(bloodGroups, bloodGroup)
+        val bloodGroupAdapter2 = BloodGroupAdapter2(bloodGroups, selectedBloodGroup)
         binding.bloodBankStockRecyclerview.apply {
             hasFixedSize()
             layoutManager = GridLayoutManager(requireContext(), 4)
@@ -151,26 +161,20 @@ class BloodBankDetailsFragment : Fragment() {
                         userId = "${auth.currentUser?.uid}",
                         donorId = bloodBankDetails?.userId!!,
                         requestType = HOSPITAL,
-                        bloodGroup = bloodGroup.name,
+                        bloodGroup = selectedBloodGroup[0],
                         note = binding.noteTextInput.text.toString().trim(),
                         requestDate = "$date:$time",
                     )
                 ) { success, message ->
                     if (success) {
-                        loadingDialog.dismiss()
                         RequestSentDialog(requireContext()) {
                             findNavController().popBackStack()
                         }.show()
                     } else {
-                        loadingDialog.dismiss()
-                        Toast.makeText(
-                            requireContext(),
-                            "Something went wrong please try again",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
+                        showToast("Something went wrong please try again")
                         Log.d("response", "$message")
                     }
+                    loadingDialog.dismiss()
                 }
             }
         } catch (e: Exception) {
@@ -181,7 +185,7 @@ class BloodBankDetailsFragment : Fragment() {
 
     private fun isValidForm(): Boolean {
         return when {
-            bloodGroup.name.isEmpty() -> {
+            selectedBloodGroup.isEmpty() -> {
                 Toast.makeText(
                     requireContext(), "Please select blood group",
                     Toast.LENGTH_SHORT
@@ -211,6 +215,42 @@ class BloodBankDetailsFragment : Fragment() {
                 true
             }
         }
+    }
+
+    private fun sendEmail(email: String) {
+        if (email.isNotEmpty()) {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:$email")
+                putExtra(Intent.EXTRA_SUBJECT, "")
+                putExtra(Intent.EXTRA_TEXT, "")
+            }
+
+            if (intent.resolveActivity(requireContext().packageManager) != null) {
+                startActivity(intent)
+            } else {
+                startActivity(Intent.createChooser(intent, "Send Us a mail"))
+            }
+        } else {
+            showToast("Email address not available")
+        }
+    }
+
+    private fun makePhoneCall(phone: String) {
+        if (phone.isNotEmpty()) {
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$phone")
+            }
+
+            if (intent.resolveActivity(requireContext().packageManager) != null) {
+                startActivity(intent)
+            }
+        } else {
+            showToast("Phone number not available")
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
 }

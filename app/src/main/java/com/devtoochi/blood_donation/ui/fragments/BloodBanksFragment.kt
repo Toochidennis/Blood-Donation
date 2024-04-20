@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.devtoochi.blood_donation.BR
@@ -36,6 +37,7 @@ class BloodBanksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LoadingDialog(requireContext())
         getBloodBanks()
+        refreshRequests()
 
         binding.navigateUp.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -45,15 +47,13 @@ class BloodBanksFragment : Fragment() {
     private fun getBloodBanks() {
         loadingDialog.show()
         try {
-            getAllUsersDetails(userType = HOSPITAL) { hospitals, message ->
-                if (hospitals != null && hospitals[0] is Hospital) {
-                    @Suppress("UNCHECKED_CAST")
-                    setupAdapter(hospitals = hospitals as List<Hospital>)
-                    loadingDialog.dismiss()
-                } else {
-                    loadingDialog.dismiss()
-                    Log.d("response", "$message")
-                }
+            getAllUsersDetails(userType = HOSPITAL) { users, message ->
+                users?.let {
+                    binding.emptyTextview.isVisible = false
+                    val hospitals = users.filterIsInstance<Hospital>()
+                    setupAdapter(hospitals = hospitals)
+                } ?: handleGetBloodBanksError(message)
+                loadingDialog.dismiss()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -82,6 +82,21 @@ class BloodBanksFragment : Fragment() {
         binding.bloodBankRecyclerview.apply {
             hasFixedSize()
             adapter = bloodBankAdapter
+        }
+    }
+
+    private fun handleGetBloodBanksError(message: String?) {
+        Log.d("response", "Failed to get donors: $message")
+        binding.emptyTextview.isVisible = true
+    }
+
+    private fun refreshRequests() {
+        binding.swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.red)
+            setOnRefreshListener {
+                getBloodBanks()
+                isRefreshing = false
+            }
         }
     }
 
