@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
@@ -51,8 +52,8 @@ class RequestFragment : Fragment() {
         loadingDialog = LoadingDialog(requireContext())
 
         handleViewsClick()
-
         getRequestHistory()
+        refreshRequests()
     }
 
     private fun handleViewsClick() {
@@ -76,61 +77,49 @@ class RequestFragment : Fragment() {
     }
 
     private fun getRequestHistory() {
-        try {
-            loadingDialog.show()
-            getBloodRequestById("$userId") { bloodRequests, message ->
-                if (bloodRequests != null) {
-                    loadingDialog.dismiss()
-                    bloodRequests.forEach { bloodRequest ->
-                        processRequestData(bloodRequest)
+        loadingDialog.show()
+        getBloodRequestById("$userId") { bloodRequests, message ->
+            binding.emptyTextview.isVisible = false
+            bloodRequests?.let {
+                val processedRequests = mutableListOf<BloodRequest>()
+                val requestsCount = bloodRequests.size
+                var processedCount = 0
+                bloodRequests.forEach { bloodRequest ->
+                    processRequestData(bloodRequest) { processedRequest ->
+                        processedRequests.add(processedRequest)
+                        processedCount++
+                        if (processedCount == requestsCount) {
+                            setUpAdapter(processedRequests)
+                        }
                     }
-                    setUpAdapter(bloodRequests)
-                } else {
-                    loadingDialog.dismiss()
-                    Log.d("response", "$message")
                 }
-            }
-        } catch (e: Exception) {
+            } ?: handleGetRequestsError(message)
             loadingDialog.dismiss()
-            e.printStackTrace()
         }
     }
 
-    private fun processRequestData(data: BloodRequest) {
+    private fun processRequestData(data: BloodRequest, callback: (BloodRequest) -> Unit) {
         val bloodGroup = data.bloodGroup
-        data.bloodGroup = when (data.requestType) {
-            DONOR -> "You urgently requested $bloodGroup blood from ${
-                getUsername(
-                    data.donorId,
-                    data.requestType
-                )
-            }"
-
-            HOSPITAL -> "You requested $bloodGroup blood from ${
-                getUsername(
-                    data.donorId,
-                    data.requestType
-                )
-            }"
-
-            else -> "You requested for $bloodGroup blood"
+        getUsername(data.donorId, data.requestType) { username ->
+            data.bloodGroup = when (data.requestType) {
+                DONOR -> "You urgently requested $bloodGroup blood from $username"
+                HOSPITAL -> "You requested $bloodGroup blood from $username"
+                else -> "You requested for $bloodGroup blood"
+            }
+            data.note = "Requested on ${dateFormat.format(data.datePosted)}"
+            callback.invoke(data)
         }
-        data.note = "Requested on ${dateFormat.format(data.datePosted)}"
     }
 
-    private fun getUsername(userId: String, userType: String): String {
-        var name = ""
+    private fun getUsername(userId: String, userType: String, callback: (String) -> Unit) {
         getPersonalDetails(userType = userType, userId = userId) { user, _ ->
-            if (user != null) {
-                name = when (user) {
-                    is Hospital -> user.name
-                    is Donor -> "${user.firstname} ${user.lastname}"
-                    else -> "Unknown name"
-                }
+            val name = when (user) {
+                is Hospital -> user.name
+                is Donor -> "${user.firstname} ${user.lastname}"
+                else -> "Unknown name"
             }
+            callback.invoke(name)
         }
-
-        return name
     }
 
     private fun setUpAdapter(bloodRequest: List<BloodRequest>) {
@@ -149,4 +138,18 @@ class RequestFragment : Fragment() {
         }
     }
 
+    private fun handleGetRequestsError(message: String?) {
+        Log.d("response", "Failed to get donors: $message")
+        binding.emptyTextview.isVisible = true
+    }
+
+    private fun refreshRequests() {
+        binding.swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.red)
+            setOnRefreshListener {
+                getRequestHistory()
+                isRefreshing = false
+            }
+        }
+    }
 }

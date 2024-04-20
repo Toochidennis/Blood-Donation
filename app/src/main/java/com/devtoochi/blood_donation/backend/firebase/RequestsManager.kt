@@ -63,17 +63,20 @@ object RequestsManager {
     }
 
     fun getAllBloodRequests(
+        requestType:String,
         userId: String,
         onComplete: (List<BloodRequest>?, String?) -> Unit
     ) {
         val query1 = requestsCollection
             .whereNotEqualTo("userId", userId)
             .whereEqualTo("requestType", GENERAL)
+            .whereEqualTo("status", "Pending")
             .get()
 
         val query2 = requestsCollection
             .whereEqualTo("donorId", userId)
-            .whereEqualTo("requestType", GENERAL)
+            .whereEqualTo("requestType", requestType)
+            .whereEqualTo("status", "Pending")
             .get()
 
         Tasks.whenAllSuccess<QuerySnapshot>(query1, query2)
