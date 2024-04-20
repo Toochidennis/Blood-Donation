@@ -19,6 +19,7 @@ import com.devtoochi.blood_donation.backend.models.BloodRequest
 import com.devtoochi.blood_donation.backend.models.DonationRequest
 import com.devtoochi.blood_donation.backend.models.Hospital
 import com.devtoochi.blood_donation.backend.utils.Constants
+import com.devtoochi.blood_donation.backend.utils.Constants.DONOR
 import com.devtoochi.blood_donation.backend.utils.Constants.PREF_NAME
 import com.devtoochi.blood_donation.backend.utils.Util
 import com.devtoochi.blood_donation.databinding.FragmentDonorDonateBinding
@@ -64,7 +65,7 @@ class DonorDonateFragment : Fragment() {
         try {
             donationRequests.clear()
             loadingDialog.show()
-            getAllBloodRequests(userId = "$userId") { bloodRequests, message ->
+            getAllBloodRequests(requestType = DONOR, userId = "$userId") { bloodRequests, message ->
                 bloodRequests?.let {
                     binding.emptyTextview.isVisible = false
                     var requestsProcessed = 0 // Counter to track processed requests

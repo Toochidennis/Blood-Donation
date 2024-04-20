@@ -92,7 +92,7 @@ class DonorHomeFragment : Fragment() {
         try {
             donationRequests.clear()
             loadingDialog.show()
-            getAllBloodRequests(userId = "$userId") { bloodRequests, message ->
+            getAllBloodRequests(requestType = DONOR, userId = "$userId") { bloodRequests, message ->
                 bloodRequests?.let {
                     binding.emptyTextview.isVisible = false
                     var requestsProcessed = 0 // Counter to track processed requests

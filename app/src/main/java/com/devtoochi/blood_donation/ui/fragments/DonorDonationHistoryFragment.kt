@@ -2,11 +2,11 @@ package com.devtoochi.blood_donation.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.DonationManager
@@ -34,25 +34,17 @@ class DonorDonationHistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LoadingDialog(requireContext())
         getDonationsHistory()
-
+        refreshDonation()
     }
 
     private fun getDonationsHistory() {
         try {
             loadingDialog.show()
             DonationManager.getDonations { donations, message ->
-                if (donations != null) {
+                donations?.let {
                     setupAdapter(donations.toMutableList())
-                    loadingDialog.dismiss()
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Something went wrong please try again",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Log.d("response", "$message")
-                    loadingDialog.dismiss()
-                }
+                } ?: handleGetDonationsError(message)
+                loadingDialog.dismiss()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -76,5 +68,19 @@ class DonorDonationHistoryFragment : Fragment() {
         }
     }
 
+    private fun handleGetDonationsError(message: String?) {
+        Log.d("response", "Failed to get donors: $message")
+        binding.emptyTextview.isVisible = true
+    }
+
+    private fun refreshDonation() {
+        binding.swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.red)
+            setOnRefreshListener {
+                getDonationsHistory()
+                isRefreshing = false
+            }
+        }
+    }
 
 }
