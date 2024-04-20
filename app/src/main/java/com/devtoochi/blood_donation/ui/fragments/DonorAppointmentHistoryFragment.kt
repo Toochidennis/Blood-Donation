@@ -19,9 +19,11 @@ import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.AppointmentManager
 import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager
+import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getPersonalDetails
 import com.devtoochi.blood_donation.backend.models.Appointment
 import com.devtoochi.blood_donation.backend.models.Donor
 import com.devtoochi.blood_donation.backend.models.Hospital
+import com.devtoochi.blood_donation.backend.utils.Constants.HOSPITAL
 import com.devtoochi.blood_donation.backend.utils.Util
 import com.devtoochi.blood_donation.databinding.FragmentDonorAppointmentHistoryBinding
 import com.devtoochi.blood_donation.ui.adapters.GenericAdapter
@@ -57,6 +59,7 @@ class DonorAppointmentHistoryFragment : Fragment() {
             loadingDialog.show()
 
             AppointmentManager.getAppointments { appointments, message ->
+                Log.d("response", "appointment: $appointments")
                 appointments?.let {
                     binding.emptyTextview.isVisible = false
                     var requestsProcessed = 0 // Counter to track processed requests
@@ -85,13 +88,7 @@ class DonorAppointmentHistoryFragment : Fragment() {
         appointment: Appointment,
         onComplete: () -> Unit
     ) {
-        val userId = if (AuthenticationManager.auth.currentUser?.uid == appointment.receiverId) {
-            appointment.donorId
-        } else {
-            appointment.receiverId
-        }
-
-        PersonDetailsManager.getPersonalDetails(userId, appointment.userType) { user, message ->
+        getPersonalDetails(userType = HOSPITAL, userId = appointment.receiverId) { user, message ->
             user?.let { userDetails ->
                 val name = when (userDetails) {
                     is Hospital -> userDetails.name

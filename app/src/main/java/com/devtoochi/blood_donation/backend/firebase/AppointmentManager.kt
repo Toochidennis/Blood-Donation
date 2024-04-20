@@ -33,6 +33,8 @@ object AppointmentManager {
 
         Tasks.whenAllSuccess<QuerySnapshot>(query1, query2)
             .addOnSuccessListener { results ->
+                Log.d("response", "result :${results.size}")
+
                 val appointmentList = mutableListOf<Appointment>()
                 val uniqueIds = HashSet<String>()
 
