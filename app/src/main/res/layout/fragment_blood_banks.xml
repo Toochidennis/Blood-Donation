@@ -56,19 +56,32 @@
             android:inputType="textPersonName|textCapSentences"
             android:padding="@dimen/dimen_10" />
 
-        <androidx.core.widget.NestedScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView2">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/blood_bank_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_fragment_blood_banks" />
-        </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/empty_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:padding="@dimen/dimen_16"
+                android:text="@string/there_no_blood_request_yet"
+                android:textAlignment="center"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_16"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

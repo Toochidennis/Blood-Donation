@@ -147,13 +147,19 @@ class DonorProfileFragment : Fragment() {
     private fun livesSaved() {
         try {
             getDonations { donations, _ ->
-                val count = donations?.size!!
-                binding.donationsTextview.text = count.toString()
-                binding.livesSavedTextview.text = count.toString()
+                donations?.let {
+                    binding.donationsTextview.text = it.size.toString()
+                    binding.livesSavedTextview.text = it.size.toString()
+                }?:updateLifeLine()
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun updateLifeLine(){
+        binding.donationsTextview.text = "0"
+        binding.livesSavedTextview.text = "0"
     }
 
 
