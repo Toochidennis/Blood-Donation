@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
@@ -48,6 +49,7 @@ class HospitalAppointmentHistoryFragment : Fragment() {
         loadingDialog = LoadingDialog(requireContext())
 
         getAppointmentsHistory()
+        refreshAppointment()
     }
 
     private fun getAppointmentsHistory() {
@@ -56,7 +58,8 @@ class HospitalAppointmentHistoryFragment : Fragment() {
             loadingDialog.show()
 
             getAppointments { appointments, message ->
-                if (appointments != null) {
+                binding.emptyTextview.isVisible = false
+                appointments?.let {
                     var requestsProcessed = 0 // Counter to track processed requests
                     val totalRequests = appointments.size
 
@@ -70,11 +73,7 @@ class HospitalAppointmentHistoryFragment : Fragment() {
                             }
                         }
                     }
-                } else {
-                    loadingDialog.dismiss()
-                    showToast("Something went wrong please try again")
-                    Log.d("response", "$message")
-                }
+                } ?: handleGetAppointmentsError(message)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -92,7 +91,7 @@ class HospitalAppointmentHistoryFragment : Fragment() {
             appointment.receiverId
         }
 
-        getPersonalDetails(userId, appointment.userType) { user, message ->
+        getPersonalDetails(userType = appointment.userType, userId = userId) { user, message ->
             user?.let { userDetails ->
                 val name = when (userDetails) {
                     is Hospital -> userDetails.name
@@ -121,6 +120,10 @@ class HospitalAppointmentHistoryFragment : Fragment() {
         }
     }
 
+    private fun handleGetAppointmentsError(message: String?) {
+        Log.d("response", "Failed to get donors: $message")
+        binding.emptyTextview.isVisible = true
+    }
 
     private fun setupAdapter() {
         val picasso = Picasso.get()
@@ -209,5 +212,15 @@ class HospitalAppointmentHistoryFragment : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun refreshAppointment() {
+        binding.swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.red)
+            setOnRefreshListener {
+                getAppointmentsHistory()
+                isRefreshing = false
+            }
+        }
     }
 }
