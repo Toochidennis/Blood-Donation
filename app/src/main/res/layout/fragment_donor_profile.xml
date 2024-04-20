@@ -92,12 +92,12 @@
                     app:layout_constraintTop_toBottomOf="@id/profile_bg">
 
                     <TextView
+                        android:id="@+id/donations_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:fontFamily="@font/nunito_sans_bold"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/text_24"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_24" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -126,12 +126,12 @@
                     app:layout_constraintTop_toTopOf="@id/donations_bg">
 
                     <TextView
+                        android:id="@+id/lives_saved_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:fontFamily="@font/nunito_sans_bold"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/text_24"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_24" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -164,9 +164,9 @@
                         android:id="@+id/blood_group_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_bold"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/text_24"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_24" />
 
                     <TextView
                         android:layout_width="wrap_content"
