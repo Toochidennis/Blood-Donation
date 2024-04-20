@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
@@ -57,6 +58,7 @@ class HospitalHomeFragment : Fragment() {
         loadingDialog = LoadingDialog(requireContext())
 
         initData()
+        refreshRequests()
     }
 
     private fun initData() {
@@ -78,7 +80,7 @@ class HospitalHomeFragment : Fragment() {
             }
 
             if (city.isNullOrEmpty() || bloodGroup.isNullOrEmpty()) {
-                WelcomeDialog(HOSPITAL,requireContext(), parentFragmentManager).show()
+                WelcomeDialog(HOSPITAL, requireContext(), parentFragmentManager).show()
             }
         }
 
@@ -89,8 +91,13 @@ class HospitalHomeFragment : Fragment() {
         try {
             donationRequests.clear()
             loadingDialog.show()
-            getAllBloodRequests(userId = "$userId") { bloodRequests, message ->
-                if (bloodRequests != null) {
+
+            getAllBloodRequests(
+                requestType = HOSPITAL,
+                userId = "$userId"
+            ) { bloodRequests, message ->
+                bloodRequests?.let {
+                    binding.emptyTextview.isVisible = false
                     var requestsProcessed = 0 // Counter to track processed requests
                     val totalRequests = bloodRequests.size // Total number of requests
 
@@ -100,14 +107,11 @@ class HospitalHomeFragment : Fragment() {
                             if (requestsProcessed == totalRequests) {
                                 // All requests processed, setup adapter
                                 setupAdapter()
-                                loadingDialog.dismiss()
                             }
                         }
                     }
-                } else {
-                    loadingDialog.dismiss()
-                    Log.d("response", "$message")
-                }
+                } ?: handleGetHospitalsError(message)
+                loadingDialog.dismiss()
             }
         } catch (e: Exception) {
             loadingDialog.dismiss()
@@ -119,8 +123,9 @@ class HospitalHomeFragment : Fragment() {
         getPersonalDetails(
             userId = bloodRequest.userId,
             userType = HOSPITAL,
-        ) { hospital, message ->
-            if (hospital != null && hospital is Hospital) {
+        ) { user, message ->
+            val hospital = user as? Hospital
+            hospital?.let {
                 donationRequests.add(
                     DonationRequest(
                         requestId = bloodRequest.requestId,
@@ -138,9 +143,7 @@ class HospitalHomeFragment : Fragment() {
                         token = hospital.token
                     )
                 )
-            } else {
-                Log.d("response", "$message")
-            }
+            } ?: Log.d("response", "Failed to get donors: $message")
 
             onComplete.invoke()
         }
@@ -156,7 +159,7 @@ class HospitalHomeFragment : Fragment() {
             val formattedDate = dateFormatter(date)
             val formattedTime = formatTime(hour, minutes)
 
-            "$formattedDate $formattedTime"
+            "Time: $formattedDate $formattedTime"
         } catch (e: Exception) {
             Log.e("formatRequestDate", "Error formatting request date: $requestDate", e)
             requestDate // Return the original string in case of an error
@@ -179,14 +182,33 @@ class HospitalHomeFragment : Fragment() {
                 }
             }
         ) { position ->
-            BloodRequestDetailsBottomSheetDialogFragment(donationRequests[position])
-                .show(parentFragmentManager, getString(R.string.request))
+            showRequestDetails(donationRequest = donationRequests[position])
         }
 
         binding.donationRequestRecyclerview.apply {
             hasFixedSize()
             adapter = donationAdapter
         }
+    }
+
+    private fun refreshRequests() {
+        binding.swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.red)
+            setOnRefreshListener {
+                getDonationRequests()
+                isRefreshing = false
+            }
+        }
+    }
+
+    private fun handleGetHospitalsError(message: String?) {
+        Log.d("response", "Failed to get donors: $message")
+        binding.emptyTextview.isVisible = true
+    }
+
+    private fun showRequestDetails(donationRequest: DonationRequest) {
+        BloodRequestDetailsBottomSheetDialogFragment(donationRequest)
+            .show(parentFragmentManager, getString(R.string.request))
     }
 
 }

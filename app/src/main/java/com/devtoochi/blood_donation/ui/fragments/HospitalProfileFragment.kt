@@ -50,8 +50,8 @@ class HospitalProfileFragment : Fragment() {
     }
 
     private fun initData() {
-        getInfo()
         sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+        getInfo()
         with(sharedPreferences) {
             isAvailable = getBoolean("is_available", true)
             profileId = getString("id", "")
@@ -143,13 +143,19 @@ class HospitalProfileFragment : Fragment() {
     private fun livesSaved() {
         try {
             getDonations { donations, _ ->
-                val count = donations?.size!!
-                binding.donationsTextview.text = count.toString()
-                binding.livesSavedTextview.text = count.toString()
+                donations?.let {
+                    binding.donationsTextview.text = it.size.toString()
+                    binding.livesSavedTextview.text = it.size.toString()
+                } ?: updateLifeLine()
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun updateLifeLine() {
+        binding.donationsTextview.text = "0"
+        binding.livesSavedTextview.text = "0"
     }
 
     private fun logout() {
