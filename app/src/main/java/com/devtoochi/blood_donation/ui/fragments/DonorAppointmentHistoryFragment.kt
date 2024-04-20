@@ -16,7 +16,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.devtoochi.blood_donation.BR
 import com.devtoochi.blood_donation.R
-import com.devtoochi.blood_donation.backend.firebase.AppointmentManager
+import com.devtoochi.blood_donation.backend.firebase.AppointmentManager.getAppointments
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.getPersonalDetails
 import com.devtoochi.blood_donation.backend.models.Appointment
 import com.devtoochi.blood_donation.backend.models.Donor
@@ -56,8 +56,7 @@ class DonorAppointmentHistoryFragment : Fragment() {
             appointments.clear()
             loadingDialog.show()
 
-            AppointmentManager.getAppointments { appointments, message ->
-                Log.d("response", "appointment: $appointments")
+            getAppointments { appointments, message ->
                 appointments?.let {
                     binding.emptyTextview.isVisible = false
                     var requestsProcessed = 0 // Counter to track processed requests

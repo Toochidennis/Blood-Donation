@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.devtoochi.blood_donation.R
 import com.devtoochi.blood_donation.backend.firebase.AppointmentManager.bookAppointment
+import com.devtoochi.blood_donation.backend.firebase.AuthenticationManager.auth
 import com.devtoochi.blood_donation.backend.firebase.PersonDetailsManager.updatePersonalDetails
 import com.devtoochi.blood_donation.backend.models.Appointment
 import com.devtoochi.blood_donation.backend.models.DonationRequest
@@ -120,7 +121,7 @@ class BookAppointmentDialogFragment(
 
                     bookAppointment(
                         Appointment(
-                            donorId = donationRequest.donorId,
+                            donorId = "${auth.currentUser?.uid}",
                             receiverId = donationRequest.userId,
                             requestId = donationRequest.requestId,
                             appointmentDate = "$date:$time",

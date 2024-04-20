@@ -1,6 +1,7 @@
 package com.devtoochi.blood_donation.ui.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -12,7 +13,7 @@ import com.devtoochi.blood_donation.databinding.ItemFragmentBloodBankDetailsBind
 
 class BloodGroupAdapter2(
     private val itemList: MutableList<BloodGroup>,
-    private var selectedBloodGroup: BloodGroup
+    private var selectedBloodGroup: MutableList<String>
 ) : RecyclerView.Adapter<BloodGroupAdapter2.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,13 +51,14 @@ class BloodGroupAdapter2(
             itemView.setOnClickListener {
                 deselectAll()
                 bloodGroup.isSelected = true
-                selectedBloodGroup = bloodGroup
+                selectedBloodGroup.add(bloodGroup.name)
                 notifyDataSetChanged()
             }
         }
     }
 
     private fun deselectAll(){
+        selectedBloodGroup.clear()
         itemList.forEach {
             it.isSelected = false
         }
