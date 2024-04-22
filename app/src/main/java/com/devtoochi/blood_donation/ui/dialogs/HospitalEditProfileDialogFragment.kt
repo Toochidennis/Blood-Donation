@@ -113,6 +113,12 @@ class HospitalEditProfileDialogFragment : DialogFragment() {
         binding.saveButton.setOnClickListener {
             updateInfo()
         }
+
+        binding.countryTextInput.setOnClickListener {
+            CountriesBottomSheetFragment {
+                binding.countryTextInput.setText(it)
+            }.show(parentFragmentManager, getString(R.string.country))
+        }
     }
 
     private fun updateInfo() {
