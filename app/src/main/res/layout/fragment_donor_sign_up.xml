@@ -71,6 +71,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:autofillHints="emailAddress"
                 android:backgroundTint="@color/textColor"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/enter_your_email"
                 android:inputType="textEmailAddress" />
 
@@ -81,6 +82,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:autofillHints="phone"
                 android:backgroundTint="@color/textColor"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/phone_number"
                 android:inputType="phone" />
 
