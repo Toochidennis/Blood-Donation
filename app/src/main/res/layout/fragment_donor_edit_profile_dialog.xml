@@ -168,6 +168,10 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:backgroundTint="@color/textColor"
+                android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:drawableTint="@color/textColor"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:hint="@string/country"
                 android:imeOptions="actionNext"
                 android:inputType="textCapSentences" />
