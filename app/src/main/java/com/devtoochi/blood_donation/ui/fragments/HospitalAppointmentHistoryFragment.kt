@@ -69,11 +69,11 @@ class HospitalAppointmentHistoryFragment : Fragment() {
                             if (requestsProcessed == totalRequests) {
                                 // All requests processed, setup adapter
                                 setupAdapter()
-                                loadingDialog.dismiss()
                             }
                         }
                     }
                 } ?: handleGetAppointmentsError(message)
+                loadingDialog.dismiss()
             }
         } catch (e: Exception) {
             e.printStackTrace()
