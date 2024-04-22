@@ -110,11 +110,16 @@ class DonorProfileEditProfileDialogFragment : DialogFragment() {
         }
 
         binding.bloodGroupTextInput.setOnClickListener {
-            DonorBloodGroupsBottomSheetFragment{
+            DonorBloodGroupsBottomSheetFragment {
                 binding.bloodGroupTextInput.setText(it)
             }.show(parentFragmentManager, getString(R.string.blood_group))
         }
 
+        binding.countryTextInput.setOnClickListener {
+            CountriesBottomSheetFragment {
+                binding.countryTextInput.setText(it)
+            }.show(parentFragmentManager, getString(R.string.country))
+        }
     }
 
     private fun updateInfo() {
