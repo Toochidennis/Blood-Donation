@@ -148,7 +148,6 @@ class DonorProfileFragment : Fragment() {
         try {
             getDonations { donations, _ ->
                 donations?.let {
-                    binding.donationsTextview.text = it.size.toString()
                     binding.livesSavedTextview.text = it.size.toString()
                 }?:updateLifeLine()
             }
@@ -158,7 +157,6 @@ class DonorProfileFragment : Fragment() {
     }
 
     private fun updateLifeLine(){
-        binding.donationsTextview.text = "0"
         binding.livesSavedTextview.text = "0"
     }
 

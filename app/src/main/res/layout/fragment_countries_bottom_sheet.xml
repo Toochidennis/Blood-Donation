@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.dialogs.CountriesBottomSheetFragment">
+
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_16"
+        android:id="@+id/search_edit_text"
+        android:backgroundTint="@color/textColor"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/dimen_16"
+        android:fontFamily="@font/nunito_sans_regular"
+        android:hint="@string/search"
+        android:inputType="textCapSentences"
+        android:textSize="@dimen/text_16" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/countries_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_fragment_countries" />
+
+</LinearLayout>
