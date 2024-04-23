@@ -20,7 +20,7 @@ firebaseAnalytics = "21.6.2"
 splashscreen = "1.0.1"
 firestore = "24.11.1"
 googleAuth = "0.26.0"
-playServicesAuth = "21.0.0"
+playServicesAuth = "21.1.0"
 swipeRefreshLayout ="1.1.0"
 
 
